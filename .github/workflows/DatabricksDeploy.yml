@@ -8,6 +8,7 @@ jobs:
     name: CreateWorkspace
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix:
         environments: [Development, Test, Production]
         #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
