@@ -19,7 +19,7 @@ jobs:
           bash stuff
 
   call-workflow-in-another-repo:
-    uses: ciaran28/DatabricksAutomation/.github/workflows/reusable_template.yml@v1
+    uses: ciaran28/DatabricksAutomation/.github/workflows/reusable_templates/reusable_template.yml@v1
     with:
       username: test
     secrets: 
