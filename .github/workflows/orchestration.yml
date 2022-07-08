@@ -22,6 +22,16 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
 
+
+      - name: JSON to Variables
+        uses: antifree/json-to-variables@v1.0.1
+        with:
+          filename: 'test.json'
+          prefix: test
+      
+      - name: Show Output
+        run: echo " Test ${{ env.test_value}} "
+
       - name: Test Bash Script
         run: |
           echo "This is Bash Script Test"
