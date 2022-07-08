@@ -21,7 +21,7 @@ jobs:
         resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       # az ad sp create-for-rbac -n testappciaran --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
       - name: 'Az CLI login'
@@ -37,9 +37,8 @@ jobs:
           prefix: test
 
       - name: ${{ matrix.environments}}
-        uses: actions/checkout@v2
-        run: '.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh'
-        shell: bash
+        run: |
+          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh
         env:
           TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
           TemplateFilePath: ${{ env.test_TemplateFilePath}} 
