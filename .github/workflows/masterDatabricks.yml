@@ -1,0 +1,61 @@
+
+# 888b     d888                   888                           8888888b.  d8b                   888 d8b                   
+# 8888b   d8888                   888                           888   Y88b Y8P                   888 Y8P                   
+# 88888b.d88888                   888                           888    888                       888                       
+# 888Y88888P888  8888b.  .d8888b  888888  .d88b.  888d888       888   d88P 888 88888b.   .d88b.  888 888 88888b.   .d88b.  
+# 888 Y888P 888     "88b 88K      888    d8P  Y8b 888P"         8888888P"  888 888 "88b d8P  Y8b 888 888 888 "88b d8P  Y8b 
+# 888  Y8P  888 .d888888 "Y8888b. 888    88888888 888           888        888 888  888 88888888 888 888 888  888 88888888 
+# 888   "   888 888  888      X88 Y88b.  Y8b.     888           888        888 888 d88P Y8b.     888 888 888  888 Y8b.     
+# 888       888 "Y888888  88888P'  "Y888  "Y8888  888           888        888 88888P"   "Y8888  888 888 888  888  "Y8888  
+#                                                                              888                                         
+#                                                                              888 
+#
+# TO DO: Create RBAC from User to KV so they can view secrets  
+# # UPDATE THE CLUSTER NAME SEARCH ===> CREATE A CLUSTER LIST                                       
+###################################################################################################################################################################//
+##                                                        All Environments 
+###################################################################################################################################################################//
+name:                             Pipeline-$(Build.DefinitionName)-$(Date:yyyyMMdd)$(Rev:.r)
+trigger:                          none
+pool:
+  vmImage:                        'ubuntu-latest'
+variables:
+- template:                       ..\Variables\Variables-Global.yml
+- group:                          delete
+- name:                           MANAGEMENT_RESOURCE_ENDPOINT
+  value:                          'https://management.core.windows.net/'
+- name:                           AZURE_DATABRICKS_APP_ID
+  value:                          '2ff814a6-3304-4ab8-85cb-cd0e6f879c1d'
+
+stages:
+
+# 88888888888                888      
+#     888   .d88b.  .d8888b  888888 
+#     888  d8P  Y8b 88K      888    
+#     888  88888888 "Y8888b. 888    
+#     888  Y8b.          X88 Y88b.  
+#     888   "Y8888   88888P'  "Y888 
+- template:                       ..\Stages\Stage-Environment.yml
+  parameters:
+    ServiceConnection:            ${{ variables.serviceConnection }}
+    Environment:                  ${{ variables.TestEnvironment }}
+    Location:                     ${{ variables.Location }}
+    MANAGEMENT_RESOURCE_ENDPOINT: ${{ variables.MANAGEMENT_RESOURCE_ENDPOINT }}
+    AZURE_DATABRICKS_APP_ID:      ${{ variables.AZURE_DATABRICKS_APP_ID }}
+
+
+# 8888888b.                    
+# 888  "Y88b                             
+# 888    888  .d88b.  888  888 
+# 888    888 d8P  Y8b 888  888 
+# 888    888 88888888 Y88  88P 
+# 888  .d88P Y8b.      Y8bd8P  
+# 8888888P"   "Y8888    Y88P 
+- template:                       ..\Stages\Stage-Environment.yml
+  parameters:
+    ServiceConnection:            ${{ variables.serviceConnection }}
+    Environment:                  ${{ variables.DevEnvironment }}
+    Location:                     ${{ variables.Location }}
+    MANAGEMENT_RESOURCE_ENDPOINT: ${{ variables.MANAGEMENT_RESOURCE_ENDPOINT }}
+    AZURE_DATABRICKS_APP_ID:      ${{ variables.AZURE_DATABRICKS_APP_ID }}
+
