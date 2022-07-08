@@ -37,7 +37,7 @@ jobs:
           prefix: test
 
       - name: ${{ matrix.environments}}
-        run: ./.github/workflows/Utilities\Utils-workspace.sh
+        run: ./.github/workflows/Utilities/Utils-workspace.sh
         shell: bash
         env:
           TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
