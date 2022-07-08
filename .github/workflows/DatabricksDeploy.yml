@@ -37,7 +37,7 @@ jobs:
           prefix: test
 
       - name: ${{ matrix.environments}}
-        run: chmod +x "./.github/workflows/Utilities/Utils-workspace.sh"
+        run: chmod +x "./.github/scripts/Utils-workspace.sh"
         shell: bash
         #env:
          # TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
