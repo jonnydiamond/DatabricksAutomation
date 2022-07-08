@@ -28,7 +28,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZURE_CREDENTIALS}}
-          enable-AzPSSession: true 
+          #enable-AzPSSession: true 
 
       - name: JSON To Env
         uses: antifree/json-to-variables@v1.0.1
@@ -38,7 +38,7 @@ jobs:
 
       - name: ${{ matrix.environments}}
         run: |
-          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh
+          chmod +x ${GITHUB_WORKSPACE}/.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh
         env:
           TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
           TemplateFilePath: ${{ env.test_TemplateFilePath}} 
