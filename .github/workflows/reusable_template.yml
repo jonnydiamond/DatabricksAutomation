@@ -13,15 +13,6 @@ on:
         required: true
 
 jobs:
-  #example_job:
-  #  name: Pass input and secrets to my-action
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: ./.github/workflows/my-action
-   #     with:
-   #       username: ${{ inputs.username }}
-    #      token: ${{ secrets.token }}
-  
   create_environment_variables_from_file:
     name: Grab Parameters and Store as Env Variables
     runs-on: ubuntu-latest
@@ -35,10 +26,18 @@ jobs:
         uses: antifree/json-to-variables@v1.0.1
         with:
           filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
+          prefix: test
   
       - name: Show Output
         run: echo " Test ${{ env.test_value}} "
 
-      - name: Test Bash Script
-        run: |
-          echo "This is Bash Script Test"
+
+  #example_job:
+  #  name: Pass input and secrets to my-action
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: ./.github/workflows/my-action
+   #     with:
+   #       username: ${{ inputs.username }}
+    #      token: ${{ secrets.token }}
+  
