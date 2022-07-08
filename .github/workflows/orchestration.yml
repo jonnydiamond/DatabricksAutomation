@@ -40,6 +40,5 @@ jobs:
     uses: ciaran28/DatabricksAutomation/.github/workflows/reusable_template.yml@main
     with:
       username: test
-      environment: ${{ matrix.environments }}
     secrets: 
       token: token
