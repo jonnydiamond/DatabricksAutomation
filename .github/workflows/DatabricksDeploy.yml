@@ -22,6 +22,4 @@ jobs:
 
       - name: Show Output
         run: echo " Test ${{ env.test_value}} "
-        with: 
-          username: ${{ inputs.username }}
-          token: ${{ secrets.token }}
+
