@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         environments: [Development, Test, Production]
-        random: [what, is, going]
+        subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
     
     steps:
       - uses: actions/checkout@v2
