@@ -35,10 +35,10 @@
       }
     },
     "resourceGroupName" :{
-      "value": "databricks-dev-rg"
+      "value": "dbxtesting-dev-rg"
     },
     "workspaceName" : {
-      "value": "azdbxwsdev"
+      "value": "dbxtestciaranws"
     },
     "pricingTier": {
       "value": "premium"
