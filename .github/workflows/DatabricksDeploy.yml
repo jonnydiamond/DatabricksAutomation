@@ -38,7 +38,7 @@ jobs:
 
       - name: ${{ matrix.environments}}
         run: |
-          chmod +x ${GITHUB_WORKSPACE}/.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh
+          chmod +x "${GITHUB_WORKSPACE}/.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh"
         env:
           TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
           TemplateFilePath: ${{ env.test_TemplateFilePath}} 
