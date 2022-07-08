@@ -37,6 +37,7 @@ jobs:
           prefix: test
 
       - name: ${{ matrix.environments}}
+        uses: actions/checkout@v2
         run: '.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh'
         shell: bash
         env:
