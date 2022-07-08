@@ -41,5 +41,5 @@ jobs:
         shell: bash
         env:
           TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
-          TemplateFilePath: ${{ env.TemplateFilePath}} 
+          TemplateFilePath: ${{ env.test_TemplateFilePath}} 
 
