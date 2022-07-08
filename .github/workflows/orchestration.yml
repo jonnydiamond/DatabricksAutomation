@@ -4,7 +4,7 @@ name: Main
 on: ["push"]
 
 jobs:
-  build-and-test:
+  TestJobsName:
     strategy:
       matrix:
         environments: [Development, Test, Production]
@@ -14,13 +14,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
 
-      - name: do stuff
+      - name: Test Bash Script
         run: |
-          bash stuff
+          echo "This is Bash Script Test"
 
   call-workflow-in-another-repo:
     uses: ciaran28/DatabricksAutomation/.github/workflows/reusable_template.yml@main
     with:
       username: test
     secrets: 
-      token: 123
+      token: token
