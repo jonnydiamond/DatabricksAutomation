@@ -8,6 +8,9 @@ on:
       username:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
     secrets:
       token:
         required: true
@@ -30,7 +33,7 @@ jobs:
       - name: JSON to Variables
         uses: antifree/json-to-variables@v1.0.1
         with:
-          filename: '.github/workflows/test.json'
+          filename: '.github/workflows/parametersfolder/${{ inputs.environment }}.json'
   
       - name: Show Output
         run: echo " Test ${{ env.test_value}} "
