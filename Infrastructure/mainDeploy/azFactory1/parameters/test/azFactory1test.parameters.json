@@ -1,0 +1,40 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+          "value": "uksouth"
+      },
+      "environment": {
+          "value": "test"
+      },
+      "repoConfig": {
+        "value": {
+          "type": null,
+          "accountName": null,
+          "rootFolder": null,
+          "projectName": null,
+          "repositoryName": null,
+          "collaborationBranch": null
+        }
+      },
+      "containerNames": {
+          "value": [
+            "bronze",
+            "silver",
+            "gold"
+          ]
+      },
+      "storageConfig": {
+        "value": {
+          "kind": "StorageV2",
+          "sku_name": "Standard_LRS",
+          "allowBlobPublicAccess": true,
+          "isHnsEnabled": true,
+          "accessTier": "Hot"
+        }
+      }
+    }
+  }
+    
+  

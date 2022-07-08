@@ -4,15 +4,17 @@ name: Databricks Deploy
 on: ["push"]
 
 jobs:
-  create_env_variables:
-    name: CreateWorkspace
+  create_resource:
+    name: create_resource
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 5
+      # When order matters, then max-parallel should be set to 1
+      # When order does not matter, and processes are not dependent on eachother, then remove max-parallel and they will execute in parallel 
+      max-parallel: 1
       matrix:
         environments: [Development, Test, Production]
         #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
-        resourceConfig: [Workspace, PAToken, Cluster, Scope, RBAC]
+        resource_to_deploy: [Workspace, PAToken, Cluster, Scope, RBAC]
     
     steps:
       - uses: actions/checkout@v2
@@ -23,6 +25,10 @@ jobs:
           filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
           prefix: test
 
-      - name: Show Output
-        run: echo " Test ${{ env.test_value}} "
+      - name: ${{ matrix.environments}}
+        run: '.github/workflows/Utilities/Utils-${{ matrix.resource_to_deploy }}.sh'
+        shell: bash
+        env:
+          TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
+          TemplateFilePath: ${{ env.TemplateFilePath}} 
 
