@@ -13,8 +13,8 @@ on:
         required: true
 
 jobs:
-  create_environment_variables_from_file:
-    name: Grab Parameters and Store as Env Variables
+  create_env_variables:
+    name: Create Env Vars
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: JSON to Variables
+      - name: JSON To Env
         uses: antifree/json-to-variables@v1.0.1
         with:
           filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
