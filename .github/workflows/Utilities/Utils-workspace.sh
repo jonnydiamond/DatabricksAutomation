@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo 'templateFilePath : $TemplateParamFilePath'
 
 az deployment sub create \
