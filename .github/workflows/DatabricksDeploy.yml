@@ -14,7 +14,7 @@ jobs:
       matrix:
         environments: [Development, Test, Production]
         #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
-        resource_to_deploy: [Workspace, PAToken, Cluster, Scope, RBAC]
+        resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
     
     steps:
       - uses: actions/checkout@v2
