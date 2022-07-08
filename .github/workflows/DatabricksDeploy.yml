@@ -5,12 +5,13 @@ on: ["push"]
 
 jobs:
   create_env_variables:
-    name: DatabricksDeploy
+    name: CreateWorkspace
     runs-on: ubuntu-latest
     strategy:
       matrix:
         environments: [Development, Test, Production]
-        subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
+        #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
+        resourceConfig: [Workspace, PAToken, Cluster, Scope, RBAC]
     
     steps:
       - uses: actions/checkout@v2
