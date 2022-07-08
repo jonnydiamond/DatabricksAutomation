@@ -22,7 +22,8 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-        
+      
+      # az ad sp create-for-rbac -n testappciaran --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
