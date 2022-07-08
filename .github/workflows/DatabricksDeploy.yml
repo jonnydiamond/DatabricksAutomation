@@ -39,6 +39,7 @@ jobs:
       - name: ${{ matrix.environments}}
         run: sh ./.github/scripts/Utils-workspace.sh
 
+        # It would seem the environment variables are passed into the bash script implicitly
         #env:
          # TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
           #TemplateFilePath: ${{ env.test_TemplateFilePath}} 

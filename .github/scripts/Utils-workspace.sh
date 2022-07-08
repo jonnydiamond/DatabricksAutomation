@@ -1,12 +1,8 @@
-echo "What is going on???"
-
 echo "environment variable: $test_TemplateParamFilePath"
-
-echo $test_TemplateParamFilePath
-
-echo 'templateFilePath : $TemplateParamFilePath'
+echo "environment variable: $test_Location"
+echo "environment variable: $test_TemplateFilePath"
 
 az deployment sub create \
---location $Location \
---template-file $TemplateFilePath \
---parameters $TemplateParamFilePath
+--location $test_Location \
+--template-file $test_TemplateFilePath \
+--parameters $test_TemplateParamFilePath
