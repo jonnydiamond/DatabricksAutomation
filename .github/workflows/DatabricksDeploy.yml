@@ -39,7 +39,7 @@ jobs:
       - name: ${{ matrix.environments}}
         run: chmod +x ./.github/workflows/Utilities/Utils-workspace.sh
         shell: bash
-        env:
-          TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
-          TemplateFilePath: ${{ env.test_TemplateFilePath}} 
+        #env:
+         # TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
+          #TemplateFilePath: ${{ env.test_TemplateFilePath}} 
 

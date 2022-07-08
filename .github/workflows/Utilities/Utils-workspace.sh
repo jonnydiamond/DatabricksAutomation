@@ -1,4 +1,4 @@
-#!/bin/bash
+echo "What is going on???"
 
 echo 'templateFilePath : $TemplateParamFilePath'
 
