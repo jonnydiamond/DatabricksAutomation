@@ -1,16 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
-name: Reusable workflow example
-
-on:
-  workflow_call:
-    inputs:
-      username:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+name: Databricks Deploy
+on: ["push"]
 
 jobs:
   create_env_variables:
@@ -19,10 +10,6 @@ jobs:
     strategy:
       matrix:
         environments: [Development, Test, Production]
-    
-    
-
-
     
     steps:
       - uses: actions/checkout@v2

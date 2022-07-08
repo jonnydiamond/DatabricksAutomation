@@ -10,7 +10,6 @@
 name: Main
 on: ["push"]
 
-
 jobs:
   create_databricks_envs:
     uses: ciaran28/DatabricksAutomation/.github/workflows/reusable_template.yml@main
