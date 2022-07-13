@@ -3,24 +3,9 @@
 COUNTER="0"
 echo $COUNTER
 
-new="{param_RBAC_Assignments_$COUNTER_role}"
-echo $new
+echo jq '.resourceGroupName' ../Global_Parmeters/Development.json
 
 
-echo ""${param_RBAC_Assignments_""$COUNTER""_role}""
-
-echo "${"param_RBAC_Assignments_"$COUNTER"_role"}"
-
-echo "${param_RBAC_Assignments_"$COUNTER"_role}"
-
-echo ${"param_RBAC_Assignments_"$COUNTER"_role"}
-
-echo "param_RBAC_Assignments_"$COUNTER"_role"
-
-
-test=$("param_RBAC_Assignments_"$COUNTER"_role")
-echo $test
-which $test
 
 which "param_RBAC_Assignments_"$COUNTER"_role"
 
