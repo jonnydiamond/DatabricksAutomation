@@ -3,7 +3,8 @@
 COUNTER=0
 echo $COUNTER
 
-echo jq '.resourceGroupName' ../Global_Parmeters/Development.json
+test=$( jq '.resourceGroupName' ../Global_Parmeters/Development.json)
+echo test
 
 
 
