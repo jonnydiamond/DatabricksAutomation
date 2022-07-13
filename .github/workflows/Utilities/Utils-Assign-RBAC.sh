@@ -9,7 +9,7 @@ echo $test
 
 for RBAC_Assignment in $test
 do
-    echo $RBAC_Assignment
+    echo "$RBAC_Assignment"
 done 
 
 
