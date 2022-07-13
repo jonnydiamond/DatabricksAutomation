@@ -2,7 +2,7 @@
     "ResourceGroupName": "databricks-test-rg",
     "Location": "uksouth",
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Local_Parameters/Test/Local_Test.parameters.json",
-    "TemplateFilePath":"Infrastructure/mainDeploy/azDatabricks1/azDatabricks1.bicep",
+    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
     "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
     
     "array": [
