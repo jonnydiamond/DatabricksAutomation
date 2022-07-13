@@ -34,7 +34,7 @@ resource azResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 //                                                                       Module for Creating Azure Databricks Workspace
 // Outputs AzDatabricks Workspace ID, which is used when Assigning RBACs
 // ################################################################################################################################################################//
-module azDatabricks '../../../bicep/azResources/azDatabricks/azDatabricks.bicep' =  {
+module azDatabricks '../../azResources/azDatabricks/azDatabricks.bicep' =  {
   dependsOn: [
     azResourceGroup
     
@@ -54,7 +54,7 @@ module azDatabricks '../../../bicep/azResources/azDatabricks/azDatabricks.bicep'
 //                                                                  KEY VAULT - SELECT KV                                                                                //
 // ################################################################################################################################################################//
 
-module azKeyVault '../../../bicep/azResources/azKeyVault/azKeyVault.bicep' = {
+module azKeyVault '../../azResources/azKeyVault/azKeyVault.bicep' = {
   dependsOn: [
     azDatabricks
   ]
@@ -69,7 +69,7 @@ module azKeyVault '../../../bicep/azResources/azKeyVault/azKeyVault.bicep' = {
 //                                                                       Module for Create Azure Data Lake Storage
 // RBAC is assigned -> azDatabricks given access to Storage 
 // ################################################################################################################################################################//
-module azDataLake '../../../bicep/azResources/azDataLake/azDataLake.bicep' =  {
+module azDataLake '../../azResources/azDataLake/azDataLake.bicep' =  {
   dependsOn: [
     azResourceGroup
     azDatabricks

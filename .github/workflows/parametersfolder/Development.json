@@ -1,8 +1,8 @@
 {
     "ResourceGroupName": "databricks-dev-rg",
     "Location": "uksouth",
-    "TemplateParamFilePath":".github/Infrastructure/mainDeploy/azDatabricks1/parameters/dev/azDatabricks1dev.parameters.json",
-    "TemplateFilePath":".github/Infrastructure/mainDeploy/azDatabricks1/azDatabricks1.bicep",
+    "TemplateParamFilePath":"Infrastructure/mainDeploy/azDatabricks1/parameters/dev/azDatabricks1dev.parameters.json",
+    "TemplateFilePath":"Infrastructure/mainDeploy/azDatabricks1/azDatabricks1.bicep",
     "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
     
     "array": [
