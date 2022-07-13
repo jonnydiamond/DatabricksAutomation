@@ -7,8 +7,8 @@ echo $i
 test=$( jq --tab ".RBAC_Assignments[].role" .github/workflows/Global_Parameters/Development.json)
 echo $test
 
-IFS=$'\n'
-
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
 for RBAC_Assignment in $test
 do
     echo $RBAC_Assignment
