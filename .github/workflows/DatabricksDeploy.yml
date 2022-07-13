@@ -16,7 +16,7 @@ jobs:
       # When order does not matter, and processes are not dependent on eachother, then remove max-parallel and they will execute in parallel 
       #max-parallel: 1
       matrix:
-        environments: [Development, Test, Production]
+        environments: [Development, Test]
         #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
         #resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
     
