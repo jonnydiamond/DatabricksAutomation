@@ -3,8 +3,10 @@ echo $COUNTER
 
 
 echo "param_RBAC_Assignments_"$COUNTER"_role"
+test=$("param_RBAC_Assignments_"$COUNTER"_role")
+echo $test
 
-echo "${"param_RBAC_Assignments_"$COUNTER"_role"}"
+echo "${param_RBAC_Assignments_"$COUNTER"_role}"
 
 echo "environment variable: $param_resourceGroupName"
 
