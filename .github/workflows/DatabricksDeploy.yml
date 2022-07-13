@@ -2,48 +2,34 @@
 
 name: Databricks Deploy
 on: ["push"]
-
 permissions:
       id-token: write
       contents: read
 
 jobs:
-  create_resource:
-    name: Full_Deployment
+  DBX_CICD_Deployment:
+    name: DBX_CICD_Deployment
     runs-on: ubuntu-latest
     strategy:
-      # When order matters, then max-parallel should be set to 1
-      # When order does not matter, and processes are not dependent on eachother, then remove max-parallel and they will execute in parallel 
-      #max-parallel: 1
       matrix:
-        environments: [Development, Test]
-        #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
-        #resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
-    
+        environments: [Development, Test]    
     steps:
       - uses: actions/checkout@v3  
       # az ad sp create-for-rbac -n testappciaran --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
+      
       - name: 'Az CLI login ${{ matrix.environments }}'
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZURE_CREDENTIALS}}
-          #enable-AzPSSession: true 
 
       - name: JSON To Env
         uses: antifree/json-to-variables@v1.0.1
         with:
-          filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
+          filename: '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix: param
-      - run: |
-          az deployment sub create \
-          --location $param_Location \
-          --template-file $param_TemplateFilePath \
-          --parameters $param_TemplateParamFilePath    
-      
-      
-      #- name: Deploy Workspace
-      #  run: sh ./.github/scripts/Utils-workspace.sh
-        # It would seem the environment variables are passed into the bash script implicitly 
+            
+      - name: Deploy Workspace
+        run: sh ./.github/Utilities/Utils-workspace.sh
 
 
 
