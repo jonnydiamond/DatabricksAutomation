@@ -7,8 +7,8 @@ echo $COUNTER
 
 
 
-test=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
-developRepoIDStaging=$( jq -r '.RBAC_Assignments[].role' <<< "$test")
+#test=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+developRepoIDStaging=$( jq -r '.RBAC_Assignments[].role' <<< .github/workflows/Global_Parameters/Development.json )
 
 echo $test
 
