@@ -69,7 +69,7 @@ module azKeyVault '../Az_Resources/Az_KeyVault/Az_KeyVault.bicep' = {
 //                                                                       Module for Create Azure Data Lake Storage
 // RBAC is assigned -> azDatabricks given access to Storage 
 // ################################################################################################################################################################//
-module azDataLake '../Az_Resources/Az_DataLake/azDataLake.bicep' =  {
+module azDataLake '../Az_Resources/Az_DataLake/Az_DataLake.bicep' =  {
   dependsOn: [
     azResourceGroup
     azDatabricks
