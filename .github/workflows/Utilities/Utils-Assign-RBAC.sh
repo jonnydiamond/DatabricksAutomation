@@ -3,7 +3,7 @@
 COUNTER="0"
 echo $COUNTER
 
-new="{param_RBAC_Assignments_"$COUNTER"_role}"
+new="{param_RBAC_Assignments_$COUNTER_role}"
 echo $new
 
 
