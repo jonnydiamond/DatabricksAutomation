@@ -9,7 +9,7 @@ echo $test
 
 
 OIFS="$IFS"
-IFS=$'\n'
+IFS=$'\z'
 for RBAC_Assignment in $test
 do
     echo "$RBAC_Assignment"
