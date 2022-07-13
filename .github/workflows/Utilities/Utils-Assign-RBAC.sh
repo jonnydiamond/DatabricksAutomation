@@ -2,7 +2,7 @@ COUNTER=0
 echo $COUNTER
 
 
-echo $("param_RBAC_Assignments_"$COUNTER"_role")
+echo ${"param_RBAC_Assignments_"$COUNTER"_role"}
 
 echo "param_RBAC_Assignments_"$COUNTER"_role"
 
