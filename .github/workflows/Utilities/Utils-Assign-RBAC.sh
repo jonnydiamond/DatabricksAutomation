@@ -4,7 +4,7 @@ i=1
 echo $i
 
 
-test=$( jq '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
+test=$( jq ".RBAC_Assignments[].role" .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 
