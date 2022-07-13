@@ -4,7 +4,7 @@ COUNTER=0
 echo $COUNTER
 
 test=$( jq '.resourceGroupName' .github/workflows/Global_Parameters/Development.json)
-echo test
+echo $test
 
 
 #which "param_RBAC_Assignments_"$COUNTER"_role"
