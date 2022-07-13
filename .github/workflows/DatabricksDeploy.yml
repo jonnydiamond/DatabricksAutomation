@@ -34,9 +34,15 @@ jobs:
         with:
           filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
           prefix: param
-
-      - name: Deploy Workspace
-        run: sh ./.github/scripts/Utils-workspace.sh
+      - run: |
+          az deployment sub create \
+          --location $param_Location \
+          --template-file $param_TemplateFilePath \
+          --parameters $param_TemplateParamFilePath    
+      
+      
+      #- name: Deploy Workspace
+      #  run: sh ./.github/scripts/Utils-workspace.sh
         # It would seem the environment variables are passed into the bash script implicitly 
 
 
