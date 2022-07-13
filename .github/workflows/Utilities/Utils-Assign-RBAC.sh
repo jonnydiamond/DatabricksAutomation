@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-COUNTER="0"
+COUNTER=0
 echo $COUNTER
 
 echo jq '.resourceGroupName' ../Global_Parmeters/Development.json
 
 
 
-which "param_RBAC_Assignments_"$COUNTER"_role"
+#which "param_RBAC_Assignments_"$COUNTER"_role"
 
-echo "${param_RBAC_Assignments_"$COUNTER"_role}"
+#echo "${param_RBAC_Assignments_"$COUNTER"_role}"
 
 echo "environment variable: $param_resourceGroupName"
 
