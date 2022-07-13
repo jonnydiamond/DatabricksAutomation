@@ -3,7 +3,7 @@
 COUNTER=0
 echo $COUNTER
 
-test=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+test=$( jq '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 
