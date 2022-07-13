@@ -2,7 +2,7 @@ COUNTER=0
 echo $COUNTER
 
 
-echo 'param_RBAC_Assignments_$COUNTER_role'
+echo "param_RBAC_Assignments_$COUNTER_role"
 echo "environment variable: $param_resourceGroupName"
 
 #while [ -z "${param_RBAC_Assignments_$COUNTER_role}"]
