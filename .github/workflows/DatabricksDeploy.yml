@@ -14,15 +14,14 @@ jobs:
     strategy:
       # When order matters, then max-parallel should be set to 1
       # When order does not matter, and processes are not dependent on eachother, then remove max-parallel and they will execute in parallel 
-      max-parallel: 1
+      #max-parallel: 1
       matrix:
         environments: [Development, Test, Production]
         #subscription: [Subscription1, Subscription2, Subscription3, Subscription4]
-        resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
+        #resource_to_deploy: [workspace, PAToken, Cluster, Scope, RBAC] 
     
     steps:
-      - uses: actions/checkout@v3
-      
+      - uses: actions/checkout@v3  
       # az ad sp create-for-rbac -n testappciaran --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
       - name: 'Az CLI login'
         uses: azure/login@v1
@@ -34,13 +33,11 @@ jobs:
         uses: antifree/json-to-variables@v1.0.1
         with:
           filename: '.github/workflows/parametersfolder/${{ matrix.environments }}.json'
-          prefix: test
+          prefix: param
 
-      - name: ${{ matrix.environments}}
+      - name: Deploy Workspace
         run: sh ./.github/scripts/Utils-workspace.sh
+        # It would seem the environment variables are passed into the bash script implicitly 
 
-        # It would seem the environment variables are passed into the bash script implicitly
-        #env:
-         # TemplateParamFilePath: ${{ env.test_TemplateParamFilePath}} 
-          #TemplateFilePath: ${{ env.test_TemplateFilePath}} 
+
 
