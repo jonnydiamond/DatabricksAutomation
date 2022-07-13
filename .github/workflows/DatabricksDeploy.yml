@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   create_resource:
-    name: create_resource
+    name: Full_Deployment
     runs-on: ubuntu-latest
     strategy:
       # When order matters, then max-parallel should be set to 1
