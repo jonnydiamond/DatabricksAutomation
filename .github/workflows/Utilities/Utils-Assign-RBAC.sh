@@ -2,6 +2,8 @@ COUNTER=0
 echo $COUNTER
 
 
+env
+
 echo "param_RBAC_Assignments_"$COUNTER"_role"
 
 
