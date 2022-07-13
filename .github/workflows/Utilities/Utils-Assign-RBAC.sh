@@ -3,9 +3,8 @@
 COUNTER=0
 echo $COUNTER
 
-test=$( jq '.resourceGroupName' ../Global_Parmeters/Development.json)
+test=$( jq '.resourceGroupName' ../Global_Parameters/Development.json)
 echo test
-
 
 
 #which "param_RBAC_Assignments_"$COUNTER"_role"
