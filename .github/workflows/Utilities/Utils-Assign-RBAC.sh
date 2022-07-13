@@ -3,7 +3,8 @@
 COUNTER=0
 echo $COUNTER
 
-test=$( jq --slurp '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
+
+test=$( jq '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 
