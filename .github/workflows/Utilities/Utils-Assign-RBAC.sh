@@ -4,12 +4,10 @@ i=1
 echo $i
 
 
-test=$( jq -r '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+test=$( jq '.RBAC_Assignments[]' <<< .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 
-OIFS="$IFS"
-IFS=$'\z'
 for RBAC_Assignment in $test
 do
     echo "$RBAC_Assignment"
