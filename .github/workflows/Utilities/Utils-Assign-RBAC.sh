@@ -4,14 +4,14 @@ i=1
 echo $i
 
 
-test=$( jq --tab ".RBAC_Assignments[].role" .github/workflows/Global_Parameters/Development.json)
+test=$( jq --tab '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 for RBAC_Assignment in $test
 do
-    echo $RBAC_Assignment
+    echo "$RBAC_Assignment"
     echo $i
     ((i=i+1))
 done 
