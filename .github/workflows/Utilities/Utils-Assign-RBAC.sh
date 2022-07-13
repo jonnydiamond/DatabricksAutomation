@@ -1,22 +1,16 @@
 #!/usr/bin/env bash
 
-sudo apt-get install jq
-
 COUNTER=0
 echo $COUNTER
 
-
-
-test=$( jq -R '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
-#developRepoIDStaging=$( jq -r '.RBAC_Assignments[].role' <<< .github/workflows/Global_Parameters/Development.json )
-
+test=$( jq '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
 echo $test
 
 
-#for RBAC_Assignment in $test
-#do
-#    echo "$RBAC_Assignment"
-#done 
+for RBAC_Assignment in $test
+do
+    echo $RBAC_Assignment
+done 
 
 
 
