@@ -1,13 +1,35 @@
 {
+    "resourceGroupName": "databricks-dev-rg", // Make sure this align to resource parameter
     "Location": "uksouth", 
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Local_Parameters/Development/Local_Dev.parameters.json",
     "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
     "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
     
-    "array": [
+    "RBAC_Assignments": [
         {
-            "value": "develop"
+            "User1": {
+                "role": "Key Vault Administrator",
+                "roleBeneficiaryObjID": "3fb6e2d3-7734-43fc-be9e-af8671acf605"
+            }
         },
-        "develop 1"
+        {
+            "User 2": { 
+                "role": "Key Vault Administrator",
+                "roleBeneficiaryObjID": "0e3c30b0-dd4e-4937-96ca-3fe88bd8f259"
+            }
+        },
+        {
+            "User 3": { 
+                "role": "Key Vault Administrator",
+                "roleBeneficiaryObjID": "fe597bb2-377c-44f1-8515-82c8a1a62e3d"
+            }
+        },
+        {
+            "User 4": { 
+                "role": "Owner",
+                "roleBeneficiaryObjID": "0e3c30b0-dd4e-4937-96ca-3fe88bd8f259"
+            }
+        }
+
     ]
 }
