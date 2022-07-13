@@ -1,13 +1,25 @@
-echo "environment variable: $param_RBAC_Assignments"
+echo "environment variable: $param_RBAC_Assignments_$COUNTER_role"
 echo "environment variable: $param_resourceGroupName"
 
-for RBAC_Assignment in $param_RBAC_Assignments
-do
-    echo $RBAC_Assignment
-    echo $RBAC_Assignment.User1
-    echo $RBAC_Assignment.User1.role
-    echo $RBAC_Assignment.User1.roleBeneficiaryObjID
+COUNTER=0
+
+while [ -z "${param_RBAC_Assignments_$COUNTER_role}"]
+do  
+    echo "$COUNTER"
+    COUNTER=$[COUNTER + 1]
+    echo $COUNTER
 done 
+
+
+
+
+#for RBAC_Assignment in $param_RBAC_Assignments
+#do
+#    echo $RBAC_Assignment
+#    echo $RBAC_Assignment.User1
+#    echo $RBAC_Assignment.User1.role
+#    echo $RBAC_Assignment.User1.roleBeneficiaryObjID
+#done 
 
 
 
