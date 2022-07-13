@@ -9,8 +9,7 @@ echo $test
 
 for RBAC_Assignment in $test
 do
-    echo $RBAC_Assignment.role
-    echo $RBAC_Assignment.roleBeneficiaryObjID
+    echo $RBAC_Assignment
 done 
 
 
