@@ -3,6 +3,10 @@
 COUNTER="0"
 echo $COUNTER
 
+new="{param_RBAC_Assignments_"$COUNTER"_role}"
+echo $new
+
+
 echo ""${param_RBAC_Assignments_""$COUNTER""_role}""
 
 echo "${"param_RBAC_Assignments_"$COUNTER"_role"}"
