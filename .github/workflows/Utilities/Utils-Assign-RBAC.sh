@@ -5,7 +5,11 @@ sudo apt-get install jq
 COUNTER=0
 echo $COUNTER
 
-test=$( jq '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
+
+
+test=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+developRepoIDStaging=$( jq -r '.RBAC_Assignments[].role' <<< "$test")
+
 echo $test
 
 
