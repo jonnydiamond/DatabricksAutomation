@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sudo apt-get install jq
+
 COUNTER=0
 echo $COUNTER
 
