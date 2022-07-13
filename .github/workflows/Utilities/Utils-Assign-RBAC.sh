@@ -3,7 +3,7 @@
 COUNTER=0
 echo $COUNTER
 
-test=$( jq '.resourceGroupName' .github\workflows\Global_Parameters\Development.json)
+test=$( jq '.resourceGroupName' .github/workflows/Global_Parameters/Development.json)
 echo test
 
 
