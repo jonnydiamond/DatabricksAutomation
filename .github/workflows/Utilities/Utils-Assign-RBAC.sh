@@ -3,8 +3,13 @@ echo $COUNTER
 
 
 echo "param_RBAC_Assignments_"$COUNTER"_role"
+
+
 test=$("param_RBAC_Assignments_"$COUNTER"_role")
 echo $test
+which $test
+
+which "param_RBAC_Assignments_"$COUNTER"_role"
 
 echo "${param_RBAC_Assignments_"$COUNTER"_role}"
 
