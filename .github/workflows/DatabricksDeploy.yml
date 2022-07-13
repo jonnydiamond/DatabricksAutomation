@@ -32,5 +32,6 @@ jobs:
         run: sh ./.github/workflows/Utilities/Utils-workspace.sh
 
       - name: Assign RBAC Permissions 
+        run: sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
 
 

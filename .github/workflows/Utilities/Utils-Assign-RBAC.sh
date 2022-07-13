@@ -7,6 +7,8 @@ do
     echo $RBAC_Assignment.User1
     echo $RBAC_Assignment.User1.role
     echo $RBAC_Assignment.User1.roleBeneficiaryObjID
+done 
+
 
 
     #az role assignment create \
