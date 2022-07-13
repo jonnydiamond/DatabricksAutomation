@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-COUNTER=0
-echo $COUNTER
+i=1
+echo $i
 
 
 test=$( jq '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
@@ -11,6 +11,8 @@ echo $test
 for RBAC_Assignment in $test
 do
     echo $RBAC_Assignment
+    echo $i
+    ((i=i+1))
 done 
 
 
