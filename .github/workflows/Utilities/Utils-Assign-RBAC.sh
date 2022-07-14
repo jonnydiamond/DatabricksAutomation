@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-i=1
-echo $i
 
-
-test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
+test=( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
 echo $test
+echo "${#test[@]}"
 
-
-for RBAC_Assignment in $test
-do
-    echo "$RBAC_Assignment"
-    echo $i
-    ((i=i+1))
-done 
+#for RBAC_Assignment in $test
+#do
+#    test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
+#    echo "$RBAC_Assignment"
+#    echo $i
+#    ((i=i+1))
+#done 
 
 
 
