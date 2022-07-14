@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-test=( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
+test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
 echo $test
 echo "${#test[@]}"
 
