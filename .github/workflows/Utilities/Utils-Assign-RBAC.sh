@@ -26,6 +26,7 @@ for row in $(echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
     echo $(_jq '.role')
+    echo $(_jq '.roleBeneficiaryObjID')
 done
 
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
