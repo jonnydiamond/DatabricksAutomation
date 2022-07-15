@@ -7,8 +7,10 @@ echo "${#test[@]}"
 
 
 roles=$( jq --compact-output '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
+array=($roles)
 echo $roles
-echo "${#roles[@]}"
+echo $array
+echo "${#array[@]}"
 
 
 #for RBAC_Assignment in $test
