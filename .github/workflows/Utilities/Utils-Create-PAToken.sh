@@ -31,11 +31,11 @@ echo "Management Access Token: $mgmt_access_token"
 
 secretName="dbkstoken"
 # Check if secret exists
-secret_exists=$(az keyvault secret list --vault-name $keyVaultName --query "contains([].id, 'https://$keyVaultName.vault.azure.net/secrets/$secretName')")
+secret_exists=$(az keyvault secret list --vault-name $azKeyVaultName --query "contains([].id, 'https://$keyVaultName.vault.azure.net/secrets/$secretName')")
 
 if [ $secret_exists == true ]; then
     echo "Secret '$secretName' exists! fetching..."
-    secret_val=$(az keyvault secret show --name $secretName --vault-name $keyVaultName --query "value")
+    secret_val=$(az keyvault secret show --name $secretName --vault-name $azKeyVaultName --query "value")
 else
     echo "Secret '$secretName' do not exist! creating PAT Token & Store In Key Vault..."
     
