@@ -37,6 +37,7 @@ echo "secret exists: $secret_exists"
 if [ $secret_exists == true ]; then
     echo "Secret '$secretName' exists! fetching..."
     secret_val=$(az keyvault secret show --name $secretName --vault-name $azKeyVaultName --query "value")
+    echo "Secret Value: $secret_val"
 else
     echo "Secret '$secretName' do not exist! creating PAT Token & Store In Key Vault..."
     
