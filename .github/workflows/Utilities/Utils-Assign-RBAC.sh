@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
 
 
-test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
-echo $test
-echo "${#test[@]}"
+#test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
+#echo $test
+#echo "${#test[@]}"
 
 
 roles=$( jq --compact-output '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
+echo "roles json scrape"
+echo $roles
 
+echo "json - cat"
 json=$(
     cat <<- EOF
     $roles
 EOF
 )
 
-echo $json
+read -a array <<< $roles
+
+echo "read - array"
+echo $roles
 
 
 #echo $roles
