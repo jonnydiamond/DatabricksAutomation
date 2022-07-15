@@ -6,9 +6,9 @@
 #echo "${#test[@]}"
 
 
-readarray -t arr < < $( jq -r '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+roles=$( jq -c '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
-echo $readarray
+echo $roles
 
 #echo "json - cat"
 #json=$(
