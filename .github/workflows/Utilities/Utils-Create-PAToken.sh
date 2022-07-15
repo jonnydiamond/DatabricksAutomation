@@ -1,21 +1,25 @@
 az config set extension.use_dynamic_install=yes_without_prompt
 
 dbx_workspace_name=$(az databricks workspace list \
-                    -g $resourceGroupName \
+                    -g $param_ResourceGroupName \
                     --query "[].name" \
                     -o tsv)
+echo $dbx_workspace_name
 
 azKeyVaultName=$(az keyvault list \
-                -g $resourceGroupName \
+                -g $param_ResourceGroupName \
                 --query "[].name" \
                 -o tsv)
 
+echo $azKeyVaultName
+
 workspace_id=$(az resource show \
                 --resource-type Microsoft.Databricks/workspaces \
-                -g $resourceGroupName \
+                -g $param_ResourceGroupName \
                 -n "$dbx_workspace_name" \
                 --query id \
                 -o tsv)
+$workspace_id
 
 
 # token response for the azure databricks app  
@@ -35,7 +39,7 @@ echo "Management Access Token: $mgmt_access_token"
 
 
 # get Command Line Args
-azKeyVaultName=$(az keyvault list -g $resourceGroupName  --query "[].name" -o tsv)
+azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName  --query "[].name" -o tsv)
 keyVaultName=$azKeyVaultName
 secretName="dbkstoken"
 echo ' secretName secretName: $secretName'

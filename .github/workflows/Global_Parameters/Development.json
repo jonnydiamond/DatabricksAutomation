@@ -1,5 +1,5 @@
 {
-    "resourceGroupName": "databricks-dev-rg",
+    "ResourceGroupName": "databricks-dev-rg",
     "Location": "uksouth", 
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Local_Parameters/Development/Local_Dev.parameters.json",
     "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
