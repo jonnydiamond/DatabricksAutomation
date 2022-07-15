@@ -8,7 +8,7 @@
 sample='[{"name":"foo"},{"name":"bar"}]'
 echo "${sample}" | jq 
 
-roles=$( ".github/workflows/Global_Parameters/Development.json" | jq )
+roles=$(jq .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
 echo $roles
 
