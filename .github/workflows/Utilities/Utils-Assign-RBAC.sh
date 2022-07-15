@@ -17,10 +17,10 @@ EOF
 echo $json
 
 
-echo $roles
-array=($roles)
-echo $array
-echo "${#array[@]}"
+#echo $roles
+#array=($roles)
+#echo $array
+#echo "${#array[@]}"
 
 
 #for RBAC_Assignment in $test
