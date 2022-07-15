@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environments: [Development]    
+        environments: [Development, Test]    
     steps:
       - uses: actions/checkout@v3  
       #  az ad sp create-for-rbac -n testappciaran --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
@@ -28,8 +28,8 @@ jobs:
           filename: '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix: param
             
-      #- name: Deploy DBX CICD Azure Resources
-      #  run: sh ./.github/workflows/Utilities/Utils-workspace.sh
+      - name: Deploy DBX CICD Azure Resources
+        run: sh ./.github/workflows/Utilities/Utils-workspace.sh
 
       - name: Assign RBAC Permissions 
         run: sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
