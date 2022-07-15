@@ -24,15 +24,22 @@ azKeyVaultName=$(az keyvault list \
 
 echo $azKeyVaultName
 
-workspace_id=$(az databricks workspace list -g $param_ResourceGroupName ) | jq -r '.[].id'
+workspace_config=$(az databricks workspace list -g $param_ResourceGroupName )
+workspace_id=$( $dbx_workspace_test | jq -r '.[].id' )
 echo $workspace_id
-#echo "${dbx_workspace_test}" | jq -r '.[].id'
+echo "${dbx_workspace_test}" | jq -r '.[].id'
 
 
+dbx_workspace_test=$(az databricks workspace list \
+                    -g $param_ResourceGroupName \
+                    --query "[].id" \ 
+                    -o tsv)
+
+echo $dbx_workspace_test
 
 dbx_workspace_test2=$(az databricks workspace list \
                     -g $param_ResourceGroupName \
-                    --query "[].id" \
+                    --query "[].workspaceUrl" \
                     -o tsv)
 echo $dbx_workspace_test2
 
