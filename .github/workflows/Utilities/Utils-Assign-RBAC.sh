@@ -2,6 +2,8 @@
 
 # Ensure That Your DevOps/PipelineAgent Has Owner RBAC Assigned. Do This Manually In Azure Portal 
 
+echo $environment
+
 echo "Ingest JSON File"
 json=$( jq '.' .github/workflows/Global_Parameters/Development.json)
 echo "${json}" | jq
