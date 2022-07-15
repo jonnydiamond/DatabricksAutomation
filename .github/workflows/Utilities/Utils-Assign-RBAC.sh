@@ -6,7 +6,7 @@
 #echo "${#test[@]}"
 
 
-roles=$( jq -c '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
+roles=$( jq -a '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
 echo $roles
 
@@ -18,10 +18,10 @@ echo $roles
 #)
 
 
-read -a array <<< $roles
+#read -a array <<< $roles
 
-echo "read - array"
-echo $roles
+#echo "read - array"
+#echo $roles
 
 
 #echo $roles
