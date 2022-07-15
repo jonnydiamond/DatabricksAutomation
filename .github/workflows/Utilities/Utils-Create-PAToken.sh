@@ -31,7 +31,7 @@ echo "Management Access Token: $mgmt_access_token"
 
 secretName="dbkstoken"
 # Check if secret exists
-secret_exists=$(az keyvault secret list --vault-name $azKeyVaultName --query "contains([].id, 'https://$keyVaultName.vault.azure.net/secrets/$secretName')")
+secret_exists=$(az keyvault secret list --vault-name $azKeyVaultName --query "contains([].id, 'https://$azKeyVaultName.vault.azure.net/secrets/$secretName')")
 echo "secret exists: $secret_exists"
 
 if [ $secret_exists == true ]; then
