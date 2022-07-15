@@ -1,18 +1,21 @@
-set -o errexit
-set -o nounset
-set -o pipefail
 
-# Login using service principle
-echo "Logging in using Azure service priciple"
+dbx_workspace_name=$(az databricks workspace list \
+                    -g $resourceGroupName \
+                    --query "[].name" \
+                    -o tsv)
 
-az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+azKeyVaultName=$(az keyvault list \
+                -g $resourceGroupName \
+                --query "[].name" \
+                -o tsv)
 
-# az account set -s  $ARM_SUBSCRIPTION_ID
-echo "ClientSecret:                             $ARM_CLIENT_SECRET"
-echo "ClientID:                                 $ARM_CLIENT_ID"
-echo "TenantID:                                 $ARM_TENANT_ID"
-echo "Databricks WS RG:                         $RESOURCE_GROUP"
-echo "Databricks WS RG:                         $azKeyVaultName"
+workspace_id=$(az resource show \
+                --resource-type Microsoft.Databricks/workspaces \
+                -g $resourceGroupName \
+                -n "$dbx_workspace_name" \
+                --query id \
+                -o tsv)
+
 
 # token response for the azure databricks app  
 token_response=$(az account get-access-token --resource $AZURE_DATABRICKS_APP_ID)
@@ -31,6 +34,7 @@ echo "Management Access Token: $mgmt_access_token"
 
 
 # get Command Line Args
+azKeyVaultName=$(az keyvault list -g $resourceGroupName  --query "[].name" -o tsv)
 keyVaultName=$azKeyVaultName
 secretName="dbkstoken"
 echo ' secretName secretName: $secretName'
@@ -50,9 +54,9 @@ else
     # Must Assign SP Minimum Contributor Permissions. Must also give the SP Key Vault Administrator Privileges (Need to Set these in YAML)
     # Also note the PAT Token Will Expire, need to be able to recycle them
     
-    #pat_token_response=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -d '{"lifetime_seconds": 3000,"comment": "this is an example token"}' https://$workspaceUrl/api/2.0/token/create )
+    #pat_token_response=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -d '{"lifetime_seconds": 3000,"comment": "this is an example token"}' https://$workspaceUrl/api/2.0/token/create )
     
-    pat_token_response=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -d \
+    pat_token_response=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -d \
     '{
         "lifetime_seconds": "300000", 
         "comment": "Token For Databricks"
@@ -71,5 +75,3 @@ else
 fi
 
 
-echo "##vso[task.setvariable variable=workspaceUrl]$workspaceUrl"
-echo "##vso[task.setvariable variable=wsId]$wsId"

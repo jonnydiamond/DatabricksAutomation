@@ -31,9 +31,16 @@ jobs:
       #- name: Deploy DBX CICD Azure Resources
       #  run: sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
 
-      - name: Assign RBAC Permissions 
-        run: sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+      #- name: Assign RBAC Permissions 
+      #  run: sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+      #  env:
+      #    environment: ${{ matrix.environments }}
+      
+      - name: Create And Store PAT Token In Key Vault
+        run: sh ./.github/workflows/Utilities/Utils-Create-PAToken.sh
         env:
-          environment: ${{ matrix.environments }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET}}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 
