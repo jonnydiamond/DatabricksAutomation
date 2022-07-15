@@ -7,6 +7,16 @@ echo "${#test[@]}"
 
 
 roles=$( jq --compact-output '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
+
+json=$(
+    cat <<- EOF
+    $roles
+EOF
+)
+
+echo $json
+
+
 echo $roles
 array=($roles)
 echo $array
