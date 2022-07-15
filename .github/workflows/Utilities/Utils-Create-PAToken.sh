@@ -26,9 +26,8 @@ echo $azKeyVaultName
 
 dbx_workspace_test=$(az databricks workspace list \
                     -g $param_ResourceGroupName )
-echo "${dbx_workspace_test}" | jq
+echo "${dbx_workspace_test}" | jq -r '.[].id'
 
-echo $dbx_workspace_test
 
 dbx_workspace_test=$(az databricks workspace list \
                     -g $param_ResourceGroupName \
