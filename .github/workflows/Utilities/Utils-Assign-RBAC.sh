@@ -12,6 +12,8 @@ roles=$( jq '.' .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
 echo $roles
 
+echo "${roles}" | jq 
+
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 #echo "roles json scrape"
 #echo $roles
