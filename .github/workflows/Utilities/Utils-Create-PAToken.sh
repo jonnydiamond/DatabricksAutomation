@@ -26,9 +26,17 @@ echo $azKeyVaultName
 
 
 dbx_workspace_test=$(az databricks workspace list \
-                    -g $param_ResourceGroupName )
+                    -g $param_ResourceGroupName \
+                    --query "[].id" \ 
+                    -o tsv)
 
 echo $dbx_workspace_test
+
+dbx_workspace_test2=$(az databricks workspace list \
+                    -g $param_ResourceGroupName \
+                    --query "[].workspaceUrl" \
+                    -o tsv)
+echo $dbx_workspace_test2
 
 workspace_id=$(az resource show --resource-type Microsoft.Databricks/workspaces -g $param_ResourceGroupName -n $dbx_workspace_name --query id -o tsv)
 $workspace_id
