@@ -7,14 +7,13 @@
 
 sample='[{"name":"foo"},{"name":"bar"}]'
 echo "${sample}" | jq 
-echo "${sample}" | jq -r '.[]'
+echo "${sample}" | jq -c '.[]'
 
-#roles=$( jq '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
-#echo "roles json scrape"
+roles=$( jq '.' .github/workflows/Global_Parameters/Development.json)
+echo "roles json scrape"
 #echo $roles
-
-echo "${roles}" | jq 
-echo "${roles}" | jq -r '.RBAC_Assignments[].role'
+#echo "${roles}" | jq 
+echo "${roles}" | jq -c '.RBAC_Assignments[]'
 
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 #echo "roles json scrape"
