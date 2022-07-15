@@ -10,9 +10,7 @@ echo "${sample}" | jq
 echo "${sample}" | jq -c '.[]'
 
 roles=$( jq '.' .github/workflows/Global_Parameters/Development.json)
-echo "roles json scrape"
-#echo $roles
-#echo "${roles}" | jq 
+echo "${roles}" | jq 
 echo "${roles}" | jq -c '.RBAC_Assignments[]'
 
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
