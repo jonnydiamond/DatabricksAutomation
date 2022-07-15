@@ -6,8 +6,8 @@ echo $test
 echo "${#test[@]}"
 
 
-roles=$( jq --compact-output '[.RBAC_Assignments[].role]' .github/workflows/Global_Parameters/Development.json)
-array=($roles)
+roles=$( jq --compact-output '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
+array=(roles)
 echo $roles
 echo $array
 echo "${#array[@]}"
