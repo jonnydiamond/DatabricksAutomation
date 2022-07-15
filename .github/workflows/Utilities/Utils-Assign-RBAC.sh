@@ -30,11 +30,11 @@ for row in $(echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'); do
     echo $(_jq '.scope')
     echo "Next Iteration"
 
-    #az role assignment create \
-    #--role "$(_jq '.role')" \
-    #--assignee-object-id $(_jq '.roleBeneficiaryObjID') \
-    #--assignee-principal-type "ServicePrincipal" \
-    #--scope "$(_jq '.scope')"
+    az role assignment create \
+    --role "$(_jq '.role')" \
+    --assignee-object-id $(_jq '.roleBeneficiaryObjID') \
+    --assignee-principal-type "ServicePrincipal" \
+    --scope "$(_jq '.scope')"
 
 done
 
