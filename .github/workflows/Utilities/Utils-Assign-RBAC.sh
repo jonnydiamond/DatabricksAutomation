@@ -5,7 +5,7 @@
 echo $environment
 
 echo "Ingest JSON File"
-json=$( jq '.' .github/workflows/Global_Parameters/Development.json)
+json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
 echo "Iterate And Assign RBAC Permissions"
