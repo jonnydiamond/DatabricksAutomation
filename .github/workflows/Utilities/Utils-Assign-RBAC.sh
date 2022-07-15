@@ -9,9 +9,24 @@ sample='[{"name":"foo"},{"name":"bar"}]'
 echo "${sample}" | jq 
 echo "${sample}" | jq -r '.[] | @base64'
 
+for row in $(echo "${sample}" | jq -r '.[] | @base64'); do
+    _jq() {
+        echo ${row} | base64 --decode | jq -r ${1}
+    }
+    echo $(_jq '.name')
+done
+
+
 roles=$( jq '.' .github/workflows/Global_Parameters/Development.json)
 echo "${roles}" | jq 
 echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'
+
+for row in $(echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'); do
+    _jq() {
+        echo ${row} | base64 --decode | jq -r ${1}
+    }
+    echo $(_jq '.role')
+done
 
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 #echo "roles json scrape"
