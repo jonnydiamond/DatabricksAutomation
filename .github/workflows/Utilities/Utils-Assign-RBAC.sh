@@ -27,41 +27,16 @@ for row in $(echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'); do
     }
     echo $(_jq '.role')
     echo $(_jq '.roleBeneficiaryObjID')
+    echo $(_jq '.scope')
+    echo "Next Iteration"
+
+    #az role assignment create \
+    #--role "$(_jq '.role')" \
+    #--assignee-object-id $(_jq '.roleBeneficiaryObjID') \
+    #--assignee-principal-type "ServicePrincipal" \
+    #--scope "$(_jq '.scope')"
+
 done
-
-#roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
-#echo "roles json scrape"
-#echo $roles
-
-#echo "json - cat"
-#json=$(
-#    cat <<- EOF
-#    $roles
-#EOF
-#)
-
-
-#read -a array <<< $roles
-
-#echo "read - array"
-#echo $roles
-
-
-#echo $roles
-#array=($roles)
-#echo $array
-#echo "${#array[@]}"
-
-
-#for RBAC_Assignment in $test
-#do
-#    test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
-#    echo "$RBAC_Assignment"
-#    echo $i
-#    ((i=i+1))
-#done 
-
-
 
     #az role assignment create \
     #--role "$role" \

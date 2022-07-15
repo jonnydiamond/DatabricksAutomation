@@ -7,19 +7,24 @@
     "RBAC_Assignments": [
         {
             "role":"Key Vault Administrator", 
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605"},
-        {
-            "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259"
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-dev-rg"
         },
         {
             "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"fe597bb2-377c-44f1-8515-82c8a1a62e3d"
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-dev-rg"
+        },
+        {
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"fe597bb2-377c-44f1-8515-82c8a1a62e3d",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-dev-rg"
 
         },
         {
             "role": "Owner",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259"
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-dev-rg"
         }
     ]
 }
