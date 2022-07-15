@@ -1,40 +1,17 @@
 az config set extension.use_dynamic_install=yes_without_prompt
 
-echo "ClientID"
-echo $ARM_CLIENT_ID
 
-echo "Client Secret"
-echo $ARM_CLIENT_SECRET
+echo "ClientID: $ARM_CLIENT_ID"
+echo "Client Secret: $ARM_CLIENT_SECRET"
+echo "Tenant ID: $ARM_TENANT_ID"
 
-echo "Tenant ID"
-echo $ARM_TENANT_ID
+# Log In To Databricks SPN To Interact With Databricks Environment
+az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
-#az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-
-azKeyVaultName=$(az keyvault list \
-                -g $param_ResourceGroupName \
-                --query "[].name" \
-                -o tsv)
-echo $azKeyVaultName
-
-dbx_workspace_name=$(az databricks workspace list \
-                    -g $param_ResourceGroupName \
-                    --query "[].name" \
-                    -o tsv)
-echo $dbx_workspace_name
-
-workspaceUrl=$(az databricks workspace list \
-                    -g $param_ResourceGroupName \
-                    --query "[].workspaceUrl" \
-                    -o tsv)
-echo $workspaceUrl
-
-workspace_id=$(az databricks workspace list \
-                    -g $param_ResourceGroupName \
-                    --query "[].id" \
-                    -o tsv)
-echo $workspace_id
-
+azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
+workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
+workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
 # token response for the azure databricks app  
 token_response=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
@@ -52,16 +29,9 @@ mgmt_access_token=$(jq .access_token -r <<< "$az_mgmt_resource_endpoint" )
 echo "Management Access Token: $mgmt_access_token"
 
 
-# get Command Line Args
-azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName  --query "[].name" -o tsv)
-keyVaultName=$azKeyVaultName
 secretName="dbkstoken"
-echo ' secretName secretName: $secretName'
-
 # Check if secret exists
 secret_exists=$(az keyvault secret list --vault-name $keyVaultName --query "contains([].id, 'https://$keyVaultName.vault.azure.net/secrets/$secretName')")
-echo ' Secrect Exists: $secret_exists'
-
 
 if [ $secret_exists == true ]; then
     echo "Secret '$secretName' exists! fetching..."
@@ -85,8 +55,6 @@ else
 
     # Print PAT token
     pat_token=$(jq .token_value -r <<< "$pat_token_response")
-
-
     echo $pat_token
 
     # Store PAT Token In Key Vault
