@@ -10,12 +10,13 @@ roles=$( jq -r '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Develop
 echo "roles json scrape"
 echo $roles
 
-echo "json - cat"
-json=$(
-    cat <<- EOF
-    $roles
-EOF
-)
+#echo "json - cat"
+#json=$(
+#    cat <<- EOF
+#    $roles
+#EOF
+#)
+
 
 read -a array <<< $roles
 
