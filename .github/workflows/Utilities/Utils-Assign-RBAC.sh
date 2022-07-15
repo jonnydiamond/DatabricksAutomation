@@ -7,11 +7,11 @@
 
 sample='[{"name":"foo"},{"name":"bar"}]'
 echo "${sample}" | jq 
-echo "${sample}" | jq -c '.[]'
+echo "${sample}" | jq -r '.[] | @base64'
 
 roles=$( jq '.' .github/workflows/Global_Parameters/Development.json)
 echo "${roles}" | jq 
-echo "${roles}" | jq -c '.RBAC_Assignments[]'
+echo "${roles}" | jq -r '.RBAC_Assignments[] | @base64'
 
 #roles=$( jq '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 #echo "roles json scrape"
