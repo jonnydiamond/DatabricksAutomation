@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Ensure That Your DevOps/PipelineAgent Has Owner RBAC Assigned. Do This Manually In Azure Portal 
+
 
 #test=$( jq --compact-output '.RBAC_Assignments[0].role' .github/workflows/Global_Parameters/Development.json)
 #echo $test
