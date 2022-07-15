@@ -11,17 +11,17 @@ echo $ARM_TENANT_ID
 
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
-dbx_workspace_name=$(az databricks workspace list \
-                    -g $param_ResourceGroupName \
-                    --query "[].name" \
-                    -o tsv)
-echo $dbx_workspace_name
-
 azKeyVaultName=$(az keyvault list \
                 -g $param_ResourceGroupName \
                 --query "[].name" \
                 -o tsv)
 echo $azKeyVaultName
+
+dbx_workspace_name=$(az databricks workspace list \
+                    -g $param_ResourceGroupName \
+                    --query "[].name" \
+                    -o tsv)
+echo $dbx_workspace_name
 
 workspaceUrl=$(az databricks workspace list \
                     -g $param_ResourceGroupName \
@@ -37,14 +37,14 @@ echo $workspace_id
 
 
 # token response for the azure databricks app  
-token_response=$(az account get-access-token --resource $AZURE_DATABRICKS_APP_ID)
+token_response=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
 echo "Token response: $token_response"
 
 # Extract accessToken value --> We use 'Here Strings to turn the JSON token response into an Array, and then extract the accessToken'
 token=$(jq .accessToken -r <<< "$token_response")
 echo "Token: $token"
 
-az_mgmt_resource_endpoint=$(curl -X GET -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&client_id='$ARM_CLIENT_ID'&resource='$MANAGEMENT_RESOURCE_ENDPOINT'&client_secret='$ARM_CLIENT_SECRET https://login.microsoftonline.com/$ARM_TENANT_ID/oauth2/token)
+az_mgmt_resource_endpoint=$(curl -X GET -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&client_id='$ARM_CLIENT_ID'&resource='$param_MANAGEMENT_RESOURCE_ENDPOINT'&client_secret='$ARM_CLIENT_SECRET https://login.microsoftonline.com/$ARM_TENANT_ID/oauth2/token)
 echo "Management Resource Endpoint: $az_mgmt_resource_endpoint"
 
 # Extract the access_token value
