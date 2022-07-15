@@ -33,7 +33,7 @@ echo $dbx_workspace_test
 
 dbx_workspace_test2=$(az databricks workspace list \
                     -g $param_ResourceGroupName \
-                    --query "[].workspaceUrl" \
+                    --query "[].id" \
                     -o tsv)
 echo $dbx_workspace_test2
 
