@@ -5,6 +5,8 @@
 #echo $test
 #echo "${#test[@]}"
 
+sample='[{"name":"foo"},{"name":"bar"}]'
+echo "${sample}" | jq 
 
 roles=$( jq -a '.RBAC_Assignments[]' .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
