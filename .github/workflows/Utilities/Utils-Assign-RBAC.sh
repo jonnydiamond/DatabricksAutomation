@@ -6,7 +6,7 @@
 #echo "${#test[@]}"
 
 
-roles=$( jq --compact-output '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
+roles=$( jq '.RBAC_Assignments[].role' .github/workflows/Global_Parameters/Development.json)
 echo "roles json scrape"
 echo $roles
 
