@@ -66,6 +66,8 @@ jobs:
       
       - name:                 Create Clusters
         run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
 
 
