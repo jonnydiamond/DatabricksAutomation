@@ -1,5 +1,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
+
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+
 name: Databricks Deploy
 on:                          ["push"]
 permissions:
@@ -26,7 +29,9 @@ jobs:
       
 
 
-      # For DBX Custom Role Permissions, (No RBAC Permissions Needed), Use This Login
+      # For DBX Custom Role Permissions, (No RBAC Permissions Needed), Use This Login.
+      # To Deploy Resources/Interact, Ensure The SP Has Contributor RBAC Assigned. 
+      # Note: Check if you can assign rbacs WITHIN bicep using only Contributor. 
       - name:                  'Az CLI login DBX SP'
         uses:                   azure/login@v1
         with:
@@ -52,7 +57,7 @@ jobs:
       # API To Create Clusters/ Jobs etc. 
 
       - name:                 Authenticate to DBX SP
-        run:                  sh ./.github/workflows/Utilities/DBX-SP-Authenticate.sh
+        run:                  sh ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
         env:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
