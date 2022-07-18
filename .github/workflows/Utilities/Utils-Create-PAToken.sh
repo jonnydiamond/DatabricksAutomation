@@ -1,6 +1,5 @@
 az config set extension.use_dynamic_install=yes_without_prompt
 
-
 echo "ClientID: $ARM_CLIENT_ID"
 echo "Client Secret: $ARM_CLIENT_SECRET"
 echo "Tenant ID: $ARM_TENANT_ID"

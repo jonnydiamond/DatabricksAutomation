@@ -27,37 +27,52 @@ mgmt_access_token=$(jq .access_token -r <<< "$az_mgmt_resource_endpoint" )
 echo "Management Access Token: $mgmt_access_token"
 
 
-echo "create secret scope"
-createSecretScope=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
+echo "Create DBX Service Principal Scope"
+Create_Secret_Scope=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
 '{
-"scope": "scopestgacckey", 
+"scope": "DBX_SP_Credentials", 
 "initial_manage_principal": "users" 
 }' https://$workspaceUrl/api/2.0/secrets/scopes/create )
+echo $Create_Secret_Scope 
 
-echo $createSecretScope 
+# Insert DBX Client Secret, ClientID and TenantID into the Secret Scope.
+# Why?... Within A Python Script, We Can Use The DBUTILS To Retrive The Service Principal Credential...
+# And Authenticate. The DBX SP Has RBACS Assigned To Key Vault/ Resoures...
+
+Create_DBX_Client_Secret=$(curl -X POST -H "Authorization: Bearer $token" \
+                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                        -H 'Content-Type: application/json' 
+                        -d \
+                        '{
+                        "scope": "DBX_SP_Credentials", 
+                        "key": "DBX_SP_Client_Secret",
+                        "string_value": "$ARM_CLIENT_SECRET"
+                        }' https://$workspaceUrl/api/2.0/secrets/put )
+echo $Create_Client_Secret
+
+Create_DBX_ClientID=$(curl -X POST -H "Authorization: Bearer $token" \
+                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                        -H 'Content-Type: application/json' 
+                        -d \
+                        '{
+                        "scope": "DBX_SP_Credentials", 
+                        "key": "DBX_SP_ClientID",
+                        "string_value": "$ARM_CLIENT_ID"
+                        }' https://$workspaceUrl/api/2.0/secrets/put )
+echo $Create_DBX_ClientID
+
+Create_DBX_TenantID=$(curl -X POST -H "Authorization: Bearer $token" \
+                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                        -H 'Content-Type: application/json' 
+                        -d \
+                        '{
+                        "scope": "DBX_SP_Credentials", 
+                        "key": "DBX_SP_TenantID",
+                        "string_value": "$ARM_TENANT_ID"
+                        }' https://$workspaceUrl/api/2.0/secrets/put )
+echo $Create_DBX_TenantID
 
 
-listSecretScope=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' https://$workspaceUrl/api/2.0/secrets/scopes/list )
-
-echo $listSecretScope 
-
-
-# I have left the "Path" out as it doesn't seem to work. I think it might be permissions issue. States 'Resource is not found'. I wonder if this is because Devops PAT token was used for git configuring the service principal.
-
-createAppIDSecret=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
-'{
-"scope": "scopestgacckey", 
-"key": "serviceprincipal-databricks-sp-dbw-dap-AppID",
-"string_value": "$param_AZURE_DATABRICKS_APP_ID"
-}' https://$workspaceUrl/api/2.0/secrets/put )
-
-echo $createAppIDSecret
-
-createDBXClientSecret=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
-'{
-"scope": "scopestgacckey", 
-"key": "serviceprincipal-databricks-sp-dbw-dap-Password",
-"string_value": "$ARM_CLIENT_SECRET"
-}' https://$workspaceUrl/api/2.0/secrets/put )
-
-echo $createDBXClientSecret
