@@ -30,3 +30,5 @@ echo "Management Resource Endpoint: $az_mgmt_resource_endpoint"
 mgmt_access_token=$(jq .access_token -r <<< "$az_mgmt_resource_endpoint" )
 echo "mgmt_access_token=$mgmt_access_token" >> $GITHUB_ENV
 echo "Management Access Set As Env Variable: $mgmt_access_token"
+
+

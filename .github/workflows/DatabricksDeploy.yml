@@ -20,27 +20,15 @@ jobs:
       - uses:                 actions/checkout@v3  
       #  az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
       # Login To testappciaran. This Has Higher Privileges/ Ownership To Create Resources/RBACs. We Generally Wouldn't Be Given 
-      # SP Secrets etc. As This Would Confer Too Much Power. Super Users Will Use This Login
-
+      # SP Secrets etc. As This Would Confer Too Much Power. Super Users Will Use This Login. DBX SP should have contributor rights.
+      # It is important to set up federated connections (below)
+      # https://goodworkaround.com/2021/12/21/another-deep-dive-into-azure-ad-workload-identity-federation-using-github-actions/
       - name:                 'Az CLI login ${{ matrix.environments }}'
         uses:                 azure/login@v1
         with:
           creds:              ${{secrets.AZURE_CREDENTIALS}}
       
-      # It is important to set up federated connections (below)
-      # https://goodworkaround.com/2021/12/21/another-deep-dive-into-azure-ad-workload-identity-federation-using-github-actions/
-
-      # For DBX Custom Role Permissions, (No RBAC Permissions Needed), Use This Login.
-      # To Deploy Resources/Interact, Ensure The SP Has Contributor RBAC Assigned. 
-      # Note: Check if you can assign rbacs WITHIN bicep using only Contributor. 
-      #- name:                  'Az CLI login DBX SP'
-      #  uses:                   azure/login@v1
-      #  with:
-      #    client-id:            ${{ secrets.ARM_CLIENT_ID }}
-      #    tenant-id:            ${{ secrets.ARM_TENANT_ID }}
-      #    subscription-id:      ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
-      
       - name:                 JSON To Env
         uses:                 antifree/json-to-variables@v1.0.1
         with:
@@ -49,10 +37,6 @@ jobs:
 
       - name:                 Deploy DBX CICD Azure Resources
         run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-
-      # Day To Day Use Interacting With Databricks API Does Not Require God Rights ("testappciaran"). The Principal of Zero Trust Applies.
-      # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
-      # API To Create Clusters/ Jobs etc. 
 
       - name:                 Assign RBAC Permissions 
         run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
@@ -65,6 +49,9 @@ jobs:
 
 
       # Switch To DBX SP
+      # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
+      # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
+      # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right
       - name:                 Authenticate to DBX SP
         run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
         env:
@@ -75,17 +62,10 @@ jobs:
 
       - name:                 Create And Store PAT Token In Key Vault
         run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
-        #env:
-        #  ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
-        #  ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
-        #  ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
 
       - name:                 Create Secret Scopes
         run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
-        env:
-          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
 
 
