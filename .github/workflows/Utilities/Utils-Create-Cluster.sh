@@ -29,14 +29,14 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
     -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
     -H 'Content-Type: application/json' -d \
     '{
-        "cluster_name": "$(_jq '.cluster_name')" , 
-        "spark_version": "10.4.x-scala2.12" , 
-        "node_type_id": "Standard_D3_v2" ,
-        "spark_conf": {} ,
-        "autotermination_minutes": 20 ,
-        "runtime_engine": "STANDARD" ,
+        "cluster_name": "$(_jq '.cluster_name')", 
+        "spark_version": "10.4.x-scala2.12", 
+        "node_type_id": "Standard_D3_v2",
+        "spark_conf": {},
+        "autotermination_minutes": 20,
+        "runtime_engine": "STANDARD",
         "autoscale": {
-            "min_workers": 2 ,
+            "min_workers": 2,
             "max_workers": 8
         }
     }' https://$workspaceUrl/api/2.0/clusters/create )
