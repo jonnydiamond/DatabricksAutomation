@@ -26,10 +26,22 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
         "spark_version": "$(_jq '.spark_version')" , 
         "node_type_id": "$(_jq '.node_type_id')" ,
         "spark_conf": "$(_jq '.spark_conf')" ,
-        "autotermination_minutes": $(_jq '.autotermination_minutes') ,
+        "autotermination_minutes": "$(_jq '.autotermination_minutes')" ,
         "runtime_engine": "$(_jq '.runtime_engine')" ,
         "autoscale": "$(_jq '.autoscale')" 
     }' https://$workspaceUrl/api/2.0/clusters/create )
+    
+
+    echo "$(_jq '.cluster_name')"
+    echo "$(_jq '.spark_version')"
+    echo "$(_jq '.node_type_id')" 
+    echo "$(_jq '.spark_conf')"
+    echo "$(_jq '.autotermination_minutes')"
+    echo "$(_jq '.runtime_engine')"
+    echo "$(_jq '.autoscale')"
+
+    echo "ClusterCreateOutput"
+    echo clusterscreate
 done
 
 
