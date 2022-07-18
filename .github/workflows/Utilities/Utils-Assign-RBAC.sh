@@ -10,7 +10,7 @@ echo "${json}" | jq
 
 
 echo "Iterate And Assign RBAC Permissions"
-for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
+for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }

@@ -17,39 +17,34 @@ echo $Create_Secret_Scope
 # And Authenticate. The DBX SP Has RBACS Assigned To Key Vault/ Resoures...
 
 Create_DBX_Client_Secret=$(curl -X POST -H "Authorization: Bearer $token" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                        -H 'Content-Type: application/json' 
-                        -d \
-                        '{
-                        "scope": "DBX_SP_Credentials", 
-                        "key": "DBX_SP_Client_Secret",
-                        "string_value": "$ARM_CLIENT_SECRET"
-                        }' https://$workspaceUrl/api/2.0/secrets/put )
-echo $Create_Client_Secret
+                -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                -H 'Content-Type: application/json' -d \
+                '{
+                "scope": "DBX_SP_Credentials", 
+                "key": "DBX_SP_Client_Secret",
+                "string_value": "$ARM_CLIENT_SECRET"
+                }' https://$workspaceUrl/api/2.0/secrets/put )
 
 Create_DBX_ClientID=$(curl -X POST -H "Authorization: Bearer $token" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                        -H 'Content-Type: application/json' 
-                        -d \
-                        '{
-                        "scope": "DBX_SP_Credentials", 
-                        "key": "DBX_SP_ClientID",
-                        "string_value": "$ARM_CLIENT_ID"
-                        }' https://$workspaceUrl/api/2.0/secrets/put )
-echo $Create_DBX_ClientID
+                -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                -H 'Content-Type: application/json' -d \
+                '{
+                "scope": "DBX_SP_Credentials", 
+                "key": "DBX_SP_ClientID",
+                "string_value": "$ARM_CLIENT_ID"
+                }' https://$workspaceUrl/api/2.0/secrets/put )
 
 Create_DBX_TenantID=$(curl -X POST -H "Authorization: Bearer $token" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                        -H 'Content-Type: application/json' 
-                        -d \
-                        '{
-                        "scope": "DBX_SP_Credentials", 
-                        "key": "DBX_SP_TenantID",
-                        "string_value": "$ARM_TENANT_ID"
-                        }' https://$workspaceUrl/api/2.0/secrets/put )
-echo $Create_DBX_TenantID
+                -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                -H 'Content-Type: application/json' -d \
+                '{
+                "scope": "DBX_SP_Credentials", 
+                "key": "DBX_SP_TenantID",
+                "string_value": "$ARM_TENANT_ID"
+                }' https://$workspaceUrl/api/2.0/secrets/put )
+
 
 

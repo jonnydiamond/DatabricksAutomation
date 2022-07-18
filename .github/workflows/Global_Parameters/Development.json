@@ -19,6 +19,33 @@
             "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-dev-rg",
             "principalType": "ServicePrincipal"
         }
+    ],
+    "Clusters": [
+        {
+            "cluster_name": "dbz-sp-cluster1",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 20,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 8
+            }
+        },
+        {
+            "cluster_name": "dbz-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 20,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 8
+            }
+        }
+
     ]
     
 }

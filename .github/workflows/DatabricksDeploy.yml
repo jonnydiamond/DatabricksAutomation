@@ -35,14 +35,13 @@ jobs:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
 
-      - name:                 Deploy DBX CICD Azure Resources
-        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+      #- name:                 Deploy DBX CICD Azure Resources
+      #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
 
-      - name:                 Assign RBAC Permissions 
-        run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
-        env:
-          environment:        ${{ matrix.environments }}
-
+      #- name:                 Assign RBAC Permissions 
+      #  run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+      #  env:
+      #    environment:        ${{ matrix.environments }}
 
 
 
@@ -64,6 +63,9 @@ jobs:
 
       - name:                 Create Secret Scopes
         run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
+      
+      - name:                 Create Clusters
+        run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
 
 
 
