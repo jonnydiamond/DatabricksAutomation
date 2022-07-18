@@ -41,13 +41,11 @@ jobs:
       #    subscription-id:      ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
       
-
       - name:                 JSON To Env
         uses:                 antifree/json-to-variables@v1.0.1
         with:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
-
 
       - name:                 Deploy DBX CICD Azure Resources
         run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
@@ -55,12 +53,18 @@ jobs:
       # Day To Day Use Interacting With Databricks API Does Not Require God Rights ("testappciaran"). The Principal of Zero Trust Applies.
       # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
       # API To Create Clusters/ Jobs etc. 
-      
+
       - name:                 Assign RBAC Permissions 
         run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
         env:
           environment:        ${{ matrix.environments }}
-      
+
+
+
+
+
+
+      # Switch To DBX SP
       - name:                 Authenticate to DBX SP
         run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
         env:
@@ -71,10 +75,10 @@ jobs:
 
       - name:                 Create And Store PAT Token In Key Vault
         run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
-        env:
-          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+        #env:
+        #  ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+        #  ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+        #  ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
 
       - name:                 Create Secret Scopes
