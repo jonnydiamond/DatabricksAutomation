@@ -29,9 +29,9 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
     -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
     -H 'Content-Type: application/json' -d \
     '{
-        "cluster_name": "$(_jq '.cluster_name')" , 
-        "spark_version": "$(_jq '.spark_version')" , 
-        "node_type_id": "$(_jq '.node_type_id')"  ,
+        "cluster_name": $(_jq '.cluster_name') , 
+        "spark_version": $(_jq '.spark_version') , 
+        "node_type_id": $(_jq '.node_type_id')  ,
         "spark_conf": {} ,
         "autotermination_minutes": 20 ,
         "runtime_engine": "STANDARD" ,
