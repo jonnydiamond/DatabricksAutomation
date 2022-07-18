@@ -27,7 +27,7 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
         "cluster_name": "$(_jq '.cluster_name')", 
         "spark_version": "$(_jq '.spark_version')" , 
         "node_type_id": "$(_jq '.node_type_id')" ,
-        "spark_conf": "$(_jq '.spark_conf')" ,
+        "spark_conf": {} ,
         "autotermination_minutes": "$(_jq '.autotermination_minutes')" ,
         "runtime_engine": "$(_jq '.runtime_engine')" ,
         "autoscale": {
