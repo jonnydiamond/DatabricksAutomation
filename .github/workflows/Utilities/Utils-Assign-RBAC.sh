@@ -8,6 +8,13 @@ echo "Ingest JSON File"
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
+
+
+
+echo "test=$json" >> $GITHUB_ENV
+echo $test
+
+
 echo "Iterate And Assign RBAC Permissions"
 for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
