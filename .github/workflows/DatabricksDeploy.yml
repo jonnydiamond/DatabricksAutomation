@@ -49,15 +49,15 @@ jobs:
           prefix:             param
 
 
-      - name:                 Deploy DBX CICD Azure Resources
-        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+      #- name:                 Deploy DBX CICD Azure Resources
+      #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
 
       # Day To Day Use Interacting With Databricks API Does Not Require God Rights ("testappciaran"). The Principal of Zero Trust Applies.
       # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
       # API To Create Clusters/ Jobs etc. 
 
       - name:                 Authenticate to DBX SP
-        run:                  sh ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+        run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
         env:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
