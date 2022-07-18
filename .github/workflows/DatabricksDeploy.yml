@@ -18,7 +18,7 @@ jobs:
         environments:          [Development]    
     steps:
       - uses:                 actions/checkout@v3  
-      #  az ad sp create-for-rbac -n testappciaran --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
+      #  az ad sp create-for-rbac -n DevOpsAgentSP --role Contributor --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
       # Login To testappciaran. This Has Higher Privileges/ Ownership To Create Resources/RBACs. We Generally Wouldn't Be Given 
       # SP Secrets etc. As This Would Confer Too Much Power. Super Users Will Use This Login
 
@@ -49,8 +49,8 @@ jobs:
           prefix:             param
 
 
-      #- name:                 Deploy DBX CICD Azure Resources
-      #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+      - name:                 Deploy DBX CICD Azure Resources
+        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
 
       # Day To Day Use Interacting With Databricks API Does Not Require God Rights ("testappciaran"). The Principal of Zero Trust Applies.
       # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
