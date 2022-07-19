@@ -37,7 +37,7 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
         echo "present"
     fi
 
-    if [[ ! " ${cluster_names[*]} " =~ "dbz-sp-cluster2" ]]; then
+    if [[ ! " ${cluster_names[*]} " =~ "dbz-sp-cluster3" ]]; then
         echo "not present"
     fi
 
