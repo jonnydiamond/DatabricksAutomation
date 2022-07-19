@@ -18,7 +18,7 @@ echo $reposWithManagePermissions
 testRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
 #prodRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
 echo "Repo Staging ID"
-echo testRepoIDStaging
+echo $testRepoIDStaging
 
 
 # .changes[] | select( .changeType | contains("No")) | .delta
