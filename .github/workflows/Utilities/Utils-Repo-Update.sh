@@ -28,7 +28,11 @@ echo $testRepoIDStaging
 #echo $prodRepoIDStaging
 
 # If there is a change to the develop branch, we will update Files in the Staging/Test Folder
-update_repo_response=$(curl -X PATCH -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -H 'Content-Type: application/json' -d \
+update_repo_response=$(curl -X PATCH \
+        -H "Authorization: Bearer $token" \
+        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+        -H 'Content-Type: application/json' -d \
 '{
 "branch": "develop"
 }' https://$workspaceUrl/api/2.0/repos/$developRepoIDStaging )
