@@ -27,8 +27,11 @@ for row in $(echo "${json}" | jq -r '.Clusters[] | @base64'); do
 
     echo "List Clusters"
     echo $listClusters
-    
-    exit
+
+    cluster_names=$( jq -r  '.clusters[].cluster_name ' <<< "$listClusters")
+    echo $cluster_name
+
+    exit 1
 
 
     
