@@ -45,7 +45,30 @@
                 "max_workers": 8
             }
         }
+    ],
+    "Git_Configuration": [
+        {
+            "personal_access_token": "yhdjjk6kcmmv6zcfowmsh6pmcre3jbstwbk5sarxcwtutmlyu5ha",
+            "git_username": "ciaranh@microsoft.com",
+            "git_provider": "azureDevOpsServices"
 
+        }
+    ],
+    "Repo_Configuration": [
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates",
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development" // change to SP id
+        },
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Production"
+        },
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging"
+        }
     ]
-    
 }
