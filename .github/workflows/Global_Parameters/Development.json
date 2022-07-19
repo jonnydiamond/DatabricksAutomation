@@ -58,7 +58,7 @@
         {
             "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates",
             "provider": "azureDevOpsServices",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development" // change to SP id
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development"
         },
         {
             "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
