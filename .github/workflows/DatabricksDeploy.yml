@@ -4,12 +4,9 @@
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
 
 name: Databricks Deploy
-on:
-  push:
-    branches:
-    - main
-    - develop
-    
+
+on: workflow_dispatch
+
 permissions:
       id-token:               write
       contents:               read
