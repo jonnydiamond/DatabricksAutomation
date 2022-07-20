@@ -53,7 +53,7 @@ jobs:
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
         # What Branch is the Merge Request Being Applied To
         env:
-          target_branch:             echo "${{ github.base_ref }}"
+          target_branch:      ${{ github.base_ref }}
 
 
 
