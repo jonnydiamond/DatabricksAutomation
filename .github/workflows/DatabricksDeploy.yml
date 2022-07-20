@@ -35,24 +35,19 @@ jobs:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
 
-      - name:                 Create Repos
-        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
-        env:
-          environment:        ${{ matrix.environments }}
 
 
 
 
+#      - name:                 Deploy DBX CICD Azure Resources
+#        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+#        env:
+#          environment:        ${{ matrix.environments }}
 
-      - name:                 Deploy DBX CICD Azure Resources
-        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        env:
-          environment:        ${{ matrix.environments }}
-
-      - name:                 Assign RBAC Permissions 
-        run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
-        env:
-          environment:        ${{ matrix.environments }}
+#      - name:                 Assign RBAC Permissions 
+#        run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+#        env:
+#          environment:        ${{ matrix.environments }}
 
 
 
@@ -66,6 +61,12 @@ jobs:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
+
+      - name:                 Create Repos
+        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
       - name:                 Create And Store PAT Token In Key Vault
         run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
