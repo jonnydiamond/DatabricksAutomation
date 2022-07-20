@@ -25,6 +25,10 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
                 '{personal_access_token: $pat,
                 git_username: $gu,
                 git_provider: $gp}' )
+    echo $pat
+    echo $gu
+    echo $gp
+
     
     git_credentials=$(curl -X POST -H "Authorization: Bearer $token" \
         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
