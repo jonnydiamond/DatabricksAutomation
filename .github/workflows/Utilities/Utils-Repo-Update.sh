@@ -52,7 +52,7 @@ update_repo_response=$(curl -X PATCH \
         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
         -H 'Content-Type: application/json' \
-        -d -d $JSON_STRING \
+        -d $JSON_STRING \
         https://$workspaceUrl/api/2.0/repos/$RepoID )
 
 echo $update_repo_response
