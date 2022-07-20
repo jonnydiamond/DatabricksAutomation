@@ -5,5 +5,5 @@ echo "environment variable: $param_TemplateFilePath"
 az deployment sub create \
 --location $param_Location \
 --template-file $param_TemplateFilePath \
---parameters $param_TemplateParamFilePath
---name "THIS"
+--parameters $param_TemplateParamFilePath \
+--name "Azure $environment Resource Deployment"
