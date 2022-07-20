@@ -48,26 +48,25 @@
     ],
     "Git_Configuration": [
         {
-            "personal_access_token": "yhdjjk6kcmmv6zcfowmsh6pmcre3jbstwbk5sarxcwtutmlyu5ha",
-            "git_username": "ciaranh@microsoft.com",
-            "git_provider": "azureDevOpsServices"
-
+            "personal_access_token": "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",
+            "git_username": "ciaran28",
+            "git_provider": "gitHub"
         }
     ],
     "Repo_Configuration": [
         {
-            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates",
-            "provider": "azureDevOpsServices",
+            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "provider": "gitHub",
             "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development"
         },
         {
-            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
-            "provider": "azureDevOpsServices",
+            "url": "https://github.com/ciaran28/DatabricksAutomation", 
+            "provider": "gitHub",
             "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Production"
         },
         {
-            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
-            "provider": "azureDevOpsServices",
+            "url": "https://github.com/ciaran28/DatabricksAutomation", 
+            "provider": "gitHub",
             "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging"
         }
     ]

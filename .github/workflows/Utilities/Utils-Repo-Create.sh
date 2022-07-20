@@ -1,3 +1,9 @@
+# For Creating Git Config in Parameters file for ADO
+
+#"personal_access_token": "yhdjjk6kcmmv6zcfowmsh6pmcre3jbstwbk5sarxcwtutmlyu5ha",
+#"git_username": "ciaranh@microsoft.com",
+#"git_provider": "azureDevOpsServices"
+
 az config set extension.use_dynamic_install=yes_without_prompt
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
