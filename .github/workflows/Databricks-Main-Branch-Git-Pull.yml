@@ -46,6 +46,7 @@ jobs:
       
       - run: |
           echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
 
       - name:                 Update Development Repo (Main Branch)
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
