@@ -40,15 +40,20 @@ echo $RepoID
 #echo $testRepoIDStaging
 #echo $prodRepoIDStaging
 
+JSON_STRING=$( jq -n -c \
+                --arg tb "$target_branch" \
+                '{branch: $tb}' )
+
+echo $JSON_STRING
+
 # If there is a change to the develop branch, we will update Files in the Staging/Test Folder
 update_repo_response=$(curl -X PATCH \
         -H "Authorization: Bearer $token" \
         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-        -H 'Content-Type: application/json' -d \
-'{
-"branch": "$target_branch"
-}' https://$workspaceUrl/api/2.0/repos/$prodRepoIDStaging )
+        -H 'Content-Type: application/json' \
+        -d -d $JSON_STRING \
+        https://$workspaceUrl/api/2.0/repos/$RepoID )
 
 echo $update_repo_response
 
