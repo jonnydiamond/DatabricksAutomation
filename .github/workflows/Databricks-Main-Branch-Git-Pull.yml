@@ -3,6 +3,7 @@
 
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
 
+# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
 name: Main Branch Pull Request
 on:  
   pull_request:
@@ -42,6 +43,10 @@ jobs:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+      
+      - run: |
+          echo "${{ github.head_ref }}"
+          exit 1
 
       - name:                 Update Development Repo (Main Branch)
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
