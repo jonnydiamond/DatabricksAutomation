@@ -18,7 +18,7 @@ echo $reposWithManagePermissions
 #developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
 prodRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
 echo "Repo Staging ID"
-echo $testRepoIDStaging
+echo $prodRepoIDStaging
 
 
 # .changes[] | select( .changeType | contains("No")) | .delta
@@ -35,7 +35,7 @@ update_repo_response=$(curl -X PATCH \
         -H 'Content-Type: application/json' -d \
 '{
 "branch": "main"
-}' https://$workspaceUrl/api/2.0/repos/$developRepoIDStaging )
+}' https://$workspaceUrl/api/2.0/repos/$prodRepoIDStaging )
 
 echo $update_repo_response
 
