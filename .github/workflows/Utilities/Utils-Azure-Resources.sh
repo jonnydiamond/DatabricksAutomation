@@ -6,3 +6,4 @@ az deployment sub create \
 --location $param_Location \
 --template-file $param_TemplateFilePath \
 --parameters $param_TemplateParamFilePath
+--name "$environment"
