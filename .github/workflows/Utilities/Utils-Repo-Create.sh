@@ -30,7 +30,7 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
     echo $gp
 
     #POST for new deployment. PATCH to update
-    git_credentials=$(curl -X PATCH -H "Authorization: Bearer $token" \
+    git_credentials=$(curl -X POST -H "Authorization: Bearer $token" \
         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
         -H 'Content-Type: application/json' \
