@@ -30,6 +30,7 @@ else
         developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Staging")) | .id' <<< "$reposWithManagePermissions")
         echo "Target Branch == ??"
         echo $RepoID
+fi
 
 echo "Repo Staging ID"
 echo $RepoID
