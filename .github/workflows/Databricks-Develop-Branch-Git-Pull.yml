@@ -3,7 +3,7 @@
 
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
 
-name: Databricks Deploy
+name: Develop Branch Pull Request
 on:  
   pull_request:
     branches:
