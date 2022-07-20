@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - main
+      - develop
     types:
       - "closed"
 
@@ -50,6 +51,9 @@ jobs:
 
       - name:                 Update Development Repo (Main Branch)
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
+        # What Branch is the Merge Request Being Applied To
+        env:
+          target_branch:             echo "${{ github.base_ref }}"
 
 
 

@@ -6,23 +6,35 @@ workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query 
 # I have left the "Path" out as it doesn't seem to work. I think it might be permissions issue. States 'Resource is not found'. I wonder if this is because Devops PAT token was used for git configuring the service principal.
 ## The section below updates the repos. We will have it triggered when when the respective branch is updated (successfully merge request)
 
+
+
 reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
-                            -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                            -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                            -H 'Content-Type: application/json' \
-                            https://$workspaceUrl/api/2.0/repos )
+                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                        -H 'Content-Type: application/json' \
+                        https://$workspaceUrl/api/2.0/repos )
 echo $reposWithManagePermissions
 
 
-#developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Staging")) | .id' <<< "$reposWithManagePermissions")
-#developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
-prodRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
-echo "Repo Staging ID"
-echo $prodRepoIDStaging
+echo $target_branch
 
+if [[ " $target_branch " =~ "main" ]]; then
+        RepoID=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
+        echo "Target Branch == Main"
+        echo $RepoID
+elif [[ " $target_branch " =~ "develop" ]]; then
+        RepoID=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
+        echo "Target Branch == Develop"
+        echo $RepoID
+else
+        developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Staging")) | .id' <<< "$reposWithManagePermissions")
+        echo "Target Branch == ??"
+        echo $RepoID
+
+echo "Repo Staging ID"
+echo $RepoID
 
 # .changes[] | select( .changeType | contains("No")) | .delta
-
 #echo $developRepoIDStaging
 #echo $testRepoIDStaging
 #echo $prodRepoIDStaging
@@ -34,17 +46,10 @@ update_repo_response=$(curl -X PATCH \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
         -H 'Content-Type: application/json' -d \
 '{
-"branch": "main"
+"branch": "$target_branch"
 }' https://$workspaceUrl/api/2.0/repos/$prodRepoIDStaging )
 
 echo $update_repo_response
 
-# If there is a change to the master branch, we will update files in the Production Folder
-#update_repo_response=$(curl -X PATCH -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -H 'Content-Type: application/json' -d \
-#'{
-#"branch": "master"
-#}' https://$workspaceUrl/api/2.0/repos/$prodRepoIDStaging )
-
-#echo $update_repo_response
 
 
