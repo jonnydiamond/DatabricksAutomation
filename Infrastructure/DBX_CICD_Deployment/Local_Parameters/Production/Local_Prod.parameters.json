@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "location": {
+          "value": "eastus"
+      },
+      "environment": {
+          "value": "prod"
+      },
+      "repoConfig": {
+        "value": {
+          "type": "FactoryVSTSConfiguration",
+          "accountName": "ciaranh0658",
+          "rootFolder": "data-factory-resources",
+          "projectName": "Reusable Templates Project",
+          "repositoryName": "Resource Templates",
+          "collaborationBranch": "main"
+        }
+      },
+      "containerNames": {
+          "value": [
+            "bronze",
+            "silver",
+            "gold"
+          ]
+      },
+      "storageConfig": {
+        "value": {
+          "kind": "StorageV2",
+          "sku_name": "Standard_LRS",
+          "allowBlobPublicAccess": true,
+          "isHnsEnabled": true,
+          "accessTier": "Hot"
+        }
+      },
+      "resourceGroupName" :{
+        "value": "databricks-prod-rg"
+      },
+      "workspaceName" : {
+        "value": "azdbxwsprod"
+      },
+      "pricingTier": {
+        "value": "premium"
+      },
+      "ShouldCreateContainers": {
+        "value": true
+      }
+    }
+  }
+    
+  
