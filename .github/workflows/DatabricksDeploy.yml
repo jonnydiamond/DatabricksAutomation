@@ -15,7 +15,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Development, Test]    
+        environments:          [Development]    
     steps:
       - uses:                 actions/checkout@v3  
       #  az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
@@ -34,6 +34,15 @@ jobs:
         with:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
+
+      - name:                 Create Repos
+        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
+        env:
+          environment:        ${{ matrix.environments }}
+
+
+
+
 
       - name:                 Deploy DBX CICD Azure Resources
         run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh

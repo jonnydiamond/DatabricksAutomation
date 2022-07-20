@@ -13,7 +13,7 @@ echo "Ingest JSON File"
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
-echo "Configure All Clusters From Environment Parameters File"
+
 for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
@@ -32,6 +32,9 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
         -H 'Content-Type: application/json' \
         -d $JSON_STRING \
         https://$workspaceUrl/api/2.0/git-credentials )
+
+    echo "git credentials"
+    echo $git_credentials
 done
 
 for row in $(echo "${json}" | jq -r '.Repo_Configuration[] | @base64'); do
@@ -52,6 +55,9 @@ for row in $(echo "${json}" | jq -r '.Repo_Configuration[] | @base64'); do
                 -H 'Content-Type: application/json' \
                 -d $JSON_STRING \
                 https://$workspaceUrl/api/2.0/repos )
+
+    echo "Repo Response"
+    echo $Repo_Configuration
 done
 
 
