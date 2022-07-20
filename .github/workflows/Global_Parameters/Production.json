@@ -4,6 +4,8 @@
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Local_Parameters/Development/CHANGE.parameters.json",
     "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
     "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
+    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
     "RBAC_Assignments": [
         {
             "role":"Key Vault Administrator", 
@@ -28,6 +30,57 @@
             "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
             "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-prod-rg",
             "principalType": "ServicePrincipal"
+        }
+    ],
+    "Clusters": [
+        {
+            "cluster_name": "dbz-sp-cluster1",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 20,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 8
+            }
+        },
+        {
+            "cluster_name": "dbz-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 20,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 8
+            }
+        }
+    ],
+    "Git_Configuration": [
+        {
+            "personal_access_token": "yhdjjk6kcmmv6zcfowmsh6pmcre3jbstwbk5sarxcwtutmlyu5ha",
+            "git_username": "ciaranh@microsoft.com",
+            "git_provider": "azureDevOpsServices"
+
+        }
+    ],
+    "Repo_Configuration": [
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates",
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development"
+        },
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Production"
+        },
+        {
+            "url": "https://dev.azure.com/ciaranh0658/_git/devopsTemplates", 
+            "provider": "azureDevOpsServices",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging"
         }
     ]
 }

@@ -15,7 +15,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Development]    
+        environments:          [Development, Test]    
     steps:
       - uses:                 actions/checkout@v3  
       #  az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
@@ -35,13 +35,13 @@ jobs:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
 
-      #- name:                 Deploy DBX CICD Azure Resources
-      #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+      - name:                 Deploy DBX CICD Azure Resources
+        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
 
-      #- name:                 Assign RBAC Permissions 
-      #  run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
-      #  env:
-      #    environment:        ${{ matrix.environments }}
+      - name:                 Assign RBAC Permissions 
+        run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
 
 
@@ -55,12 +55,6 @@ jobs:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
-
-      - name:                 Update Repo
-        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
-        env:
-          environment:        ${{ matrix.environments }}
-
 
       - name:                 Create And Store PAT Token In Key Vault
         run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
@@ -77,6 +71,7 @@ jobs:
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
         env:
           environment:        ${{ matrix.environments }}
+        
 
       #- name:                 Create Jobs
       #  run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh

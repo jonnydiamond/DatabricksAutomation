@@ -7,7 +7,10 @@ name: Databricks Deploy
 on:  
   pull_request:
     branches:
-      - develop
+      - main
+    types:
+      - "closed"
+
 
 permissions:
       id-token:               write
@@ -19,7 +22,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Development]    
+        environments:          [Development, Test]    
     steps:
       - uses:                 actions/checkout@v3  
               
@@ -40,7 +43,7 @@ jobs:
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
-      - name:                 Create And Store PAT Token In Key Vault
+      - name:                 Update Development Repo (Main Branch)
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
 
 

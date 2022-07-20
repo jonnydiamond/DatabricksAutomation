@@ -15,8 +15,8 @@ echo $reposWithManagePermissions
 
 
 #developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Staging")) | .id' <<< "$reposWithManagePermissions")
-developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
-#prodRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
+#developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
+prodRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
 echo "Repo Staging ID"
 echo $testRepoIDStaging
 
@@ -34,7 +34,7 @@ update_repo_response=$(curl -X PATCH \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
         -H 'Content-Type: application/json' -d \
 '{
-"branch": "develop"
+"branch": "main"
 }' https://$workspaceUrl/api/2.0/repos/$developRepoIDStaging )
 
 echo $update_repo_response
@@ -47,4 +47,4 @@ echo $update_repo_response
 
 #echo $update_repo_response
 
-exit 1
+
