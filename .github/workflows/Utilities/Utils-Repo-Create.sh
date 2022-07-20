@@ -64,7 +64,7 @@ for row in $(echo "${json}" | jq -r '.Repo_Configuration[] | @base64'); do
     echo $Repo_Configuration
 done
 
-exit 1
+
 
 
 
