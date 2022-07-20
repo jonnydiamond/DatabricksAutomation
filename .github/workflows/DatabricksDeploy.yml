@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 
-# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. .
 
 name: Databricks Deploy
 on:                          ["push"]
