@@ -18,14 +18,17 @@ echo $reposWithManagePermissions
 
 echo $target_branch
 
+# Develop Branch --> Main Branch
 if [[ " $target_branch " =~ "main" ]]; then
         RepoID=$( jq -r '.repos[] | select( .path | contains("Production")) | .id' <<< "$reposWithManagePermissions")
         echo "Target Branch == Main"
         echo $RepoID
+# Develop Feature Branch --> Develop Branch
 elif [[ " $target_branch " =~ "develop" ]]; then
         RepoID=$( jq -r '.repos[] | select( .path | contains("Development")) | .id' <<< "$reposWithManagePermissions")
         echo "Target Branch == Develop"
         echo $RepoID
+# Not sure what this looks like
 else
         developRepoIDStaging=$( jq -r '.repos[] | select( .path | contains("Staging")) | .id' <<< "$reposWithManagePermissions")
         echo "Target Branch == ??"

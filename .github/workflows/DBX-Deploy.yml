@@ -73,14 +73,5 @@ jobs:
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
         env:
           environment:        ${{ matrix.environments }}
-      
-      # Sync Each Repo Folder With the Relevant Branch
-      
-        
-
-      #- name:                 Create Jobs
-      #  run:                  bash ./.github/workflows/Utilities/Utils-Repo-Create.sh
-      #  env:
-      #    environment:        ${{ matrix.environments }}
 
 

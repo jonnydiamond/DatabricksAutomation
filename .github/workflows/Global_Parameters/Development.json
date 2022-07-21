@@ -57,17 +57,20 @@
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation",
             "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development"
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Development",
+            "branch": "develop"
         },
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation", 
             "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Production"
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Production",
+            "branch": "main"
         },
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation", 
             "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging"
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging",
+            "branch": "test"
         }
     ]
 }

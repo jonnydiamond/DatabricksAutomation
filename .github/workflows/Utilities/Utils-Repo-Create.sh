@@ -22,12 +22,15 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
                 --arg pat "$(_jq '.personal_access_token')" \
                 --arg gu "$(_jq '.git_username')" \
                 --arg gp "$(_jq '.git_provider')"  \
+                --arg br "$(_jq '.branch')"  \
                 '{personal_access_token: $pat,
                 git_username: $gu,
-                git_provider: $gp}' )
+                git_provider: $gp}
+                branch: $br' )
     echo $pat
     echo $gu
     echo $gp
+    echo $br
 
     #POST for new deployment. PATCH to update
     git_credentials=$(curl -X POST -H "Authorization: Bearer $token" \
