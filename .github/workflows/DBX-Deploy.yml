@@ -18,7 +18,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        #Repo Folder Names
+        #Azure Resource Environments
         environments:          [Development, Production, Staging]    
     steps:
       - uses:                 actions/checkout@v3  
