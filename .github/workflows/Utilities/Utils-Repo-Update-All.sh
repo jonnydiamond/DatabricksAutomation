@@ -16,10 +16,14 @@ echo $reposWithManagePermissions
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
-declare -a cw=("Production", "Development", "Staging")
+declare -a myarray
+my_array=(foo bar)
+
 echo $cw
 
-Repo_Folders=( "Production", "Development", "Staging" )
+Repo_Folders=("Production"
+            "Development"
+            "Staging")
 echo "Repo Folders"
 echo $Repo_Folders
 for Repo_Folder in "${Repo_Folders[@]}" 
