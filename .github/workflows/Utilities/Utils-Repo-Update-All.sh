@@ -30,6 +30,16 @@ echo $test
 for Repo_Folder in "${Repo_Folders[@]}"; do
     echo "Repo Folder"
     echo $Repo_Folder
+    
+    reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
+                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                        -H 'Content-Type: application/json' \
+                        https://$workspaceUrl/api/2.0/repos )
+    echo $reposWithManagePermissions
+    json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
+    echo "${json}" | jq
+
 
     RepoID=$( jq -r --arg Repo_Folder "$Repo_Folder" '.repos[] | select( .path | contains('"${Repo_Folder}"')) | .id' <<< "$reposWithManagePermissions")
     echo "Repo ID"
