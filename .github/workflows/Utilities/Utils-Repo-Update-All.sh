@@ -16,6 +16,8 @@ echo $reposWithManagePermissions
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
+declare -a cw=("Production", "Development", "Staging")
+echo $cw
 
 Repo_Folders=( "Production", "Development", "Staging" )
 echo "Repo Folders"
