@@ -23,13 +23,23 @@ Repo_Folders[0]='Production'
 Repo_Folders[1]='Development'
 Repo_Folders[2]='Staging'
 
+FILES=(Production\ 21.43.02.jpg
+2011-09-05\ Staging
+Staging\ 12.31.16.jpg
+2011-09-11\ 08.43.12.jpg)
+
+echo ${FILES[0]}
+echo ${FILES[1]}
+echo ${FILES[2]}
+echo ${FILES[3]}
 
 
 
-for Repo_Folder in $(echo ${!Repo_Folders[@]}); do
-    echo ${Repo_Folders[$i]}
 
-    RepoID=$( jq -r '.repos[] | select( .path | contains(${Repo_Folders[$i]})) | .id' <<< "$reposWithManagePermissions")
+echo $test
+for Repo_Folder in $( echo ${Repo_Folders[@]}); do
+
+    RepoID=$( jq -r '.repos[] | select( .path | contains($Repo_Folder)) | .id' <<< "$reposWithManagePermissions")
     echo "Repo ID"
     echo $RepoID
 
