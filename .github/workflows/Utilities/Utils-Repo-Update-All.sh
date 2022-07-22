@@ -41,7 +41,7 @@ for Repo_Folder in "${Repo_Folders[@]}"; do
     echo "${json}" | jq
 
 
-    RepoID=$( jq --arg Repo_Folder "$Repo_Folder" -r ' .repos[] | "select( .path | contains($Repo_Folder))" | .id' <<< "$reposWithManagePermissions")
+    RepoID=$( jq --arg Repo_Folder "$Repo_Folder" -r ' .repos[] | select( .path | contains($Repo_Folder)) | .id ' <<< "$reposWithManagePermissions")
     echo "Repo ID"
     echo $RepoID
 
