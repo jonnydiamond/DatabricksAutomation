@@ -27,7 +27,7 @@ Development)
 
 
 echo $test
-for Repo_Folder in $( echo ${Repo_Folders[@]}); do
+for Repo_Folder in "${Repo_Folders[@]}"; do
     echo "Repo Folder"
     echo Repo_Folder
 
