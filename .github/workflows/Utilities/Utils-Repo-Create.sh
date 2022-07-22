@@ -25,7 +25,7 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
                 --arg br "$(_jq '.branch')"  \
                 '{personal_access_token: $pat,
                 git_username: $gu,
-                git_provider: $gp
+                git_provider: $gp,
                 branch: $br}' )
     echo $pat
     echo $gu
