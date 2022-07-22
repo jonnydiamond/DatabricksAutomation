@@ -24,12 +24,12 @@ Repo_Folders[1]='Development'
 Repo_Folders[2]='Staging'
 
 
-test=('Production' 'Development' 'Staging')
-echo "test"
-echo $test
-for Repo_Folder in $( echo ${Repo_Folders[@]}); do
 
-    RepoID=$( jq -r '.repos[] | select( .path | contains($Repo_Folder)) | .id' <<< "$reposWithManagePermissions")
+
+for Repo_Folder in $(echo ${!Repo_Folders[@]}); do
+    echo ${Repo_Folders[$i]}
+
+    RepoID=$( jq -r '.repos[] | select( .path | contains(${Repo_Folders[$i]})) | .id' <<< "$reposWithManagePermissions")
     echo "Repo ID"
     echo $RepoID
 
