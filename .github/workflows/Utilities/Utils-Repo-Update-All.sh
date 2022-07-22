@@ -21,9 +21,9 @@ echo "${json}" | jq
 
 
 
-Repo_Folders=(Production
-Staging
-Development)
+Repo_Folders=("Production"
+"Staging"
+"Development")
 
 
 echo $test
