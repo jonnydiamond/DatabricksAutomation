@@ -17,7 +17,7 @@ json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
 
-Repo_Folders=(Production Development Staging)
+Repo_Folders=( "Production" "Development" "Staging" )
 echo "Repo Folders"
 echo $Repo_Folders
 for Repo_Folder in "${Repo_Folders[@]}" 
@@ -44,7 +44,7 @@ do
         -H 'Content-Type: application/json' \
         -d $JSON_STRING \
         https://$workspaceUrl/api/2.0/repos/$RepoID )
-    
+
     echo $update_repo_response
 done
 
