@@ -19,25 +19,17 @@ json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
 
-Repo_Folders[0]='Production'
-Repo_Folders[1]='Development'
-Repo_Folders[2]='Staging'
-
-FILES=(Production\ 21.43.02.jpg
-2011-09-05\ Staging
-Staging\ 12.31.16.jpg
-2011-09-11\ 08.43.12.jpg)
-
-echo ${FILES[0]}
-echo ${FILES[1]}
-echo ${FILES[2]}
-echo ${FILES[3]}
 
 
+Repo_Folders=(Production
+Staging
+Development)
 
 
 echo $test
 for Repo_Folder in $( echo ${Repo_Folders[@]}); do
+    echo "Repo Folder"
+    echo Repo_Folder
 
     RepoID=$( jq -r '.repos[] | select( .path | contains($Repo_Folder)) | .id' <<< "$reposWithManagePermissions")
     echo "Repo ID"
