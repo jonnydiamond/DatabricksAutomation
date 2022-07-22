@@ -23,10 +23,16 @@ jobs:
     steps:
       - uses:                 actions/checkout@v3  
 
-      #- name:                 'Az CLI login ${{ matrix.environments }}'
-      #  uses:                 azure/login@v1
-      #  with:
-      #    creds:              ${{secrets.AZURE_CREDENTIALS}}
+      - name:                 'Az CLI login ${{ matrix.environments }}'
+        uses:                 azure/login@v1
+        with:
+          creds:              ${{secrets.AZURE_CREDENTIALS}}
+
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
 
       - name:                 Authenticate to DBX SP
         run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
@@ -35,11 +41,6 @@ jobs:
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
       
-      - name:                 JSON To Env
-        uses:                 antifree/json-to-variables@v1.0.1
-        with:
-          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
-          prefix:             param
         
       # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
       - name:                 Update Databricks Repo SP Folders
