@@ -1,3 +1,5 @@
+#!/bin/bash
+
 az config set extension.use_dynamic_install=yes_without_prompt
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
@@ -15,6 +17,16 @@ reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
 echo $reposWithManagePermissions
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
+
+
+Unix[0]='Debian'
+Unix[1]="Red Hat"
+Unix[2]='Ubuntu'
+Unix[3]='Suse'
+
+for i in $(echo ${Unix[@]});
+    do echo $i;
+done
 
 declare -a myarray
 my_array=(foo bar)
