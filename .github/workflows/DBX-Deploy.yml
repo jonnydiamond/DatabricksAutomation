@@ -41,9 +41,9 @@ jobs:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
         
-
+      # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
       - name:                 Update Databricks Repo SP Folders
-        run:                  sh ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
+        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
         env:
           environment:        ${{ matrix.environments }}
 
