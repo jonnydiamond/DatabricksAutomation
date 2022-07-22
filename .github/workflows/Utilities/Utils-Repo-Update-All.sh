@@ -19,29 +19,16 @@ json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 echo "${json}" | jq
 
 
-Unix[0]='Debian'
-Unix[1]="Red Hat"
-Unix[2]='Ubuntu'
-Unix[3]='Suse'
+Repo_Folders[0]='Production'
+Repo_Folders[1]='Development'
+Repo_Folders[2]='Staging'
 
-for i in $(echo ${Unix[@]});
-    do echo $i;
-done
 
-declare -a myarray
-my_array=(foo bar)
+test=('Production' 'Development' 'Staging')
+echo "test"
+echo $test
+for Repo_Folder in $( echo ${Repo_Folders[@]}); do
 
-echo $cw
-
-Repo_Folders=("Production"
-            "Development"
-            "Staging")
-echo "Repo Folders"
-echo $Repo_Folders
-for Repo_Folder in "${Repo_Folders[@]}" 
-do
-    :
-    
     RepoID=$( jq -r '.repos[] | select( .path | contains($Repo_Folder)) | .id' <<< "$reposWithManagePermissions")
     echo "Repo ID"
     echo $RepoID
