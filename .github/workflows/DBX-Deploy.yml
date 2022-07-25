@@ -23,6 +23,10 @@ jobs:
         environments:          [Development, Production]    
     steps:
       - uses:                 actions/checkout@v3  
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name:                 'Az CLI login ${{ matrix.environments }}'
         uses:                 azure/login@v1
@@ -55,11 +59,6 @@ jobs:
         run:                  bash ./.github/workflows/Utilities/Utils-Test.sh
         env:
           environment:        ${{ matrix.environments }}
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
 
       - name:                 Upload Wheel Files To Cluster 
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
