@@ -402,7 +402,7 @@ class Cluster():
         is_deleted = False if id else True
 
         if not is_deleted:
-            cs.permanent_delete_cluster(id)
+            cs.cluster.permanent_delete_cluster(id)
 
             requests = 0
             seconds_interval = 20
