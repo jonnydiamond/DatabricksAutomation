@@ -101,6 +101,8 @@ def main(cluster_config_file):
         personal_token=configuration.DATABRICKS_TOKEN
     )
 
+    print(client.apiClient)
+
     
     drm = DatabricksResourceManager(
         client=client,

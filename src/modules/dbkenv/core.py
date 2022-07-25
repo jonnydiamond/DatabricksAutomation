@@ -65,7 +65,7 @@ class Configuration():
             The host url
         """
         ###Amended DATABRICKS_HOST --> param_DATABRICKS_HOST
-        res = _os.environ["param_DATABRICKS_HOST"]
+        res = _os.environ["DATABRICKS_HOST"]
         print("Databricks Host")
         print(res)
         ############################################
@@ -82,7 +82,7 @@ class Configuration():
             The token
         """
         ##Amended DATABRICKS_TOKEN --> param_DATABRICKS_TOKEN
-        res = _os.environ["param_DATABRICKS_TOKEN"]
+        res = _os.environ["DATABRICKS_TOKEN"]
         print("Databricks Token")
         print(res)
         ######################################################
