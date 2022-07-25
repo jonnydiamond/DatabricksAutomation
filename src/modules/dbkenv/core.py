@@ -915,6 +915,8 @@ class DatabricksResourceManager():
             # appinsight_instrumentation_key="",
         )
 
+
+        #Here #############                                                                #####################
         self.jobs = Jobs(client=self.client)
         self.secret = Secret(client=self.client)
         self.workspace = Workspace(client=self.client)
