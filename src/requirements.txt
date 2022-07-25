@@ -2,7 +2,7 @@ opencensus-ext-azure>=1.0.2
 typeguard==2.7.1
 pyspark
 pandas>=0.24.2
-databricks-cli==0.9.1
+databricks-cli==0.17.0
 databricks-connect==7.*
 pypandoc>=1.4
 pdoc3>=0.7.4
