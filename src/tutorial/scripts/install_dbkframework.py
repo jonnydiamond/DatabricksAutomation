@@ -196,6 +196,9 @@ def main(cluster_config_file):
         dbk_whl_root = 'dbfs:/FileStore/dev/artifacts/'
         dbk_whl_path = f'{dbk_whl_root}{dbk_whl_name}'
 
+        command_exec(f'databricks fs -h')
+        command_exec(f'databricks fs ls')
+
         command_exec(f'databricks fs rm {dbk_whl_root}', ignore=True)
         command_exec(f'databricks fs cp -r {wheel} {dbk_whl_path}')
 
