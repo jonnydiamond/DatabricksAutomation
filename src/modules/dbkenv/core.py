@@ -470,7 +470,7 @@ class Cluster():
                     raise Exception("Cluster not started")
             return True
         elif self.cluster_state() in ["TERMINATED", "TERMINATING"]:
-            cs.start_cluster(cluster_id)                                  ###################### CHECK HERE ##############
+            cs.cluster.start_cluster(cluster_id)                                  ###################### CHECK HERE ##############
             _time.sleep(20)
             # Waiting cluster to start
             requests = 0
