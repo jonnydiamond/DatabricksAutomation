@@ -87,7 +87,9 @@ def main(cluster_config_file):
         cluster_configuration = json.load(cl)
 
     cluster_name = cluster_configuration['cluster_name']
-
+    ## Change
+    print(cluster_name)
+    ##
     client = ResourceClient(
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN

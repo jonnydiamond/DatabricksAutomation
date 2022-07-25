@@ -64,7 +64,10 @@ class Configuration():
         str
             The host url
         """
-        res = _os.environ["DATABRICKS_HOST"]
+        #Amended
+        res = _os.environ["param_DATABRICKS_HOST"]
+        print("Databricks Host")
+        print(res)
         return res
 
     @property
