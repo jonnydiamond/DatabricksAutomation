@@ -240,7 +240,7 @@ class Cluster():
             
             #HEEEEEEREEEEEEE
             
-            self.__cluster_service = self.client.host
+            self.__cluster_service = self.client.apiClient.cluster
         # This will return cluster service when Cluster() (Above) is called
         return self.__cluster_service
 
@@ -374,12 +374,12 @@ class Cluster():
             Id of the cluster
         """
         print("Cluster Service")
-        #cs = self.cluster_service
+        cs = self.cluster_service
         #print("Cluster Service")
         #print(cs)
 
         print("Cluster List")
-        cluster_list = self.client.cluster.list_clusters(headers=None)
+        cluster_list = cs.cluster.list_clusters(headers=None)
         print(cluster_list)
         exit()
 
