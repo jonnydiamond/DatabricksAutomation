@@ -17,6 +17,9 @@ echo "Workspace ID Set As Env Variable: $workspace_id"
 echo "workspaceUrl=$workspaceUrl" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $workspaceUrl"
 
+echo "Testing Python Path For Uploading Wheel File"
+echo "PYTHONPATH=/workspaces/DatabricksAutomation/src/modules" >> $GITHUB_ENV
+
 # token response for the azure databricks app  
 token_response=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
 token=$(jq .accessToken -r <<< "$token_response")
