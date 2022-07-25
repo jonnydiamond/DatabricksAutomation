@@ -7,6 +7,9 @@ echo "Tenant ID: $ARM_TENANT_ID"
 echo "Logging in using Azure service priciple"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
+dbx_workspace_list=$(az databricks workspace list -g $param_ResourceGroupName -o tsv)
+exit 1
+
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
@@ -17,8 +20,12 @@ echo "Workspace ID Set As Env Variable: $workspace_id"
 echo "workspaceUrl=$workspaceUrl" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $workspaceUrl"
 
+echo "Databricks OrgID as Env Variables"
+
 echo "Testing Python Path For Uploading Wheel File"
 echo "PYTHONPATH=src/modules" >> $GITHUB_ENV
+
+
 
 # token response for the azure databricks app  
 token_response=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
