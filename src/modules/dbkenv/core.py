@@ -374,12 +374,12 @@ class Cluster():
             Id of the cluster
         """
         print("Cluster Service")
-        cs = self.cluster_service
+        cs = self.cluster_service                                               # FOLLOW
         #print("Cluster Service")
         #print(cs)
 
         print("Cluster List")
-        cluster_list = cs.cluster.list_clusters(headers=None)
+        cluster_list = cs.cluster.list_clusters(headers=None)                   #FOLLOW
         print(cluster_list)
 
         id = None
@@ -434,7 +434,7 @@ class Cluster():
             State of the cluster
         """
         cs = self.cluster_service
-        cluster_state = cs.get_cluster(self.cluster_id)["state"]
+        cluster_state = cs.cluster.get_cluster(self.cluster_id)["state"]           #######
         return cluster_state
 
     @trace
@@ -470,7 +470,7 @@ class Cluster():
                     raise Exception("Cluster not started")
             return True
         elif self.cluster_state() in ["TERMINATED", "TERMINATING"]:
-            cs.start_cluster(cluster_id)
+            cs.start_cluster(cluster_id)                                  ###################### CHECK HERE ##############
             _time.sleep(20)
             # Waiting cluster to start
             requests = 0
