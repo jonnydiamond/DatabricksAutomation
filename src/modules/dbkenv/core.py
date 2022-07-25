@@ -381,7 +381,6 @@ class Cluster():
         print("Cluster List")
         cluster_list = cs.cluster.list_clusters(headers=None)
         print(cluster_list)
-        exit()
 
         id = None
         if cluster_list:
