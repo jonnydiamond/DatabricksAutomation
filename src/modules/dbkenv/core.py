@@ -899,7 +899,7 @@ class DatabricksResourceManager():
         self.jobs = Jobs(client=self.client)
         self.secret = Secret(client=self.client)
         self.workspace = Workspace(client=self.client)
-        self.log_to_appi = log_to_appi
+        #self.log_to_appi = log_to_appi
 
     @trace
     def __dkea_token(self) -> str:
