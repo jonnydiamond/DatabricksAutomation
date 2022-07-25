@@ -2,7 +2,7 @@
 
 ### I ADDED
 import sys
-sys.path.append('/workspaces/DatabricksAutomation/src/modules')
+sys.path.append('/DatabricksAutomation/src/modules')
 ####
 
 
