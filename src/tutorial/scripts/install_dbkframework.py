@@ -175,7 +175,11 @@ def main(cluster_config_file):
         print(setup_file)
 
         command_string = f"cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel"
+        print(command_string)
+
         res = os.system(command_string)
+        print("Print Result")
+        print(res)
 
         if res != 0:
             raise Exception(f'Failed to build {module}')
