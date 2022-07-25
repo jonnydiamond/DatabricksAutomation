@@ -359,7 +359,9 @@ class Cluster():
             Id of the cluster
         """
         cs = self.cluster_service
+        print(cs)
         cluster_list = cs.list_clusters()
+        print(cluster_list)
         id = None
         if cluster_list:
             matches = [c['cluster_id'] for c in cluster_list["clusters"] if c['cluster_name'] == self.cluster_name]
@@ -884,6 +886,8 @@ class DatabricksResourceManager():
             Log to application insights
         """
         self.client = client
+        print("self.client")
+        print(self.client)
 
         self.cluster = Cluster(
             client=client,
