@@ -2,7 +2,9 @@
 
 ### I ADDED
 import sys
-sys.path.append('/workspaces/DatabricksAutomation/src/modules')
+import os
+PYTHONPATH = _os.environ["PYTHONPATH"]
+print(PYTHONPATH)
 ####
 
 
