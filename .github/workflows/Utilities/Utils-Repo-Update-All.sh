@@ -20,7 +20,7 @@ echo "${json}" | jq
 
 
 
-
+#Based on DBX Repo Folders Created in Parameters File Within Objection Repo_Configuration 
 Repo_Folders=("Production"
 "Staging"
 "Development")
@@ -53,7 +53,7 @@ for Repo_Folder in "${Repo_Folders[@]}"; do
                 --arg tb "$branch" \
                 '{branch: $tb}' )
 
-    echo $JSON_STRING
+    #echo $JSON_STRING
     update_repo_response=$(curl -X PATCH \
         -H "Authorization: Bearer $token" \
         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
