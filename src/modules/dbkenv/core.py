@@ -173,6 +173,7 @@ class ResourceClient():
         self.personal_token = personal_token
         self.__api_client = None
 
+
     @property
     def apiClient(self) -> _dbkcli.ApiClient:
         """
@@ -188,6 +189,9 @@ class ResourceClient():
                 host=self.host,
                 token=self.personal_token
             )
+            print("API CLIENT")
+            print(self.__api_client)
+
         return self.__api_client
 
 

@@ -92,10 +92,16 @@ def main(cluster_config_file):
     ## Change
     print(cluster_name)
     ##
+    print("Databricks Host And Databricks Token: For Resource Client Object Creation")
+    print(configuration.DATABRICKS_HOST)
+    print(configuration.DATABRICKS_TOKEN)
+
     client = ResourceClient(
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN
     )
+
+    
     drm = DatabricksResourceManager(
         client=client,
         cluster_name=cluster_name,
