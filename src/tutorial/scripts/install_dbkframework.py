@@ -82,7 +82,7 @@ def main(cluster_config_file):
     Exception
         Raises when script failes
     """
-    configuration = Configuration(file_load=True)
+    configuration = Configuration(file_load=False)
     with open(cluster_config_file.strip(), 'r') as cl:
         cluster_configuration = json.load(cl)
 
