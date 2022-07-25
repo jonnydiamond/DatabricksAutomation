@@ -105,6 +105,8 @@ def main(cluster_config_file):
     print("Databricks Resource Manager")
     print(drm)
 
+    #####
+
     print("ClusterID")
     cluster_id = drm.cluster.cluster_id
     print(cluster_id)

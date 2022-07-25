@@ -358,8 +358,12 @@ class Cluster():
         str
             Id of the cluster
         """
+        print("Cluster Service")
         cs = self.cluster_service
+        print("Cluster Service")
         print(cs)
+
+        # HERE IS THE ERROR
         cluster_list = cs.list_clusters()
         print(cluster_list)
         id = None
