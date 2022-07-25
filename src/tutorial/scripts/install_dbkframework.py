@@ -1,6 +1,7 @@
 """Build and installs the dbkframework."""
 
 ### I ADDED
+import sys
 sys.path.append('/src/modules')
 ####
 

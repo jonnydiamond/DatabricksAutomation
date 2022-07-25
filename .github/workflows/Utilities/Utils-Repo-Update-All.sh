@@ -16,9 +16,9 @@ reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
                         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
                         -H 'Content-Type: application/json' \
                         https://$workspaceUrl/api/2.0/repos )
-echo $reposWithManagePermissions
+#echo $reposWithManagePermissions
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
-echo "${json}" | jq
+#echo "${json}" | jq
 
 
 
