@@ -6,3 +6,4 @@ databricks-cli==0.9.1
 databricks-connect==7.*
 pypandoc>=1.4
 pdoc3>=0.7.4
+python-dotenv==0.20.0
