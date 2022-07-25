@@ -14,3 +14,5 @@ setuptools>=56.0.0
 pydataset>=0.2.0
 scikit-learn>=0.24.1
 PyArrow>=0.15.1
+pyspark
+pandas>=0.24.2
