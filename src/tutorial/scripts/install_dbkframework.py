@@ -3,7 +3,7 @@
 ### I ADDED
 import sys
 import os
-print('List of paths in PYTHONPATH:',os.environ['PYTHONPATH'])
+print('List of paths in PYTHONPATH:',os.environ['$PYTHONPATH'])
 ####
 
 
