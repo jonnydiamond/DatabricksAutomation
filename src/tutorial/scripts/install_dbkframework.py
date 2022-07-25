@@ -97,12 +97,12 @@ def main(cluster_config_file):
     print(configuration.DATABRICKS_TOKEN)
 
     
-    
+    #This is Actual API Client i.e client.apiClient
     client = ResourceClient(
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN
     )
-    print("Client")
+    print("API Client")
     print(client)
 
 
@@ -114,6 +114,8 @@ def main(cluster_config_file):
     #print(client.apiClient)
 
 
+
+    # client.apiClient.
     drm = DatabricksResourceManager(
         client=client,
         cluster_name=cluster_name,
@@ -123,9 +125,12 @@ def main(cluster_config_file):
     print("Databricks Resource Manager")
     print(drm)
 
+ 
+
     #####
 
     print("ClusterID")
+    
     cluster_id = drm.cluster.cluster_id
     print(cluster_id)
     exit()

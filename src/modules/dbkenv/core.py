@@ -189,10 +189,8 @@ class ResourceClient():
         """
 
         if not self.__api_client:
-            self.__api_client = DatabricksAPI(
-                host=self.host,
-                token=self.personal_token
-            )
+            self.__api_client = DatabricksAPI(host=self.host, token=self.personal_token).apiClient
+    
             print("API CLIENT")
             print(self.__api_client)
 
@@ -238,7 +236,11 @@ class Cluster():
             #Previous Step was: db = client.apiClient
             # In THIS step we create the Cluster Service: cs = db.cluster
             # In the Next Steo, we can use the Cluster Service to Do things: clusterID = cs.list_clusters
-            self.__cluster_service = self.client.apiClient
+            
+            
+            #HEEEEEEREEEEEEE
+            
+            self.__cluster_service = self.client.host
         # This will return cluster service when Cluster() (Above) is called
         return self.__cluster_service
 
@@ -372,13 +374,15 @@ class Cluster():
             Id of the cluster
         """
         print("Cluster Service")
-        cs = self.cluster_service
-        print("Cluster Service")
-        print(cs)
+        #cs = self.cluster_service
+        #print("Cluster Service")
+        #print(cs)
 
-        # HERE IS THE ERROR
-        cluster_list = cs.list_clusters()
+        print("Cluster List")
+        cluster_list = self.client.cluster.list_clusters(headers=None)
         print(cluster_list)
+        exit()
+
         id = None
         if cluster_list:
             matches = [c['cluster_id'] for c in cluster_list["clusters"] if c['cluster_name'] == self.cluster_name]
@@ -903,8 +907,7 @@ class DatabricksResourceManager():
             Log to application insights
         """
         self.client = client
-        print("self.client")
-        print(self.client)
+
 
         self.cluster = Cluster(
             client=client,
