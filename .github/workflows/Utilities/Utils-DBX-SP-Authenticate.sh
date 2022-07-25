@@ -9,7 +9,7 @@ az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $A
 
 DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceId" -o tsv)
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
-workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
+DATABRICKS_HOST=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
@@ -18,8 +18,8 @@ echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
 echo "workspace_id=$workspace_id" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $workspace_id"
 
-echo "workspaceUrl=$workspaceUrl" >> $GITHUB_ENV
-echo "Workspace URL Set As Env Variable: $workspaceUrl"
+echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV
+echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
 
 echo "Databricks OrgID as Env Variables"
 
@@ -30,9 +30,9 @@ echo "PYTHONPATH=src/modules" >> $GITHUB_ENV
 
 # token response for the azure databricks app  
 token_response=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
-token=$(jq .accessToken -r <<< "$token_response")
-echo "token=$token" >> $GITHUB_ENV
-echo "Token Set As Env Variable: $token"
+DATABRICKS_TOKEN=$(jq .accessToken -r <<< "$token_response")
+echo "DATABRICKS_TOKEN=$DATABRICKS_TOKEN" >> $GITHUB_ENV
+echo "Token Set As Env Variable: $DATABRICKS_TOKEN"
 
 az_mgmt_resource_endpoint=$(curl -X GET -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=client_credentials&client_id='$ARM_CLIENT_ID'&resource='$param_MANAGEMENT_RESOURCE_ENDPOINT'&client_secret='$ARM_CLIENT_SECRET https://login.microsoftonline.com/$ARM_TENANT_ID/oauth2/token)
 echo "Management Resource Endpoint: $az_mgmt_resource_endpoint"
