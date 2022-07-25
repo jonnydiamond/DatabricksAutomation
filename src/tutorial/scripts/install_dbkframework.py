@@ -102,7 +102,13 @@ def main(cluster_config_file):
         cluster_configuration=cluster_configuration
     )
 
+    print("Databricks Resource Manager")
+    print(drm)
+
+    print("ClusterID")
     cluster_id = drm.cluster.cluster_id
+    print(cluster_id)
+
 
     drm.cluster.start_cluster_and_wait()
 
