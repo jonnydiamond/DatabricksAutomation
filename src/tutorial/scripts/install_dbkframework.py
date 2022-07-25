@@ -3,8 +3,7 @@
 ### I ADDED
 import sys
 import os
-PYTHONPATH = os.environ["PYTHONPATH"]
-print(PYTHONPATH)
+print(sys.path)
 ####
 
 
