@@ -65,6 +65,10 @@ jobs:
         with:
           path:               "src/requirements.txt"
 
+      - name: docgenerator.py dependency instal;
+        run: |
+          sudo apt-get install pandoc
+
       - name:                 Upload Wheel Files To Cluster 
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
         env:
