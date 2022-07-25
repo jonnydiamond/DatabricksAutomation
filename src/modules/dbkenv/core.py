@@ -189,7 +189,7 @@ class ResourceClient():
         """
 
         if not self.__api_client:
-            self.__api_client = DatabricksAPI(host=self.host, token=self.personal_token).apiClient
+            self.__api_client = DatabricksAPI(host=self.host, token=self.personal_token)
     
             print("API CLIENT")
             print(self.__api_client)
