@@ -5,7 +5,8 @@
 
 name: Databricks Deploy
 
-on: workflow_dispatch
+on: push 
+#workflow_dispatch
 
 permissions:
       id-token:               write
@@ -49,10 +50,13 @@ jobs:
         env:
           environment:        ${{ matrix.environments }}
 
+
       - name:                 Test Databricks Host Parameters 
         run:                  bash ./.github/workflows/Utilities/Utils-Test.sh
         env:
           environment:        ${{ matrix.environments }}
+
+          
 
       - name:                 Upload Wheel Files To Cluster 
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
