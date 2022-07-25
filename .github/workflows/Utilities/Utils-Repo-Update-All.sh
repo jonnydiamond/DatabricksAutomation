@@ -1,8 +1,8 @@
 #!/bin/bash
 
 az config set extension.use_dynamic_install=yes_without_prompt
-export dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
-echo $dbx_workspace_name
+#export dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
+
 
 export workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 export workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
