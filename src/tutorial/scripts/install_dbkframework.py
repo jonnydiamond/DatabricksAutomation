@@ -140,7 +140,7 @@ def main(cluster_config_file):
     cluster_id = drm.cluster.cluster_id
     print(cluster_id)
  
-    exit()
+ 
 
     drm.cluster.start_cluster_and_wait()
 
