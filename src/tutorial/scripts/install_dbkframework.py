@@ -96,20 +96,22 @@ def main(cluster_config_file):
     print(configuration.DATABRICKS_HOST)
     print(configuration.DATABRICKS_TOKEN)
 
+    
+    
     client = ResourceClient(
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN
     )
+    print("Client")
+    print(client)
 
-    print(client.host)
-    print(client.personal_token)
-    print(client.apiClient)
-    
-    db = client.apiClient
-    print(db.cluster.list_clusters(headers=None))
 
-    print(client.apiClient)
-    exit()
+    #print(client.host)
+    #print(client.personal_token)
+    #print(client.apiClient)    
+    #db = client.apiClient
+    #print(db.cluster.list_clusters(headers=None))
+    #print(client.apiClient)
 
 
     drm = DatabricksResourceManager(
@@ -126,6 +128,7 @@ def main(cluster_config_file):
     print("ClusterID")
     cluster_id = drm.cluster.cluster_id
     print(cluster_id)
+    exit()
 
 
     drm.cluster.start_cluster_and_wait()

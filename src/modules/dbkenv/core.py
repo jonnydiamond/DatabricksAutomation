@@ -173,8 +173,9 @@ class ResourceClient():
         super().__init__()
         self.host = host
         self.personal_token = personal_token
-        self.__api_client = None
 
+        # This is client
+        self.__api_client = None
 
     @property
     def apiClient(self) -> _dbkcli.ApiClient:
@@ -233,7 +234,12 @@ class Cluster():
     @property
     def cluster_service(self) -> _dss.ClusterService:
         if not self.__cluster_service:
-            self.__cluster_service = _dss.ClusterService(self.client.apiClient)
+            # This step is when we specify 'Cluster'
+            #Previous Step was: db = client.apiClient
+            # In THIS step we create the Cluster Service: cs = db.cluster
+            # In the Next Steo, we can use the Cluster Service to Do things: clusterID = cs.list_clusters
+            self.__cluster_service = self.client.apiClient
+        # This will return cluster service when Cluster() (Above) is called
         return self.__cluster_service
 
     @trace
