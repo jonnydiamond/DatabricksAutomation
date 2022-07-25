@@ -102,6 +102,9 @@ def main(cluster_config_file):
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN
     )
+
+    db = client.apiClient.cluster.list_clusters(headers=None)
+
     print("API Client")
     print(client)
 

@@ -240,7 +240,7 @@ class Cluster():
             
             #HEEEEEEREEEEEEE
             
-            self.__cluster_service = self.client.cluster
+            self.__cluster_service = self.client.apiClient
         # This will return cluster service when Cluster() (Above) is called
         return self.__cluster_service
 
