@@ -99,6 +99,8 @@ class Configuration():
             The id
         """
         res = _os.environ["DATABRICKS_ORDGID"]
+        print("Databricks ORG ID")
+        print(res)
         return res
 
 
