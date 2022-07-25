@@ -12,8 +12,8 @@ dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
-echo "dbx_workspace_org_id=$dbx_workspace_org_id" >> $GITHUB_ENV
-echo "Workspace ID Set As Env Variable: $dbx_workspace_org_id"
+echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
+echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
 
 echo "workspace_id=$workspace_id" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $workspace_id"
