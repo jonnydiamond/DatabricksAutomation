@@ -107,7 +107,7 @@ def main(cluster_config_file):
 
     #next add .cluster
 
-    client.cluster
+    #client.cluster
 
 
     #print(client.host)
