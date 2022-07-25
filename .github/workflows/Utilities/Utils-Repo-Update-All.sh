@@ -41,12 +41,12 @@ for Repo_Folder in "${Repo_Folders[@]}"; do
     echo "${json}" | jq
 
 
-    RepoID=$( jq --arg Repo_Folder "$Repo_Folder" -r ' .repos[] | select( .path | contains($Repo_Folder)) | .id ' <<< "$reposWithManagePermissions")
+    RepoID=$( jq -r --arg Repo_Folder "$Repo_Folder" ' .repos[] | select( .path | contains($Repo_Folder)) | .id ' <<< "$reposWithManagePermissions")
     echo "Repo ID"
     echo $RepoID
 
 
-    branch=$( jq -r  ' .Repo_Configuration[]| select( .path | contains("Repo_Folder"))| .branch ' <<< "$json")
+    branch=$( jq -r --arg Repo_Folder "$Repo_Folder" ' .Repo_Configuration[] | select( .path | contains($Repo_Folder)) | .branch ' <<< "$json")
     echo "Branch"
     echo $branch
     JSON_STRING=$( jq -n -c \
