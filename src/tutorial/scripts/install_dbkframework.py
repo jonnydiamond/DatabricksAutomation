@@ -82,6 +82,8 @@ def main(cluster_config_file):
     Exception
         Raises when script failes
     """
+
+    # If you are working locally, then upload .env file --> Change file_load=True --> Also ensure from dotenv import load_dotenv
     configuration = Configuration(file_load=False)
     with open(cluster_config_file.strip(), 'r') as cl:
         cluster_configuration = json.load(cl)
