@@ -154,13 +154,25 @@ def main(cluster_config_file):
         parent.\
         absolute().\
         joinpath('pipelines')
+    
+    print("Pipelines Folder")
+    print(pipelines_folder)
 
     for module in modules_to_deploy:
+        print("Module")
+        print(module)
 
         package_folder = pipelines_folder.joinpath(module)
+        print("Package Folder")
+        print(package_folder)
+
         dist_folder = package_folder.joinpath('dist')
+        print("Dist Folder")
+        print(dist_folder)
 
         setup_file = package_folder.joinpath('setup.py')
+        print("Set Up File")
+        print(setup_file)
 
         command_string = f"cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel"
         res = os.system(command_string)
