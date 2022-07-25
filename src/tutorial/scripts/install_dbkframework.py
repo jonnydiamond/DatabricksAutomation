@@ -3,8 +3,11 @@
 ### I ADDED
 import sys
 import os
-PYTHONPATH = os.path
-print(PYTHONPATH)
+
+
+for path in sys.path:
+    print(path)
+
 ####
 
 
