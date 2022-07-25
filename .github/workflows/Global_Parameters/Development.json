@@ -72,5 +72,9 @@
             "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/Staging",
             "branch": "develop"
         }
-    ]
+    ],
+    "APPI_IK": "",
+    "DATABRICKS_HOST": "adb-1330140498858410.10.azuredatabricks.net",
+    "DATABRICKS_TOKEN": "dapi1c43a65fa1a9d7cba7bcb2a6fe00ea14-3",
+    "DATABRICKS_ORDGID": "1330140498858410"
 }

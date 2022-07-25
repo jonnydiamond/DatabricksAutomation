@@ -1,9 +1,9 @@
 #!/bin/bash
 
 az config set extension.use_dynamic_install=yes_without_prompt
-dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
-workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
-workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
+export dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
+export workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
+export workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
 # I have left the "Path" out as it doesn't seem to work. I think it might be permissions issue. States 'Resource is not found'. I wonder if this is because Devops PAT token was used for git configuring the service principal.
 ## The section below updates the repos. We will have it triggered when when the respective branch is updated (successfully merge request)

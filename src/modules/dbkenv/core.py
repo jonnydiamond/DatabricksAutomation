@@ -49,6 +49,10 @@ class Configuration():
             The connection string
         """
         res = _os.environ["APPI_IK"]
+
+
+        # Test Setting These As Environment Variables in The PipeLine And See If you Can Print Them Here.
+        
         return res
 
     @property

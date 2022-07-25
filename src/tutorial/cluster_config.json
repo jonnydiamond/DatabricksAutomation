@@ -1,7 +1,7 @@
 {
     "num_workers": 2,
-    "cluster_name": "devcluster",
-    "spark_version": "7.3.x-cpu-ml-scala2.12",
+    "cluster_name": "dbz-sp-cluster1",
+    "spark_version": "10.4.x-scala2.12",
     "spark_conf": {
         "spark.databricks.delta.preview.enabled": "true",
         "spark.sql.execution.arrow.enabled": "true"
@@ -13,6 +13,6 @@
     "spark_env_vars": {
         "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
     },
-    "autotermination_minutes": 60,
+    "autotermination_minutes": 20,
     "enable_elastic_disk": true
 }

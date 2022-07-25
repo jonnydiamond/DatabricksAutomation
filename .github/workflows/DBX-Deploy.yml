@@ -41,13 +41,18 @@ jobs:
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
       
-        
+
+  
       # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
       - name:                 Update Databricks Repo SP Folders
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
         env:
           environment:        ${{ matrix.environments }}
 
+      - name:                 Test Databricks Host Parameters 
+        run:                  bash ./.github/workflows/Utilities/Utils-Test.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
 
 
