@@ -176,8 +176,14 @@ def main(cluster_config_file):
 
         command_string = f"cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel"
         print(command_string)
+        
 
         res = os.system(command_string)
+
+        # NEW
+        res = os.system(f'cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel')
+
+        ####
         print("Print Result")
         print(res)
 
