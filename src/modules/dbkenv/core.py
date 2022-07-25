@@ -1,5 +1,7 @@
 import databricks_cli.sdk as _dbkcli
 import databricks_cli.sdk.service as _dss
+
+from databricks_api import DatabricksAPI
 from dbkcore.core import trace
 from dbkcore.core import Log
 # from dbkcore.core import Log
@@ -171,7 +173,10 @@ class ResourceClient():
         super().__init__()
         self.host = host
         self.personal_token = personal_token
-        self.__api_client = None
+        self.__api_client = DatabricksAPI(
+            host=self.host,
+            token=self.personal_token
+            )
 
 
     @property
@@ -184,8 +189,9 @@ class ResourceClient():
         ApiClient
             The client
         """
+
         if not self.__api_client:
-            self.__api_client = _dbkcli.ApiClient(
+            self.__api_client = DatabricksAPI(
                 host=self.host,
                 token=self.personal_token
             )
