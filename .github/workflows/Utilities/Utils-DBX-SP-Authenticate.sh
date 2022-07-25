@@ -8,6 +8,7 @@ echo "Logging in using Azure service priciple"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
 dbx_workspace_list=$(az databricks workspace list -g $param_ResourceGroupName -o tsv)
+echo dbx_workspace_list
 exit 1
 
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
