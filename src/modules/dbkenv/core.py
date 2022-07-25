@@ -173,10 +173,7 @@ class ResourceClient():
         super().__init__()
         self.host = host
         self.personal_token = personal_token
-        self.__api_client = DatabricksAPI(
-            host=self.host,
-            token=self.personal_token
-            )
+        self.__api_client = None
 
 
     @property

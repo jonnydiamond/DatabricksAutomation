@@ -103,9 +103,9 @@ def main(cluster_config_file):
 
     print(client.host)
     print(client.personal_token)
-    print(client.__api_client)
-
-    db = client.__api_client
+    print(client.apiClient)
+    
+    db = client.apiClient
     print(db.cluster.list_clusters(headers=None))
 
     print(client.apiClient)
