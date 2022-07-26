@@ -46,7 +46,13 @@ jobs:
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
+      - name:                 Create Python Wheel File
+        run:                  bash ./.github/workflows/Utilities/Utils-Create-Wheel.sh
+
       
+
+
+
 
   
       # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
@@ -54,53 +60,7 @@ jobs:
       #  run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
       #  env:
       #    environment:        ${{ matrix.environments }}
-
-
-      - name:                 Test Databricks Host Parameters 
-        run:                  bash ./.github/workflows/Utilities/Utils-Test.sh
-        env:
-          environment:        ${{ matrix.environments }}
-
-      #- name:                 Install Python dependencies
-      #  uses:                 py-actions/py-dependency-install@v3
-      #  with:
-      #    path:               "src/requirements.txt"
-      - name: bash run
-        shell: bash 
-        run: | 
-
-          pip install databricks-cli --upgrade
-          databricks --version
-
-          listClusters=$(curl -X GET \
-                          -H "Authorization: Bearer $token" \
-                          -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                          -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                          -H 'Content-Type: application/json' https://$DATABRICKS_HOST/api/2.0/clusters/list )
-          echo 'List Clusters'
-          echo $listClusters
-
-          echo 'DATABRICKS_CLUSTER_ID'
-          DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster1")) | .cluster_id ' <<< "$listClusters")
-          echo $DATABRICKS_CLUSTER_ID
-
-          
-          #Install Databricks CLI
-
-
-          databricks configure --token <<EOF
-          "https://adb-3476570679452994.14.azuredatabricks.net"
-          $DATABRICKS_TOKEN
-          EOF
-
-        
-          databricks workspace ls "/Users/ce79c2ef-170d-4f1c-a706-7814efb94898"
-          databricks workspace ls "/Users/bfe2a4ab-0f12-4fdc-b824-98241a6dad8e"
-          databricks workspace ls "/Users/ciaranh@microsoft.com"
-
-
-          sudo apt-get install pandoc
-
+    
       
 
 
