@@ -87,8 +87,8 @@ jobs:
           #Install Databricks CLI
 
           databricks configure --token <<EOF
-          https://adb-3476570679452994.14.azuredatabricks.net
           ${DATABRICKS_AAD_TOKEN}
+          https://adb-3476570679452994.14.azuredatabricks.net
           EOF
         
           databricks workspace ls /Users/ce79c2ef-170d-4f1c-a706-7814efb94898
