@@ -79,7 +79,7 @@ jobs:
           databricks-connect configure <<EOF
           "y" 
           ${DATABRICKS_HOST}
-          ${DATABRICKS_TOKEN}
+          ${param_DATABRICKS_TOKEN}
           ${DATABRICKS_CLUSTER_ID}
           ${DATABRICKS_ORDGID}
           15001
