@@ -86,13 +86,10 @@ jobs:
           
           #Install Databricks CLI
 
-
-          databricks configure --token
-
-          #databricks configure --token <<EOF
-          #"https://adb-3476570679452994.14.azuredatabricks.net"
-          #${param_DATABRICKS_TOKEN}
-          #EOF
+          databricks configure --token <<EOF
+          ${DATABRICKS_HOST}
+          ${param_DATABRICKS_TOKEN}
+          EOF
         
           databricks workspace ls /Users/ce79c2ef-170d-4f1c-a706-7814efb94898
           databricks workspace ls /Users/bfe2a4ab-0f12-4fdc-b824-98241a6dad8e 
@@ -108,9 +105,7 @@ jobs:
           #EOF
 
           sudo apt-get install pandoc
-        env:
-          DATABRICKS_HOST: "https://$(DATABRICKS_HOST)"
-          DATABRICKS_TOKEN: $(param_DATABRICKS_TOKEN)
+        
 
 
       - name:                 Upload Wheel Files To Cluster 

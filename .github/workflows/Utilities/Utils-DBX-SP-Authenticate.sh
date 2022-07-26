@@ -18,8 +18,14 @@ echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
 echo "workspace_id=$workspace_id" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $workspace_id"
 
-echo "DATABRICKS_HOST=$DATABRICKS_HOST" >> $GITHUB_ENV
+echo "DATABRICKS_INSTANCE=$DATABRICKS_INSTANCE" >> $GITHUB_ENV
+echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
+
+echo "DATABRICKS_HOST=https://$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
+
+
+
 
 echo "Databricks OrgID as Env Variables"
 
