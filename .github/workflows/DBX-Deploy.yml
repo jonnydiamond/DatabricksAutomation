@@ -65,8 +65,9 @@ jobs:
       #  uses:                 py-actions/py-dependency-install@v3
       #  with:
       #    path:               "src/requirements.txt"
-
-      - run: | 
+      - name: bash run
+        shell: bash 
+        run: | 
 
           pip install databricks-cli --upgrade
           databricks --version
@@ -101,8 +102,7 @@ jobs:
           #EOF
 
           sudo apt-get install pandoc
-        shell:
-          bash 
+        
 
 
         
