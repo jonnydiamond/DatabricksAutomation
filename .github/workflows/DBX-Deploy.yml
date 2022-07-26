@@ -87,7 +87,7 @@ jobs:
           #Install Databricks CLI
 
           databricks configure --token <<EOF
-          https://${DATABRICKS_HOST}
+          "https://adb-3476570679452994.14.azuredatabricks.net"
           ${DATABRICKS_AAD_TOKEN}
           EOF
 
