@@ -87,22 +87,22 @@ jobs:
           #Install Databricks CLI
 
           databricks configure --token <<EOF
+          "https://adb-3476570679452994.14.azuredatabricks.net"
           ${DATABRICKS_AAD_TOKEN}
-          https://adb-3476570679452994.14.azuredatabricks.net
           EOF
         
           databricks workspace ls /Users/ce79c2ef-170d-4f1c-a706-7814efb94898
           databricks workspace ls /Users/bfe2a4ab-0f12-4fdc-b824-98241a6dad8e 
           databricks workspace ls /Users/ciaranh@microsoft.com
 
-          databricks-connect configure <<EOF
-          "y" 
-          "https://${DATABRICKS_HOST}"
-          ${param_DATABRICKS_TOKEN}
-          ${DATABRICKS_CLUSTER_ID}
-          ${DATABRICKS_ORDGID}
-          15001
-          EOF
+          #databricks-connect configure <<EOF
+          #"y" 
+          #"https://${DATABRICKS_HOST}"
+          #${param_DATABRICKS_TOKEN}
+          #${DATABRICKS_CLUSTER_ID}
+          #${DATABRICKS_ORDGID}
+          #15001
+          #EOF
 
           sudo apt-get install pandoc
 
