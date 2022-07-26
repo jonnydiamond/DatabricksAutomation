@@ -88,7 +88,7 @@ jobs:
 
           databricks-connect configure <<EOF
           "y" 
-          ${DATABRICKS_HOST}
+          "https://${DATABRICKS_HOST}"
           ${param_DATABRICKS_TOKEN}
           ${DATABRICKS_CLUSTER_ID}
           ${DATABRICKS_ORDGID}
