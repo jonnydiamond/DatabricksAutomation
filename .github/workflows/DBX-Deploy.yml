@@ -86,10 +86,7 @@ jobs:
           
           #Install Databricks CLI
 
-          databricks configure --token <<EOF
-          "$(DATABRICKS_HOST)"
-          ${param_DATABRICKS_TOKEN}
-          EOF
+          databricks configure --token
         
           databricks workspace ls /Users/ce79c2ef-170d-4f1c-a706-7814efb94898
           databricks workspace ls /Users/bfe2a4ab-0f12-4fdc-b824-98241a6dad8e 
