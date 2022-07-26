@@ -61,10 +61,10 @@ jobs:
         env:
           environment:        ${{ matrix.environments }}
 
-      - name:                 Install Python dependencies
-        uses:                 py-actions/py-dependency-install@v3
-        with:
-          path:               "src/requirements.txt"
+      #- name:                 Install Python dependencies
+      #  uses:                 py-actions/py-dependency-install@v3
+      #  with:
+      #    path:               "src/requirements.txt"
 
       - run: | 
 
