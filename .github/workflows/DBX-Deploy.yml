@@ -110,7 +110,7 @@ jobs:
           sudo apt-get install pandoc
         env:
           DATABRICKS_HOST: "https://$(DATABRICKS_HOST)"
-          DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
+          DATABRICKS_TOKEN: $(param_DATABRICKS_TOKEN)
 
 
       - name:                 Upload Wheel Files To Cluster 
