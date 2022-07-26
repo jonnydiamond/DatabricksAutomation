@@ -82,14 +82,14 @@ jobs:
           DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster1")) | .cluster_id ' <<< "$listClusters")
           echo $DATABRICKS_CLUSTER_ID
 
-
+          
           #Install Databricks CLI
-          echo "$DATABRICKS_HOST
+          echo "https://${DATABRICKS_HOST}
           $param_DATABRICKS_TOKEN" | databricks configure --token
 
           databricks-connect configure <<EOF
           "y" 
-          "https://$DATABRICKS_HOST"
+          "https://${DATABRICKS_HOST}"
           ${param_DATABRICKS_TOKEN}
           ${DATABRICKS_CLUSTER_ID}
           ${DATABRICKS_ORDGID}
