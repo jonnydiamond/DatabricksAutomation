@@ -9,7 +9,7 @@ az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $A
 
 DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceId" -o tsv)
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
-DATABRICKS_INSTANCE=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
+DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
@@ -21,7 +21,7 @@ echo "Workspace ID Set As Env Variable: $workspace_id"
 echo "DATABRICKS_INSTANCE=$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
 
-echo "DATABRICKS_HOST='https://$DATABRICKS_INSTANCE'" >> $GITHUB_ENV
+echo "DATABRICKS_HOST=$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
 
 echo "DATABRICKS_TOKEN=$param_DATABRICKS_TOKEN" >> $GITHUB_ENV
