@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.8'
 
       - name:                 'Az CLI login ${{ matrix.environments }}'
         uses:                 azure/login@v1
@@ -45,6 +45,7 @@ jobs:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
       
 
   
@@ -65,12 +66,27 @@ jobs:
         with:
           path:               "src/requirements.txt"
 
-      - name: docgenerator.py dependency instal;
-        run: |
+      - run: | 
+          listClusters=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' https://$DATABRICKS_HOST/api/2.0/clusters/list )
+          echo 'List Clusters'
+          echo $listClusters
+
+          echo 'DATABRICKS_CLUSTER_ID'
+          DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster1")) | .cluster_id ' <<< "$listClusters")
+          echo $DATABRICKS_CLUSTER_ID
+
+
+          databricks-connect configure <<EOF
+          "y" 
+          ${DATABRICKS_HOST}
+          ${DATABRICKS_TOKEN}
+          ${DATABRICKS_CLUSTER_ID}
+          ${DATABRICKS_ORDGID}
+          15001
+          EOF
+
           sudo apt-get install pandoc
-          #pip install wheel
-          #ls
-          #python setup.py bdist_wheel 
+
 
       - name:                 Upload Wheel Files To Cluster 
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
