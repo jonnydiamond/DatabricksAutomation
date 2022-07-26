@@ -67,7 +67,14 @@ jobs:
           path:               "src/requirements.txt"
 
       - run: | 
-          listClusters=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' https://$DATABRICKS_HOST/api/2.0/clusters/list )
+
+          pip install databricks-cli
+
+          listClusters=$(curl -X GET \
+                          -H "Authorization: Bearer $token" \
+                          -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                          -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                          -H 'Content-Type: application/json' https://$DATABRICKS_HOST/api/2.0/clusters/list )
           echo 'List Clusters'
           echo $listClusters
 
@@ -75,6 +82,9 @@ jobs:
           DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster1")) | .cluster_id ' <<< "$listClusters")
           echo $DATABRICKS_CLUSTER_ID
 
+          #Install Databricks CLI
+          echo "$DATABRICKS_HOST
+          $param_DATABRICKS_TOKEN" | databricks configure --token
 
           databricks-connect configure <<EOF
           "y" 
