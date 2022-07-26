@@ -101,8 +101,6 @@ jobs:
           #EOF
 
           sudo apt-get install pandoc
-        env:
-          DATABRICKS_TOKEN: $param_DATABRICKS_TOKEN
         shell:
           bash 
 
