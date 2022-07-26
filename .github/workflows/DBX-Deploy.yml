@@ -87,7 +87,7 @@ jobs:
           #Install Databricks CLI
 
           databricks configure --token <<EOF
-          $(DATABRICKS_HOST)
+          "$(DATABRICKS_HOST)"
           ${param_DATABRICKS_TOKEN}
           EOF
         
