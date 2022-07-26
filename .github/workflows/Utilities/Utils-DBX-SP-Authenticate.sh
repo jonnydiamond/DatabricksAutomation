@@ -24,7 +24,7 @@ echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
 echo "DATABRICKS_HOST=https://$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
 
-echo "DATABRICKS_TOKEN=$param_DATABRICKS_TOKEN>> $GITHUB_ENV
+echo "DATABRICKS_TOKEN=$param_DATABRICKS_TOKEN" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_TOKEN"
 
 
