@@ -9,9 +9,9 @@ pip install databricks-cli --upgrade
 #pip install -U databricks-connect=="10.4.0b0"
 #apt install openjdk-8-jdk
 
-databricks configure <<EOF
+databricks configure --token <<EOF
 https://adb-3476570679452994.14.azuredatabricks.net/
-"$DATABRICKS_TOKEN"
+$DATABRICKS_TOKEN
 EOF
 
 
@@ -20,6 +20,7 @@ echo "Commands"
 databricks -h 
 
 databricks fs ls
+databricks fs mkdirs dbfs:/tmp/new-dir
 
 
 #databricks-connect configure <<EOF
