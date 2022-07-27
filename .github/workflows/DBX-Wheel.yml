@@ -5,16 +5,12 @@
 
 name: Databricks Deploy
 
-on: push 
+on: workflow_dispatch
 #workflow_dispatch
 
 permissions:
       id-token:               write
       contents:               read
-
-
-
-
 
 
 
@@ -56,3 +52,8 @@ jobs:
 
 
         shell: bash
+        
+      - name:                 Upload Wheel Files To Cluster 
+        run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
+        env:
+          environment:        ${{ matrix.environments }}
