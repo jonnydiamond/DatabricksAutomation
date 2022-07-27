@@ -3,6 +3,7 @@ echo $DATABRICKS_TOKEN
 echo $DATABRICKS_ORDGID
 echo $DATABRICKS_CLUSTER_ID
 
+pip install databricks-connect
 
 echo "y
 $(DATABRICKS_HOST)
