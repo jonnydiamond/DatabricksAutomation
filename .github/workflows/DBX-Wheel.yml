@@ -14,9 +14,7 @@ permissions:
       id-token:               write
       contents:               read
 
-
 jobs:
-
   DBX_CICD_Deployment:
       name:                     DBX_CICD_Deployment
       runs-on:                  ubuntu-latest
@@ -24,32 +22,35 @@ jobs:
         matrix:
           environments:          [Development]    
       steps:
-        - uses:                 actions/checkout@v3  
+        - uses:                 actions/checkout@v3
 
-
-        #  az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
+        # az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
+        
         # Login To testappciaran. This Has Higher Privileges/ Ownership To Create Resources/RBACs. We Generally Wouldn't Be Given 
         # SP Secrets etc. As This Would Confer Too Much Power. Super Users Will Use This Login. DBX SP should have contributor rights.
+        
         # It is important to set up federated connections (below)
         # https://goodworkaround.com/2021/12/21/another-deep-dive-into-azure-ad-workload-identity-federation-using-github-actions/
 
 
-        - name:                 'Az CLI login ${{ matrix.environments }}'
+        - name:                 Azure Login - ${{ matrix.environments }}
           uses:                 azure/login@v1
           with:
             creds:              ${{secrets.AZURE_CREDENTIALS}}
-        
-          
-        - name:                 JSON To Env
+      
+
+        - name:                 Store JSON Param File Variables As Environ Variables
           uses:                 antifree/json-to-variables@v1.0.1
           with:
             filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
             prefix:             param
 
+
         - name:                 Deploy DBX CICD Azure Resources
           run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
           env:
             environment:        ${{ matrix.environments }}
+
 
         - name:                 Assign RBAC Permissions 
           run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
@@ -57,41 +58,50 @@ jobs:
             environment:        ${{ matrix.environments }}
 
         # Switch To DBX SP.
+
         # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
+        
         # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
         # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right
 
-        - name:                 Authenticate to DBX SP
+
+        - name:                 Authenticate to DBX Service Principal
           run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
           env:
             ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
             ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
             ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
+
         - name:                 Create And Store PAT Token In Key Vault
           run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
 
-        - name:                 Create Secret Scopes
+
+        - name:                 Create DBX Secret Scopes
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
         
-        - name:                 Create Clusters
+
+        - name:                 Create DBX Clusters
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
           env:
             environment:        ${{ matrix.environments }}
-        - name:                 Create Repos
+
+
+        - name:                 Create DBX Repos
           run:                  sh ./.github/workflows/Utilities/Utils-Repo-Create.sh
           env:
             environment:        ${{ matrix.environments }}
         
   
-  UpdateRepos:
+  UpdateRepoFoldersByBranch:
     needs:                    DBX_CICD_Deployment 
-    name:                     UpdateRepo
+    
+    name:                     Update Each Repo Folder By Respective Git Branch
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        #Azure Resource Environments
-        environments:          [Development, Production]    
+        #This Relates To The Folders In DBX Repos
+        environments:          [Development, Production, Staging]    
     steps:
       - uses:                 actions/checkout@v3  
       - name:                 Setup Python
@@ -155,54 +165,53 @@ jobs:
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
 
-      - name:                   Databricks Connect
+      - name:                   Install + Configure Databricks CLI
         run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
 
-      #- name:                   Install Wheel
-      #  run: | 
-      #    # Install Packages
+      - name:                   Create A Wheel File (Example)
+        run: | 
+          # Install Packages - TO DO - Do Via Requirements.txt File
 
-      #    python -m pip install --user --upgrade setuptools wheel
-      #    sudo apt-get install pandoc
-      #    #sudo apt-get install pdoc
-      #    pip3 install pdoc3
-      #    pip3 install pypandoc
-      #    pip3 install opencensus
-      #    pip3 install opencensus-ext-azure
-      #    pip3 install typeguard
-      #    pip3 install pytest
-      #    pip3 install python-dotenv
-      #    pip3 install jupyter
-      #    pip3 install databricks-api
-      #    pip3 install pandas
-      #    pip3 install pydataset
-      #    pip3 install pyspark 
-      #    pip3 install requests
+          python -m pip install --user --upgrade setuptools wheel
+          sudo apt-get install pandoc
+          #sudo apt-get install pdoc
+          pip3 install pdoc3
+          pip3 install pypandoc
+          pip3 install opencensus
+          pip3 install opencensus-ext-azure
+          pip3 install typeguard
+          pip3 install pytest
+          pip3 install python-dotenv
+          pip3 install jupyter
+          pip3 install databricks-api
+          pip3 install pandas
+          pip3 install pydataset
+          pip3 install pyspark 
+          pip3 install requests
 
 
           # Navigate To The Setup.Py File
-      #    ls
-      #    cd src
-      #    cd pipelines
-      #    cd dbkframework
+          ls
+          cd src
+          cd pipelines
+          cd dbkframework
 
 
           # Create The Python Wheel File
-      #    python setup.py sdist bdist_wheel
+          python setup.py sdist bdist_wheel
 
-      #    # Display The New Python Wheel (dbkframework-20220727.post112208-py3-none-any.whl)
-      #    cd dist
-      #    echo "Name of Pyton Wheel File"
-      #    ls
+          # Display The New Python Wheel (dbkframework-20220727.post112208-py3-none-any.whl)
+          cd dist
+          echo "Name of Pyton Wheel File"
+          ls
 
 
           # Install Wheel
-      #    pip uninstall dbkframework-1-py3-none-any.whl
-      #    pip install dbkframework-1-py3-none-any.whl
-      #  shell: bash
+          pip uninstall dbkframework-1-py3-none-any.whl
+          pip install dbkframework-1-py3-none-any.whl
+        shell: bash
 
-
-      - name:                 Upload Wheel Files To Cluster 
+      - name:                 PY - Create Wheel File And Upload To Cluster
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
         env:
           environment:        ${{ matrix.environments }}
