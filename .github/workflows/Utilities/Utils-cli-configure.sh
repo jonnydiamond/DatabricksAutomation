@@ -5,9 +5,19 @@ echo $DATABRICKS_CLUSTER_ID
 
 pip install databricks-connect
 
-echo "y
-'"$DATABRICKS_HOST"'
-$(DATABRICKS_TOKEN)
-$(DATABRICKS_CLUSTER_ID)
-$(DATABRICKS_ORDGID)
-15001" | databricks-connect configure
+
+databricks-connect configure <<EOF
+"y" 
+${DATABRICKS-HOST}
+${DATABRICKS-PAT}
+${DATABRICKS-CLUSTER-ID}
+${DATABRICKS-WORKSPACE-ORG-ID}
+15001
+EOF
+
+#echo "y
+#'"$DATABRICKS_HOST"'
+#$(DATABRICKS_TOKEN)
+#$(DATABRICKS_CLUSTER_ID)
+#$(DATABRICKS_ORDGID)
+#15001" | databricks-connect configure
