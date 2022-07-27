@@ -45,63 +45,28 @@ jobs:
           ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
-
-      - name:                   Install Wheel
-        run: | 
-          python -m pip install --user --upgrade setuptools wheel
-          sudo apt-get install pandoc
-          #sudo apt-get install pdoc
-          pip3 install pdoc3
-          pip3 install requests
-          ls
-          cd src
-          cd pipelines
-          cd dbkframework
-
-          #export PATH=”$PATH:/src/modules” 
-
-          
-          python setup.py sdist bdist_wheel
-
-          cd dist
-          ls
-
-
-        shell: bash
-
-        
-
-
-
-
+      
   
       # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
-      #- name:                 Update Databricks Repo SP Folders
-      #  run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
-      #  env:
-      #    environment:        ${{ matrix.environments }}
+      - name:                 Update Databricks Repo SP Folders
+        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
+        env:
+          environment:        ${{ matrix.environments }}
     
-      
-
-
       - name:                 Upload Wheel Files To Cluster 
         run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
         env:
           environment:        ${{ matrix.environments }}
   
 
-
-
-
-
-  #DBX_CICD_Deployment:
-  #  name:                     DBX_CICD_Deployment
-  #  runs-on:                  ubuntu-latest
-  #  strategy:
-  #    matrix:
-  #      environments:          [Development, Production]    
-  #  steps:
-  #    - uses:                 actions/checkout@v3  
+  DBX_CICD_Deployment:
+    name:                     DBX_CICD_Deployment
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [Development, Production]    
+    steps:
+      - uses:                 actions/checkout@v3  
 
 
       #  az ad sp create-for-rbac -n DevOpsAgentSP --role Owner --scopes /subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994 --sdk-auth
@@ -111,54 +76,54 @@ jobs:
       # https://goodworkaround.com/2021/12/21/another-deep-dive-into-azure-ad-workload-identity-federation-using-github-actions/
 
 
-   #   - name:                 'Az CLI login ${{ matrix.environments }}'
-   #     uses:                 azure/login@v1
-   #     with:
-   #       creds:              ${{secrets.AZURE_CREDENTIALS}}
+      - name:                 'Az CLI login ${{ matrix.environments }}'
+        uses:                 azure/login@v1
+        with:
+          creds:              ${{secrets.AZURE_CREDENTIALS}}
       
         
-   #   - name:                 JSON To Env
-   #     uses:                 antifree/json-to-variables@v1.0.1
-   #     with:
-   #       filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
-   #       prefix:             param
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
 
-      #- name:                 Deploy DBX CICD Azure Resources
-      #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-      #  env:
-      #    environment:        ${{ matrix.environments }}
+      - name:                 Deploy DBX CICD Azure Resources
+        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
-      #- name:                 Assign RBAC Permissions 
-      #  run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
-      #  env:
-      #    environment:        ${{ matrix.environments }}
+      - name:                 Assign RBAC Permissions 
+        run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+        env:
+          environment:        ${{ matrix.environments }}
 
       # Switch To DBX SP.
       # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
       # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
       # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right
 
-  #    - name:                 Authenticate to DBX SP
-  #      run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
-  #      env:
-  #        ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
-  #        ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
-  #        ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+      - name:                 Authenticate to DBX SP
+        run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+        env:
+          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
-  #    - name:                 Create And Store PAT Token In Key Vault
-  #      run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
+      - name:                 Create And Store PAT Token In Key Vault
+        run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
 
-  #    - name:                 Create Secret Scopes
-  #      run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
-  #    
-  #    - name:                 Create Clusters
-  #      run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
-  #      env:
-  #        environment:        ${{ matrix.environments }}
-  #    - name:                 Create Repos
-  #      run:                  sh ./.github/workflows/Utilities/Utils-Repo-Create.sh
-  #      env:
-  #        environment:        ${{ matrix.environments }}
+      - name:                 Create Secret Scopes
+        run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
+      
+      - name:                 Create Clusters
+        run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
+        env:
+          environment:        ${{ matrix.environments }}
+      - name:                 Create Repos
+        run:                  sh ./.github/workflows/Utilities/Utils-Repo-Create.sh
+        env:
+          environment:        ${{ matrix.environments }}
       
   
 
