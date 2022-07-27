@@ -30,6 +30,8 @@ jobs:
 
       - name:                   Install Wheel
         run: | 
+          # Install Packages
+
           python -m pip install --user --upgrade setuptools wheel
           sudo apt-get install pandoc
           #sudo apt-get install pdoc
@@ -44,22 +46,32 @@ jobs:
           pip3 install databricks-api
           pip3 install pandas
           pip3 install pydataset
-          pip3 install pyspark
-
-          
+          pip3 install pyspark 
           pip3 install requests
+
+
+          # Navigate To The Setup.Py File
           ls
           cd src
           cd pipelines
           cd dbkframework
 
-          #export PATH=”$PATH:/src/modules” 
 
-          
+          # Create The Python Wheel File
           python setup.py sdist bdist_wheel
 
+          # Display The New Python Wheel (dbkframework-20220727.post112208-py3-none-any.whl)
           cd dist
+          echo "Name of Pyton Wheel File"
           ls
+
+
+          # Install Wheel
+          pip uninstall -y dbkframework-20220727.post112208-py3-none-any.whl
+          pip install -y dbkframework-20220727.post112208-py3-none-any.whl
+
+
+
 
 
         shell: bash
