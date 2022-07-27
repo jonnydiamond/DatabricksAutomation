@@ -47,7 +47,7 @@ jobs:
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
       
   
-      # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'
+      # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'.
       - name:                 Update Databricks Repo SP Folders
         run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
         env:
