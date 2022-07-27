@@ -18,9 +18,9 @@ EOF
 
 echo "Commands"
 databricks -h 
-echo databricks -h 
-databricks fs -h
-echo databricks fs -h
+
+databricks fs ls
+
 
 #databricks-connect configure <<EOF
 #y 
