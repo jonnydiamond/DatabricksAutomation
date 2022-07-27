@@ -16,7 +16,7 @@ azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" 
 DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $azKeyVaultName --query "value" -o tsv)
 
 
-### Creation Of Important Environment Variables For Later Steps
+### Creation Of Important Environment Variables For Later Steps.
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
 
