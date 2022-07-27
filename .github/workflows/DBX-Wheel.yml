@@ -136,7 +136,7 @@ jobs:
     
 
   CreateWheel:
-    needs:                    [DBX_CICD_Deployment, UpdateRepos]
+    needs:                    [DBX_CICD_Deployment, UpdateRepoFoldersByBranch]
     name:                     CreateWheel
     runs-on:                  ubuntu-latest
     strategy:
