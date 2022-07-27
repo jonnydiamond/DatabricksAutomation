@@ -54,7 +54,13 @@ jobs:
           cd src
           cd pipelines
           cd dbkframework
+          
+          python setup.py sdist bdist_wheel
+
+          cd dist
           ls
+
+
         shell: bash
 
         
