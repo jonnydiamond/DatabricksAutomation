@@ -28,7 +28,7 @@ jobs:
       - name:                 Setup Python
         uses:                 actions/setup-python@v4
         with:
-          python-version: '3.6'
+          python-version: '3.8'
 
       - name:                 JSON To Env
         uses:                 antifree/json-to-variables@v1.0.1
@@ -45,8 +45,12 @@ jobs:
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
 
-      - name:                   Databricks Connect
-        run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
+      - name: install-databricks-cli
+        uses: microsoft/install-databricks-cli@v1.0.0
+
+
+     # - name:                   Databricks Connect
+     #   run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
 
 #########################################################################################
 
