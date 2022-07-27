@@ -8,16 +8,14 @@ echo "Logging in using Azure service priciple"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
 ### Remove This In Time
-listClusters=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -H 'Content-Type: application/json' https://$workspaceUrl/api/2.0/clusters/list )
-DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster2")) | .cluster_id ' <<< "$listClusters")
 DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceId" -o tsv)
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
 
-echo "DATABRICKS_CLUSTER_ID=$DATABRICKS_CLUSTER_ID" >> $GITHUB_ENV
-echo "Workspace ID Set As Env Variable: $DATABRICKS_CLUSTER_ID"
+
+
 
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
@@ -56,3 +54,11 @@ mgmt_access_token=$(jq .access_token -r <<< "$az_mgmt_resource_endpoint" )
 echo "mgmt_access_token=$mgmt_access_token" >> $GITHUB_ENV
 echo "Management Access Set As Env Variable: $mgmt_access_token"
 
+
+
+### Remove
+listClusters=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' https://$DATABRICKS_INSTANCE/api/2.0/clusters/list )
+DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster2")) | .cluster_id ' <<< "$listClusters")
+echo "DATABRICKS_CLUSTER_ID=$DATABRICKS_CLUSTER_ID" >> $GITHUB_ENV
+echo "Workspace ID Set As Env Variable: $DATABRICKS_CLUSTER_ID"
+###
