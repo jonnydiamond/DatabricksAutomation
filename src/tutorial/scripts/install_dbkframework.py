@@ -180,8 +180,8 @@ def main(cluster_config_file):
 
         res = os.system(command_string)
 
-        # NEW
-        #res = os.system(f'cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel')
+        # NEW .
+        #res = os.system(f'cd {str(package_folder)} && python {str(setup_file)} sdist bdist_wheel') 
 
 
         #####

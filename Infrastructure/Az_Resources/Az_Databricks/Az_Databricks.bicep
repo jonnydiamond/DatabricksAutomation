@@ -45,6 +45,7 @@ resource azDatabricksWS 'Microsoft.Databricks/workspaces@2021-04-01-preview' = {
   sku: {
     name: pricingTier
   }
+  
 
 }
 
