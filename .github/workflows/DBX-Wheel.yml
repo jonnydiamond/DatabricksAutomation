@@ -67,8 +67,8 @@ jobs:
 
 
           # Install Wheel
-          pip uninstall -y dbkframework-20220727.post112208-py3-none-any.whl
-          pip install -y dbkframework-20220727.post112208-py3-none-any.whl
+          pip uninstall -y dbkframework-1-py3-none-any.whl
+          pip install -y dbkframework-1-py3-none-any.whl
 
 
 

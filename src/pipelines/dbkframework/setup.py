@@ -42,7 +42,11 @@ with open(str(path_readme), 'w', encoding="utf-8") as out:
     out.write(documentation)
 
 today = datetime.today()
-version = f'{today:%Y}{today:%m}{today:%d}_{today:%H}{today:%M}{today:%S}'
+#version = f'{today:%Y}{today:%m}{today:%d}_{today:%H}{today:%M}{today:%S}'
+
+# Amendments
+version = 1
+
 
 setuptools.setup(
     name=package_name,
