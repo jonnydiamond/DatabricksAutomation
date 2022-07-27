@@ -11,7 +11,7 @@ reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
                         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
                         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
                         -H 'Content-Type: application/json' \
-                        https://$workspaceUrl/api/2.0/repos )
+                        https://$DATABRICKS_INSTANCE/api/2.0/repos )
 #echo $reposWithManagePermissions
 json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
 #echo "${json}" | jq
@@ -33,7 +33,7 @@ for Repo_Folder in "${Repo_Folders[@]}"; do
                         -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
                         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
                         -H 'Content-Type: application/json' \
-                        https://$workspaceUrl/api/2.0/repos )
+                        https://$DATABRICKS_INSTANCE/api/2.0/repos )
     echo $reposWithManagePermissions
     json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
     echo "${json}" | jq
@@ -58,7 +58,7 @@ for Repo_Folder in "${Repo_Folders[@]}"; do
         -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
         -H 'Content-Type: application/json' \
         -d $JSON_STRING \
-        https://$workspaceUrl/api/2.0/repos/$RepoID )
+        https://$DATABRICKS_INSTANCE/api/2.0/repos/$RepoID )
 
     echo $update_repo_response
 done

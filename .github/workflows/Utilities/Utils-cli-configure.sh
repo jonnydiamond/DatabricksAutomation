@@ -9,9 +9,9 @@ pip install databricks-cli --upgrade
 # DATABRICKS_HOST : It Must Start As https:// : It Must Not End In '/'
 # DATABRICKS_TOKEN : It Must Not Be Expired. 
 
-secretName="dbkstoken"
+
 azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
-secret_val=$(az keyvault secret show --name $secretName --vault-name $azKeyVaultName --query "value")
+secret_val=$(az keyvault secret show --name "dbkstoken" --vault-name $azKeyVaultName --query "value")
 
 
 databricks configure --token 
