@@ -8,7 +8,7 @@ pip install databricks-connect
 
 databricks-connect configure <<EOF
 y 
-$DATABRICKS_HOST
+https://adb-1330140498858410.10.azuredatabricks.net
 $DATABRICKS_TOKEN
 $DATABRICKS_CLUSTER_ID
 $DATABRICKS_ORDGID
