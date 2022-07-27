@@ -13,6 +13,7 @@ $DATABRICKS_HOST
 $DATABRICKS_TOKEN
 EOF
 
+echo "Commands"
 databricks -h 
 echo databricks -h 
 databricks fs -h
