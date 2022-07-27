@@ -2,45 +2,23 @@
 
 echo $DATABRICKS_HOST
 echo $DATABRICKS_TOKEN
-echo $DATABRICKS_ORDGID
-echo $DATABRICKS_CLUSTER_ID
 pip install databricks-cli --upgrade
-#pip uninstall pyspark
-#pip install -U databricks-connect=="10.4.0b0"
-#apt install openjdk-8-jdk
+
+# Change absolutely NOTHING.
+# It would seem that the PAT Token That I was Running Off had expired! Ensure That The Environment Variables Are Set:
+# DATABRICKS_HOST : It Must Start As https:// : It Must Not End In '/'
+# DATABRICKS_TOKEN : It Must Not Be Expired. 
+
+secretName="dbkstoken"
+azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+secret_val=$(az keyvault secret show --name $secretName --vault-name $azKeyVaultName --query "value")
+
 
 databricks configure --token 
-
-
 
 echo "Commands"
 databricks -h 
 
 databricks fs ls
 databricks fs mkdirs dbfs:/tmp/new-dir
-
-
-#databricks-connect configure <<EOF
-#y 
-#"$DATABRICKS_HOST"
-#$DATABRICKS_TOKEN
-#$DATABRICKS_CLUSTER_ID
-#$DATABRICKS_ORDGID
-#15001
-#EOF
-#databricks-connect configure
-#databricks-connect test
-
-
-#echo $DATABRICKS_HOST
-#echo $DATABRICKS_TOKEN
-#echo $DATABRICKS_ORDGID
-#echo $DATABRICKS_CLUSTER_ID
-#echo "Second Attempt"
-#echo "y
-#"$DATABRICKS_HOST"
-#$DATABRICKS_TOKEN
-#$DATABRICKS_CLUSTER_ID
-#$DATABRICKS_ORDGID
-#15001" | databricks-connect configure
 

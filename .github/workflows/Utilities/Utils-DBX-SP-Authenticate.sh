@@ -12,11 +12,11 @@ DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --q
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
+azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $azKeyVaultName --query "value")
 
 
-
-
-
+### Creation Of Important Environment Variables For Later Steps
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
 
@@ -29,15 +29,12 @@ echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
 echo "DATABRICKS_HOST=https://$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
 
-echo "DATABRICKS_TOKEN=$param_DATABRICKS_TOKEN" >> $GITHUB_ENV
-echo "Workspace URL Set As Env Variable: $DATABRICKS_API_TOKEN"
-
-
+echo "DATABRICKS_TOKEN=$DATABRICKS_TOKEN" >> $GITHUB_ENV
+echo "Workspace URL Set As Env Variable: $DATABRICKS_TOKEN"
 
 
 echo "Testing Python Path For Uploading Wheel File"
 echo "PYTHONPATH=src/modules" >> $GITHUB_ENV
-
 
 
 # token response for the azure databricks app  
