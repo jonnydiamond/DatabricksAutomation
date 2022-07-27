@@ -4,7 +4,8 @@ echo $DATABRICKS_ORDGID
 echo $DATABRICKS_CLUSTER_ID
 
 pip uninstall pyspark
-pip install -U databricks-connect=="10.4.0"
+pip install -U databricks-connect=="10.4.0b0"
+apt install openjdk-8-jdk
 
 
 databricks-connect configure <<EOF
