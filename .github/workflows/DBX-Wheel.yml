@@ -37,6 +37,15 @@ jobs:
           pip3 install pypandoc
           pip3 install opencensus
           pip3 install opencensus-ext-azure
+          pip3 install typeguard
+          pip3 install pytest
+          pip3 install python-dotenv
+          pip3 install jupyter
+          pip3 install databricks-api
+          pip3 install pandas
+          pip3 install pydataset
+          pip3 install pyspark
+
           
           pip3 install requests
           ls
