@@ -3,17 +3,19 @@ echo $DATABRICKS_TOKEN
 echo $DATABRICKS_ORDGID
 echo $DATABRICKS_CLUSTER_ID
 
-pip install databricks-connect
+pip install -U databricks-connect
 
 
 databricks-connect configure <<EOF
 y 
-$DATABRICKS_HOST
-$DATABRICKS_TOKEN
-$DATABRICKS_CLUSTER_ID
-$DATABRICKS_ORDGID
+"$DATABRICKS_HOST"
+"$DATABRICKS_TOKEN"
+"$DATABRICKS_CLUSTER_ID"
+"$DATABRICKS_ORDGID"
 15001
 EOF
+
+databricks-connect test
 
 #databricks-connect test
 
