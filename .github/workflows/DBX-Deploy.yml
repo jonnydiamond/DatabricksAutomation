@@ -50,7 +50,7 @@ jobs:
         run: | 
           python -m pip install --user --upgrade setuptools wheel
           sudo apt-get install pandoc
-          sudo apt-get install pdoc
+          #sudo apt-get install pdoc
           pip3 install pdoc3
           pip3 install requests
           ls
