@@ -10,7 +10,7 @@ pip install databricks-cli --upgrade
 
 
 "$DATABRICKS_HOST
-$DATABRICKS_TOKEN" | databricks-connect configure
+$DATABRICKS_TOKEN" | databricks configure
 
 
 echo "Commands"
