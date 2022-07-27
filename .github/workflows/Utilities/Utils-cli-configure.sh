@@ -8,10 +8,10 @@ pip install databricks-cli --upgrade
 #apt install openjdk-8-jdk
 
 
-databricks configure --token << EOF
-$DATABRICKS_HOST
-$DATABRICKS_TOKEN
-EOF
+
+"$DATABRICKS_HOST
+$DATABRICKS_TOKEN" | databricks-connect configure
+
 
 echo "Commands"
 databricks -h 
