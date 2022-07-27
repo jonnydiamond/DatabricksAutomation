@@ -4,7 +4,7 @@ echo $DATABRICKS_ORDGID
 echo $DATABRICKS_CLUSTER_ID
 
 pip uninstall pyspark
-pip install -U databricks-connect=="10.4"
+pip install -U databricks-connect=="10.4.0"
 
 
 databricks-connect configure <<EOF
@@ -18,6 +18,11 @@ EOF
 
 databricks-connect test
 
+
+echo $DATABRICKS_HOST
+echo $DATABRICKS_TOKEN
+echo $DATABRICKS_ORDGID
+echo $DATABRICKS_CLUSTER_ID
 echo "Second Attempt"
 echo "y
 '"$DATABRICKS_HOST"'
