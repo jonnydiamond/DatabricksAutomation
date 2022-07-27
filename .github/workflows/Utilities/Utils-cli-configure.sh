@@ -10,7 +10,7 @@ pip install databricks-cli --upgrade
 #apt install openjdk-8-jdk
 
 databricks configure <<EOF
-"$DATABRICKS_HOST"
+https://adb-3476570679452994.14.azuredatabricks.net/
 "$DATABRICKS_TOKEN"
 EOF
 
