@@ -6,16 +6,16 @@ echo $DATABRICKS_CLUSTER_ID
 pip install databricks-connect
 
 
-databricks-connect configure <<EOF
-y 
-$DATABRICKS_HOST
-$DATABRICKS_TOKEN
-$DATABRICKS_CLUSTER_ID
-$DATABRICKS_ORDGID
-15001
-EOF
+#databricks-connect configure <<EOF
+#y 
+#$DATABRICKS_HOST
+#$DATABRICKS_TOKEN
+#$DATABRICKS_CLUSTER_ID
+#$DATABRICKS_ORDGID
+#15001
+#EOF
 
-databricks-connect test
+#databricks-connect test
 
 echo "Second Attempt"
 echo "y
