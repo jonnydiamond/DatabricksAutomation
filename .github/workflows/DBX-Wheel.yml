@@ -45,12 +45,12 @@ jobs:
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
 
-      - name: install-databricks-cli
-        uses: microsoft/install-databricks-cli@v1.0.0
+      #- name: install-databricks-cli
+      #  uses: microsoft/install-databricks-cli@v1.0.0
 
 
-     # - name:                   Databricks Connect
-     #   run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
+      - name:                   Databricks Connect
+        run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
 
 #########################################################################################
 
