@@ -51,6 +51,11 @@ jobs:
           pip3 install requests
           python -m pip install --user --upgrade setuptools wheel
           ls
+          cd src
+          cd pipelines
+          cd dbkframework
+          ls
+        shell: bash
 
         
 
