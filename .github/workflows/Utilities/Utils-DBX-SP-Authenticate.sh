@@ -7,10 +7,17 @@ echo "Tenant ID: $ARM_TENANT_ID"
 echo "Logging in using Azure service priciple"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
+### Remove This In Time
+listClusters=$(curl -X GET -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $wsId" -H 'Content-Type: application/json' https://$workspaceUrl/api/2.0/clusters/list )
+DATABRICKS_CLUSTER_ID=$( jq -r  '.clusters[] | select( .cluster_name | contains("dbz-sp-cluster2")) | .cluster_id ' <<< "$listClusters")
 DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceId" -o tsv)
 dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
+
+
+echo "DATABRICKS_CLUSTER_ID=$DATABRICKS_CLUSTER_ID" >> $GITHUB_ENV
+echo "Workspace ID Set As Env Variable: $DATABRICKS_CLUSTER_ID"
 
 echo "DATABRICKS_ORDGID=$DATABRICKS_ORDGID" >> $GITHUB_ENV
 echo "Workspace ID Set As Env Variable: $DATABRICKS_ORDGID"
@@ -21,14 +28,14 @@ echo "Workspace ID Set As Env Variable: $workspace_id"
 echo "DATABRICKS_INSTANCE=$DATABRICKS_INSTANCE" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
 
-echo "DATABRICKS_INSTANCE=$DATABRICKS_INSTANCE" >> $GITHUB_ENV
-echo "Workspace URL Set As Env Variable: $DATABRICKS_INSTANCE"
+echo "DATABRICKS_HOST=https://$DATABRICKS_INSTANCE" >> $GITHUB_ENV
+echo "Workspace URL Set As Env Variable: $DATABRICKS_HOST"
 
 echo "DATABRICKS_TOKEN=$param_DATABRICKS_TOKEN" >> $GITHUB_ENV
 echo "Workspace URL Set As Env Variable: $DATABRICKS_TOKEN"
 
 
-echo "Databricks OrgID as Env Variables"
+
 
 echo "Testing Python Path For Uploading Wheel File"
 echo "PYTHONPATH=src/modules" >> $GITHUB_ENV

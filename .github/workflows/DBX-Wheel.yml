@@ -28,6 +28,26 @@ jobs:
         with:
           python-version: '3.8'
 
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
+
+
+      - name:                 Authenticate to DBX SP
+        run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+        env:
+          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
+
+      - name:                   Databricks Connect
+        run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
+
+#########################################################################################
+
       - name:                   Install Wheel
         run: | 
           # Install Packages
@@ -67,8 +87,8 @@ jobs:
 
 
           # Install Wheel
-          pip uninstall -y dbkframework-1-py3-none-any.whl
-          pip install -y dbkframework-1-py3-none-any.whl
+          pip uninstall dbkframework-1-py3-none-any.whl
+          pip install dbkframework-1-py3-none-any.whl
 
 
 
