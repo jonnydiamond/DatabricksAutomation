@@ -16,7 +16,7 @@ $DATABRICKS_CLUSTER_ID
 $DATABRICKS_ORDGID
 15001
 EOF
-
+databricks-connect configure
 databricks-connect test
 
 
