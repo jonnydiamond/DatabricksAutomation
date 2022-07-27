@@ -71,30 +71,30 @@ jobs:
 
 
           # Navigate To The Setup.Py File
-          ls
-          cd src
-          cd pipelines
-          cd dbkframework
+       #   ls
+       #   cd src
+       #   cd pipelines
+       #   cd dbkframework
 
 
           # Create The Python Wheel File
-          python setup.py sdist bdist_wheel
+       #   python setup.py sdist bdist_wheel
 
           # Display The New Python Wheel (dbkframework-20220727.post112208-py3-none-any.whl)
-          cd dist
-          echo "Name of Pyton Wheel File"
-          ls
+      #    cd dist
+      #    echo "Name of Pyton Wheel File"
+      #    ls
 
 
           # Install Wheel
-          pip uninstall dbkframework-1-py3-none-any.whl
-          pip install dbkframework-1-py3-none-any.whl
+      #    pip uninstall dbkframework-1-py3-none-any.whl
+      #    pip install dbkframework-1-py3-none-any.whl
 
 
 
 
 
-        shell: bash
+#        shell: bash
 
       #- name:                 Upload Wheel Files To Cluster 
       #  run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
