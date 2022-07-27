@@ -17,11 +17,11 @@ EOF
 
 databricks-connect test
 
-echo "y
-'"$DATABRICKS_HOST"'
-$DATABRICKS_API_TOKEN
-$DATABRICKS_CLUSTER_ID
-$DATABRICKS_ORDGID
-15001" | databricks-connect configure
+#echo "y
+#'"$DATABRICKS_HOST"'
+#$DATABRICKS_API_TOKEN
+#$DATABRICKS_CLUSTER_ID
+#$DATABRICKS_ORDGID
+#15001" | databricks-connect configure
 
-databricks-connect test
+#databricks-connect test
