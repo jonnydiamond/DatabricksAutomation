@@ -13,7 +13,10 @@ $DATABRICKS_HOST
 $DATABRICKS_TOKEN
 EOF
 
-databricks -v
+databricks -h 
+echo databricks -h 
+databricks fs -h
+echo databricks fs -h
 
 #databricks-connect configure <<EOF
 #y 
