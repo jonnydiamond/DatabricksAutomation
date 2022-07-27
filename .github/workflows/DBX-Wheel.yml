@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         #Azure Resource Environments.
-        environments:          [Development, Production]    
+        environments:          [Development]    
     steps:
       - uses:                 actions/checkout@v3  
       - name:                 Setup Python
