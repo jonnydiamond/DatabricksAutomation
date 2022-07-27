@@ -3,7 +3,8 @@ echo $DATABRICKS_TOKEN
 echo $DATABRICKS_ORDGID
 echo $DATABRICKS_CLUSTER_ID
 
-pip install databricks-connect
+pip uninstall pyspark
+pip install -U databricks-connect=="10.4"
 
 
 databricks-connect configure <<EOF
