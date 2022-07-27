@@ -13,7 +13,7 @@ dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --
 DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
-DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $azKeyVaultName --query "value")
+DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $azKeyVaultName --query "value" -o tsv)
 
 
 ### Creation Of Important Environment Variables For Later Steps
