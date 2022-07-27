@@ -55,6 +55,9 @@ jobs:
           cd src
           cd pipelines
           cd dbkframework
+
+          export PATH=”$PATH:/src/modules” 
+
           
           python setup.py sdist bdist_wheel
 
