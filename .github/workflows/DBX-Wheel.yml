@@ -35,6 +35,7 @@ jobs:
           #sudo apt-get install pdoc
           pip3 install pdoc3
           pip3 install pypandoc
+          pip3 install opencensus
           
           pip3 install requests
           ls
