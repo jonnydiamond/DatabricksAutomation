@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo $DATABRICKS_HOST
 echo $DATABRICKS_TOKEN
 echo $DATABRICKS_ORDGID
@@ -7,10 +9,11 @@ pip install databricks-cli --upgrade
 #pip install -U databricks-connect=="10.4.0b0"
 #apt install openjdk-8-jdk
 
+databricks configure <<EOF
+"$DATABRICKS_HOST"
+"$DATABRICKS_TOKEN"
+EOF
 
-
-"$DATABRICKS_HOST
-$DATABRICKS_TOKEN" | databricks configure
 
 
 echo "Commands"
@@ -43,4 +46,3 @@ echo databricks fs -h
 #$DATABRICKS_ORDGID
 #15001" | databricks-connect configure
 
-databricks-connect test
