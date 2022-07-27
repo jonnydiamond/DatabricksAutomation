@@ -3,21 +3,19 @@
 
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
 
-name: Databricks Deploy
+name: CreateWheelFile
 
-on: workflow_dispatch
+on: push
 #workflow_dispatch
 
 permissions:
       id-token:               write
       contents:               read
 
-
-
 jobs:
 
   CreateWheel:
-    name:                     UpdateRepo
+    name:                     CreateWheel
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
