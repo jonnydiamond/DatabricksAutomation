@@ -9,7 +9,7 @@ pip install databricks-cli --upgrade
 #pip install -U databricks-connect=="10.4.0b0"
 #apt install openjdk-8-jdk
 
-databricks configure --token
+databricks configure --token 
 
 
 
