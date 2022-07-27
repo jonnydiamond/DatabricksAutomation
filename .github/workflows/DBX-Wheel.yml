@@ -48,26 +48,26 @@ jobs:
 
 #########################################################################################
 
-      - name:                   Install Wheel
-        run: | 
-          # Install Packages
+      #- name:                   Install Wheel
+      #  run: | 
+      #    # Install Packages
 
-          python -m pip install --user --upgrade setuptools wheel
-          sudo apt-get install pandoc
+       #   python -m pip install --user --upgrade setuptools wheel
+        #  sudo apt-get install pandoc
           #sudo apt-get install pdoc
-          pip3 install pdoc3
-          pip3 install pypandoc
-          pip3 install opencensus
-          pip3 install opencensus-ext-azure
-          pip3 install typeguard
-          pip3 install pytest
-          pip3 install python-dotenv
-          pip3 install jupyter
-          pip3 install databricks-api
-          pip3 install pandas
-          pip3 install pydataset
-          pip3 install pyspark 
-          pip3 install requests
+       #   pip3 install pdoc3
+       #   pip3 install pypandoc
+       #   pip3 install opencensus
+       #   pip3 install opencensus-ext-azure
+       #   pip3 install typeguard
+       #   pip3 install pytest
+       #   pip3 install python-dotenv
+       #   pip3 install jupyter
+       #   pip3 install databricks-api
+       #   pip3 install pandas
+       #   pip3 install pydataset
+       #   pip3 install pyspark 
+       #   pip3 install requests
 
 
           # Navigate To The Setup.Py File
