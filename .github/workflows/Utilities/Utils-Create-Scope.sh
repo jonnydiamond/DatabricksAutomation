@@ -3,6 +3,9 @@ dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
+APP_INSIGHT_INSTRUMENT_KEY=$(az resource show -g databricks-dev-rg -n dbxappinsightsdev --resource-type "microsoft.insights/components" --query properties.ConnectionString)
+echo "Application Insight Key"
+echo $APP_INSIGHT_INSTRUMENT_KEY
 
 echo "Create DBX Service Principal Scope"
 Create_Secret_Scope=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
@@ -46,5 +49,15 @@ Create_DBX_TenantID=$(curl -X POST -H "Authorization: Bearer $token" \
                 "string_value": "$ARM_TENANT_ID"
                 }' https://$workspaceUrl/api/2.0/secrets/put )
 
+
+Create_APP_INSIGHT_INSTRUMENT_KEY_SecretD=$(curl -X POST -H "Authorization: Bearer $token" \
+                                            -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
+                                            -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+                                            -H 'Content-Type: application/json' -d \
+                                            '{
+                                            "scope": "DBX_SP_Credentials", 
+                                            "key": "appi_ik_scope",
+                                            "string_value": "$APP_INSIGHT_INSTRUMENT_KEY"
+                                            }' https://$workspaceUrl/api/2.0/secrets/put )
 
 
