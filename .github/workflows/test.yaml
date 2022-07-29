@@ -22,6 +22,11 @@ jobs:
     steps:
       - uses:                 actions/checkout@v3    
 
+      - name:                 Azure Login - ${{ matrix.environments }}
+        uses:                 azure/login@v1
+        with:
+          creds:              ${{secrets.AZURE_CREDENTIALS}}
+
       - name:                 JSON To Env
         uses:                 antifree/json-to-variables@v1.0.1
         with:
