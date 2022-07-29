@@ -26,7 +26,7 @@ jobs:
         run: | 
           pip install databricks-cli
           adburl="https://adb-3440105635727082.2.azuredatabricks.net"
-          token=dapi913f611f89829af7f0b688be73b4e217-3
+          token=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
           databricks configure --token <<EOF
           $adburl
           $token
