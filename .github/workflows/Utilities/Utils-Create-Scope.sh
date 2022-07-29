@@ -29,7 +29,7 @@ Create_DBX_ClientID_Secret=$(curl -X POST -H "Authorization: Bearer $token" -H "
                                 "scope": "DBX_SP_Credentials", 
                                 "key": "DBX_SP_ClientID",
                                 "string_value": "$ARM_CLIENT_ID"
-                            }' https://$workspaceUrl/api/2.0/secrets/put )
+                            }' https://$DATABRICKS_INSTANCE/api/2.0/secrets/put )
 
 Create_DBX_TenantID_Secret=$(curl -X POST -H "Authorization: Bearer $token" -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
                             -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" -H 'Content-Type: application/json' -d \
