@@ -24,6 +24,7 @@ jobs:
       
       - name:                 DatabricksCLI
         run: | 
+          pip install databricks-cli
           adburl="https://adb-3440105635727082.2.azuredatabricks.net"
           token=dapi913f611f89829af7f0b688be73b4e217-3
           databricks configure --token <<EOF
