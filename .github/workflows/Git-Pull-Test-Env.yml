@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+
+# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
+name: Git Pull Test Environment - TestFolder
+on:  
+  pull_request:
+    branches:
+      - main
+    paths:
+      - src
+    types: [open, closed]
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  DBX_CICD_Test:
+    name:                     Git Pull Test Environment - TestFolder
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [Test]    
+    steps:
+      - uses:                 actions/checkout@v3  
+              
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
+
+
+      - name:                 Authenticate to DBX SP
+        run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+        env:
+          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+      
+
+      - run: |
+          echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
+
+
+    # If it is an open merge request --> Then Update the Dev Environment 
+    # If it is a closed merge request --> Then update the Test Environment
+    # How do we trigger Test To Production
+
+      - name:                 Update Test Repo In Test Environment (Main Branch)
+        run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-Test-Env.sh
+        # What Branch is the Merge Request Being Applied To
+        env:
+          target_branch:      ${{ github.base_ref }}
+          environment:        ${{ matrix.environments }}
+
+
+
+

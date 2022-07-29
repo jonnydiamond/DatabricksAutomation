@@ -4,14 +4,8 @@
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
 
 # If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
-name: Main Branch Pull Request
-on:  
-  pull_request:
-    branches:
-      - main
-      - develop
-    types:
-      - "closed"
+name: Git Pull Production Environment - ProductionFolder
+on:  [workflow_dispatch]
 
 
 permissions:
@@ -19,12 +13,12 @@ permissions:
       contents:               read
 
 jobs:
-  DBX_CICD_Deployment:
-    name:                     DBX_CICD_Deployment
+  Git_Pull_Production:
+    name:                     Git Pull Production Environment - ProductionFolder
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Development, Production]    
+        environments:          [Test]    
     steps:
       - uses:                 actions/checkout@v3  
               
@@ -34,10 +28,7 @@ jobs:
           filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
           prefix:             param
 
-      # Switch To DBX SP
-      # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
-      # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
-      # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right
+
       - name:                 Authenticate to DBX SP
         run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
         env:
@@ -45,15 +36,18 @@ jobs:
           ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
       
+
       - run: |
           echo "${{ github.head_ref }}"
           echo "${{ github.base_ref }}"
 
-      - name:                 Update Development Repo (Main Branch)
-        run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update.sh
+      - name:                 Update Test Repo In Test Environment (Main Branch)
+        run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-Prod-Env.sh
         # What Branch is the Merge Request Being Applied To
         env:
           target_branch:      ${{ github.base_ref }}
+
+      # CREATE .WHL FILE
 
 
 
