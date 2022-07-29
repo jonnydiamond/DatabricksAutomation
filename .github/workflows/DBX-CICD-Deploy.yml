@@ -3,7 +3,7 @@
 #https://github.com/marketplace/actions/run-databricks-notebook
 
 
-# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File
 
 name: DBX_CICD-DEPLOY
 
