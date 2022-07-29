@@ -3,7 +3,7 @@ dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --
 workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
 workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
 
-APP_INSIGHT_INSTRUMENT_KEY=$(az resource show -g databricks-dev-rg -n dbxappinsightsdev --resource-type "microsoft.insights/components" --query properties.ConnectionString)
+APP_INSIGHT_INSTRUMENT_KEY=$(az resource show -g databricks-dev-rg -n dbxappinsightsdev --resource-type "microsoft.insights/components" --query properties.ConnectionString -o tsv)
 echo "Application Insight Key"
 echo $APP_INSIGHT_INSTRUMENT_KEY
 
