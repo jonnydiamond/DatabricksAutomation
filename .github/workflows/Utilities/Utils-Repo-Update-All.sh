@@ -25,11 +25,11 @@ for REPO_FOLDER in "${REPO_FOLDERS[@]}"; do
 
     
     echo "Display Repos In DBX With Manage Permissions...."
-    echo REPOS_WITH_MANAGEMENT_PERMISSIONS
+    echo $REPOS_WITH_MANAGEMENT_PERMISSIONS
 
     echo "Ingest JSON File..."
     JSON=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
-    echo "${JSON}" | jq
+    #echo "${JSON}" | jq
 
     echo "Retrieve Repo ID For $REPO_FOLDER..."
     REPO_ID=$( jq -r --arg REPO_FOLDER "$REPO_FOLDER" ' .repos[] | select( .path | contains($REPO_FOLDER)) | .id ' <<< "$REPOS_WITH_MANAGEMENT_PERMISSIONS")
@@ -45,14 +45,14 @@ for REPO_FOLDER in "${REPO_FOLDERS[@]}"; do
                 --arg tb "$branch" \
                 '{branch: $tb}' )
 
-    echo "Git Pull DBX Repo $REPO_FOLDER Using $BRANCH Branch "
+    echo "Git Pull on DBX Repo $REPO_FOLDER With $BRANCH Branch "
     GIT_PULL_RESPONSE=$(curl -X PATCH \
         -H "Authorization: Bearer $TOKEN" \
         -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
         -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
         -H 'Content-Type: application/json' \
         -d $JSON_STRING \
-        https://$DATABRICKS_INSTANCE/api/2.0/repos/$RepoID )
+        https://$DATABRICKS_INSTANCE/api/2.0/repos/$REPO_ID )
     
     echo "Git Pull Response..."
     echo $GIT_PULL_RESPONSE
