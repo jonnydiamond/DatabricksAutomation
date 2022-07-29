@@ -49,15 +49,19 @@ Create_DBX_TenantID=$(curl -X POST -H "Authorization: Bearer $token" \
                 "string_value": "$ARM_TENANT_ID"
                 }' https://$workspaceUrl/api/2.0/secrets/put )
 
+JSON_STRING=$( jq -n -c \
+                --arg scope "DBX_SP_Credentials" \
+                --arg key "appi_ik_scope" \
+                --arg value "$APP_INSIGHT_INSTRUMENT_KEY"  \
+                '{scope: $scope,
+                key: $key,
+                string_value: $value}' )
 
 Create_APP_INSIGHT_INSTRUMENT_KEY_SecretD=$(curl -X POST -H "Authorization: Bearer $token" \
                                             -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
                                             -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                                            -H 'Content-Type: application/json' -d \
-                                            '{
-                                            "scope": "DBX_SP_Credentials", 
-                                            "key": "appi_ik_scope",
-                                            "string_value": "$APP_INSIGHT_INSTRUMENT_KEY"
-                                            }' https://$workspaceUrl/api/2.0/secrets/put )
+                                            -H 'Content-Type: application/json' \
+                                            -d $JSON_STRING \
+                                            https://$workspaceUrl/api/2.0/secrets/put )
 
 
