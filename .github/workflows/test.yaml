@@ -22,10 +22,17 @@ jobs:
     steps:
       - uses:                 actions/checkout@v3    
       
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
+      
       - name:                 DatabricksCLI
         run: | 
           pip install databricks-cli
           adburl="https://adb-3440105635727082.2.azuredatabricks.net"
+          AZ_KEYVAULT_NAME=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
           token=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
           databricks configure --token <<EOF
           $adburl
