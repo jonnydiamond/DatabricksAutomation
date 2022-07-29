@@ -21,11 +21,11 @@ jobs:
         environments:          [Development]    
     steps:
       - uses:                 actions/checkout@v3    
-      
+
       - name:                 JSON To Env
         uses:                 antifree/json-to-variables@v1.0.1
         with:
-          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
           prefix:             param
       
       - name:                 DatabricksCLI
