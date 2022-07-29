@@ -9,9 +9,10 @@ param resourceGroupName string
 param workspaceName string
 param pricingTier string
 param ShouldCreateContainers bool = true
+param loganalyticswsname string 
+param appInsightswsname string 
 
 var keyVaultName = 'keyvault${environment}dbxkv'
-
 
 
 var storageAccountName = '${environment}adls${workspaceName}'
@@ -90,6 +91,21 @@ module azDataLake '../Az_Resources/Az_DataLake/Az_DataLake.bicep' =  {
     azKeyVaultName: azKeyVault.outputs.azKeyVaultName
 
 
+  }
+}
+
+module logAnalytics '../Az_Resources/Az_AppInsights/Az_AppInsights.bicep' = {
+  dependsOn: [
+    azResourceGroup
+    azDatabricks
+    azDataLake
+  ]
+  scope: resourceGroup(resourceGroupName)
+  name: 'logAnalytics'
+  params: {
+    location: location
+    logwsname: loganalyticswsname
+    appinsightname: appInsightswsname
   }
 }
 

@@ -45,6 +45,12 @@
     },
     "ShouldCreateContainers": {
       "value": true
+    },
+    "loganalyticswsname": {
+      "value": "dbxloganalyticsdev"
+    },
+    "appInsightswsname": {
+      "value": "dbxappinsightsdev"
     }
   }
 }
