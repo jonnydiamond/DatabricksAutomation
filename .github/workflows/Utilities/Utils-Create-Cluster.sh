@@ -36,11 +36,11 @@ for row in $(echo "${JSON}" | jq -r '.Clusters[] | @base64'); do
                     spark_conf: ($sc|fromjson)}' )
         
         CREATE_CLUSTER=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
-                        -H 'Content-Type: application/json' \
-                        -d $JSON_STRING \
-                        https://$DATABRICKS_INSTANCE/api/2.0/clusters/create )
+                    -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                    -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
+                    -H 'Content-Type: application/json' \
+                    -d $JSON_STRING \
+                    https://$DATABRICKS_INSTANCE/api/2.0/clusters/create )
 
     else
         echo "Cluster Exists... Ignore"  

@@ -7,8 +7,7 @@
 
 name: DBX_CICD-DEPLOY
 
-on: push
-#workflow_dispatch
+on: [workflow_dispatch]
 
 permissions:
       id-token:               write
@@ -94,14 +93,14 @@ jobs:
 
 
         - name:                 Create DBX Repos
-          run:                  sh ./.github/workflows/Utilities/Utils-Repo-Create.sh
+          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
         
-
+      
         # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'.
         - name:                 Update Databricks Repo SP Folders
-          run:                  bash ./.github/workflows/Utilities/Utils-Repo-Update-All.sh
+          run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-All-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
       
@@ -137,7 +136,7 @@ jobs:
 
 
       - name:                   Install + Configure Databricks CLI
-        run:                    bash ./.github/workflows/Utilities/Utils-cli-configure.sh
+        run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
 
       #- name:                   Create A Wheel File (Example)
       #  run: | 

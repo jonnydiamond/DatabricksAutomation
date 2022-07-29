@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+
+# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
+name: tesr
+on: [workflow_dispatch]
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  testtyt:
+    name:                     Git Pull Test Environment - TestFolder
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [Development]    
+    steps:
+      - uses:                 actions/checkout@v3    
+      
+      - name:                 DatabricksCLI
+        run: | 
+          adburl="https://adb-3440105635727082.2.azuredatabricks.net"
+          token=dapi913f611f89829af7f0b688be73b4e217-3
+          databricks configure --token <<EOF
+          $adburl
+          $token
+          EOF
+          databricks -h 
+          databricks fs ls
+        shell: bash
