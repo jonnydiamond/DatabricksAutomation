@@ -13,7 +13,7 @@ permissions:
       contents:               read
 
 jobs:
-  DBX_CICD_Test:
+  testtyt:
     name:                     Git Pull Test Environment - TestFolder
     runs-on:                  ubuntu-latest
     strategy:
