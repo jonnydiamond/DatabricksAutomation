@@ -41,8 +41,7 @@ for REPO_FOLDER in "${REPO_FOLDERS[@]}"; do
     
     echo "$REPO_FOLDER Associated With $BRANCH Branch"
 
-    JSON_STRING=$( jq -n -c \
-                --arg tb "$branch" \
+    JSON_STRING=$( jq -n -c --arg tb "$BRANCH" \
                 '{branch: $tb}' )
 
     echo "Git Pull on DBX Repo $REPO_FOLDER With $BRANCH Branch "
