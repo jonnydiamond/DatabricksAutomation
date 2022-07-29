@@ -1,7 +1,6 @@
 # Databricks notebook source
-
 """Example of framework usage"""
-
+# If setting up scope with Keyvault --> Ensure you have RBAC to KV Admin From 'AzureDatabrics' to Key Vault.
 import random
 from acai_ml.core import Engine
 import pandas as pd
@@ -157,7 +156,8 @@ Engine()
 Engine().get_instance().initialize_env()
 # pipeline_name = Path(__file__).stem
 pipeline_name = "Remote Testing"
-Engine().get_instance().initialize_logger(pipeline_name=pipeline_name)
+
+Engine().get_instance().initialize_logger(pipeline_name=pipeline_name, appi_ik_scope="appinsight", appi_ik_secret="appsecret")
 # Engine().get_instance().spark().conf.set("spark.sql.execution.arrow.enabled", "true")
 
 run_id = 'test_run_id'

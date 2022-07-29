@@ -43,8 +43,8 @@ class Engine(metaclass=Singleton):
     def initialize_logger(
         self,
         pipeline_name: str,
-        appi_ik_scope: str = 'config',
-        appi_ik_secret: str = 'APPI_IK'
+        appi_ik_scope: str = 'appinsight',
+        appi_ik_secret: str = 'appsecret'
     ):
         """
         Initializes the logger
