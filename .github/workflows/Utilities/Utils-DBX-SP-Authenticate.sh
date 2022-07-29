@@ -14,7 +14,7 @@ WORKSPACE_ID=$(az databricks workspace list -g $param_ResourceGroupName --query 
 AZ_KEYVAULT_NAME=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
 DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
 TOKEN_RESPONSE=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
-TOKEN=$(jq .accessToken -r <<< "$token_response")
+TOKEN=$(jq .accessToken -r <<< "$TOKEN_RESPONSE")
 AZ_MGMT_RESOURCE_ENDPOINT=$(curl -X GET -H 'Content-Type: application/x-www-form-urlencoded' \
                             -d 'grant_type=client_credentials&client_id='$ARM_CLIENT_ID'&resource='$param_MANAGEMENT_RESOURCE_ENDPOINT'&client_secret='$ARM_CLIENT_SECRET \
                             https://login.microsoftonline.com/$ARM_TENANT_ID/oauth2/token)

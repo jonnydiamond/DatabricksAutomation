@@ -6,7 +6,7 @@ SECRET_EXISTS=$(az keyvault secret list \
                 --query "contains([].id, \
                 'https://$AZ_KEYVAULT_NAME.vault.azure.net/secrets/$SECRET_NAME')")
 
-echo "secret exists: $secret_exists"
+echo "secret exists: $SECRET_EXISTS"
 
 if [ $SECRET_EXISTS == true ]; then
     echo "Secret '$SECRET_NAME' exists! fetching..."
@@ -21,7 +21,8 @@ else
     echo "Secret '$SECRET_NAME' Do Not exist! Creating PAT Token & Store In Key Vault..."
     # Must Assign SP Minimum Contributor Permissions. Must also give the SP Key Vault Administrator Privileges (Need to Set these in YAML)
 
-    PAT_TOKEN_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
+    PAT_TOKEN_RESPONSE=$(curl -X POST \
+                        -H "Authorization: Bearer $TOKEN" \
                         -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
                         -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" -d \
                         '{
