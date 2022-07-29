@@ -1,66 +1,61 @@
 #!/bin/bash
 
-az config set extension.use_dynamic_install=yes_without_prompt
-#export dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
 
-# I have left the "Path" out as it doesn't seem to work. I think it might be permissions issue. States 'Resource is not found'. I wonder if this is because Devops PAT token was used for git configuring the service principal.
-## The section below updates the repos. We will have it triggered when when the respective branch is updated (successfully merge request)
+# I have left the "Path" out as it doesn't seem to work. I think it might be permissions issue. States 'Resource is not found'. 
+# I wonder if this is because Devops PAT token was used for git configuring the service principal.
 
-
-reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-                        -H 'Content-Type: application/json' \
-                        https://$DATABRICKS_INSTANCE/api/2.0/repos )
-#echo $reposWithManagePermissions
-json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
-#echo "${json}" | jq
+echo "Ingest JSON File"
 
 
 
 #Based on DBX Repo Folders Created in Parameters File Within Objection Repo_Configuration 
-Repo_Folders=("Production"
-"Staging"
-"Development")
+REPO_FOLDERS=("DevelopmentFolder"
+"TestFolder"
+"ProductionFolder")
 
-
-echo $test
-for Repo_Folder in "${Repo_Folders[@]}"; do
-    echo "Repo Folder"
-    echo $Repo_Folder
+for REPO_FOLDER in "${REPO_FOLDERS[@]}"; do
+    echo "Git Pull On Repo Folder: $REPO_FOLDER"
     
-    reposWithManagePermissions=$(curl -X GET -H "Authorization: Bearer $token" \
-                        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+    REPOS_WITH_MANAGEMENT_PERMISSIONS=$(curl -X GET \
+                        -H "Authorization: Bearer $TOKEN" \
+                        -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                        -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
                         -H 'Content-Type: application/json' \
                         https://$DATABRICKS_INSTANCE/api/2.0/repos )
-    echo $reposWithManagePermissions
-    json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
-    echo "${json}" | jq
 
+    
+    echo "Display Repos In DBX With Manage Permissions...."
+    echo REPOS_WITH_MANAGEMENT_PERMISSIONS
 
-    RepoID=$( jq -r --arg Repo_Folder "$Repo_Folder" ' .repos[] | select( .path | contains($Repo_Folder)) | .id ' <<< "$reposWithManagePermissions")
-    echo "Repo ID"
-    echo $RepoID
+    echo "Ingest JSON File..."
+    JSON=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
+    echo "${JSON}" | jq
 
+    echo "Retrieve Repo ID For $REPO_FOLDER..."
+    REPO_ID=$( jq -r --arg REPO_FOLDER "$REPO_FOLDER" ' .repos[] | select( .path | contains($REPO_FOLDER)) | .id ' <<< "$REPOS_WITH_MANAGEMENT_PERMISSIONS")
+    
+    echo "Repo ID: $REPO_ID"
 
-    branch=$( jq -r --arg Repo_Folder "$Repo_Folder" ' .Repo_Configuration[] | select( .path | contains($Repo_Folder)) | .branch ' <<< "$json")
-    echo "Branch"
-    echo $branch
+    echo "With Repo ID, Retrieve Associated Branch For $REPO_FOLDER"
+    BRANCH=$( jq -r --arg REPO_FOLDER "$REPO_FOLDER" ' .Repo_Configuration[] | select( .path | contains($REPO_FOLDER)) | .branch ' <<< "$JSON")
+    
+    echo "$REPO_FOLDER Associated With $BRANCH Branch"
+
     JSON_STRING=$( jq -n -c \
                 --arg tb "$branch" \
                 '{branch: $tb}' )
 
-    #echo $JSON_STRING
-    update_repo_response=$(curl -X PATCH \
-        -H "Authorization: Bearer $token" \
-        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+    echo "Git Pull DBX Repo $REPO_FOLDER Using $BRANCH Branch "
+    GIT_PULL_RESPONSE=$(curl -X PATCH \
+        -H "Authorization: Bearer $TOKEN" \
+        -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+        -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
         -H 'Content-Type: application/json' \
         -d $JSON_STRING \
         https://$DATABRICKS_INSTANCE/api/2.0/repos/$RepoID )
-
-    echo $update_repo_response
+    
+    echo "Git Pull Response..."
+    echo $GIT_PULL_RESPONSE
 done
 
 

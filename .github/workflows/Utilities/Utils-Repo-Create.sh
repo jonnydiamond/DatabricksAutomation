@@ -1,20 +1,14 @@
 # For Creating Git Config in Parameters file for ADO
-
 #"personal_access_token": "yhdjjk6kcmmv6zcfowmsh6pmcre3jbstwbk5sarxcwtutmlyu5ha",
 #"git_username": "ciaranh@microsoft.com",
 #"git_provider": "azureDevOpsServices"
 
-az config set extension.use_dynamic_install=yes_without_prompt
-dbx_workspace_name=$(az databricks workspace list -g $param_ResourceGroupName --query "[].name" -o tsv)
-workspaceUrl=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)
-workspace_id=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
-
 echo "Ingest JSON File"
-json=$( jq '.' .github/workflows/Global_Parameters/$environment.json)
-echo "${json}" | jq
+JSON=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
+#echo "${JSON}" | jq
 
 
-for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
+for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
@@ -27,24 +21,19 @@ for row in $(echo "${json}" | jq -r '.Git_Configuration[] | @base64'); do
                 git_username: $gu,
                 git_provider: $gp,
                 branch: $br}' )
-    echo $pat
-    echo $gu
-    echo $gp
-    echo $br
+   
+    CREATE_GIT_CREDENTIALS_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
+                -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
+                -H 'Content-Type: application/json' \
+                -d $JSON_STRING \
+                https://$DATABRICKS_INSTANCE/api/2.0/git-credentials )
 
-    #POST for new deployment. PATCH to update
-    git_credentials=$(curl -X POST -H "Authorization: Bearer $token" \
-        -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-        -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
-        -H 'Content-Type: application/json' \
-        -d $JSON_STRING \
-        https://$workspaceUrl/api/2.0/git-credentials )
-
-    echo "git credentials"
-    echo $git_credentials
+    echo "Git Credentials Response...."
+    echo $CREATE_GIT_CREDENTIALS_RESPONSE
 done
 
-for row in $(echo "${json}" | jq -r '.Repo_Configuration[] | @base64'); do
+for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
@@ -56,15 +45,15 @@ for row in $(echo "${json}" | jq -r '.Repo_Configuration[] | @base64'); do
                 provider: $pr,
                 path: $pa}' )
 
-    Repo_Configuration=$(curl -X POST -H "Authorization: Bearer $token" \
-                -H "X-Databricks-Azure-SP-Management-Token: $mgmt_access_token" \
-                -H "X-Databricks-Azure-Workspace-Resource-Id: $workspace_id" \
+    CREATE_REPO_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
+                -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
                 -H 'Content-Type: application/json' \
                 -d $JSON_STRING \
-                https://$workspaceUrl/api/2.0/repos )
+                https://$DATABRICKS_INSTANCE/api/2.0/repos )
 
     echo "Repo Response"
-    echo $Repo_Configuration
+    echo $CREATE_REPO_RESPONSE
 done
 
 
