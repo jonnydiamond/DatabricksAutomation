@@ -157,7 +157,7 @@ Engine().get_instance().initialize_env()
 # pipeline_name = Path(__file__).stem
 pipeline_name = "Remote Testing"
 
-Engine().get_instance().initialize_logger(pipeline_name=pipeline_name, appi_ik_scope="appinsight", appi_ik_secret="appsecret")
+Engine().get_instance().initialize_logger(pipeline_name=pipeline_name, appi_ik_scope="AzureResourceSecrets", appi_ik_secret="appi_ik")
 # Engine().get_instance().spark().conf.set("spark.sql.execution.arrow.enabled", "true")
 
 run_id = 'test_run_id'
