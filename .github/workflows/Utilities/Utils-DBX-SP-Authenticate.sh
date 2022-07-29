@@ -24,6 +24,9 @@ MGMT_ACCESS_TOKEN=$(jq .access_token -r <<< "$AZ_MGMT_RESOURCE_ENDPOINT" )
 ### Creation Of Important Environment Variables For Later Steps.
 echo "Set Environment Variables For Later Stages..."
 
+echo "Set Key Vault Name As Environment Variable..."
+echo "AZ_KEYVAULT_NAME=$AZ_KEYVAULT_NAME" >> $GITHUB_ENV
+
 echo "Set Management Access Token As Environment Variable..."
 echo "MGMT_ACCESS_TOKEN=$MGMT_ACCESS_TOKEN" >> $GITHUB_ENV
 
