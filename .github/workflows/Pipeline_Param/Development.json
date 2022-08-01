@@ -36,7 +36,6 @@
     ],
     "Git_Configuration": [
         {
-            "personal_access_token": "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",
             "git_username": "ciaran28",
             "git_provider": "gitHub"
         }

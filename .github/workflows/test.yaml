@@ -1,9 +1,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 
-# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
-
-# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update.
+#Below Is Databrick CLI Config.
+# Ensure There Are No Environment Variables With The Name DATABRICKS_HOST OR DATABRICKS_TOKEN Anywhere As The System Will Grab Them. 
 name: test
 on: [push]
 
@@ -42,13 +41,17 @@ jobs:
           DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
           adburl="https://$DATABRICKS_INSTANCE"
           echo $adburl
+          
           AZ_KEYVAULT_NAME=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
           token=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
           echo $token
+          
           databricks configure --token <<EOF
           $adburl
           $token
           EOF
+
+          echo "test"
           databricks -h 
           databricks fs ls
         shell: bash
