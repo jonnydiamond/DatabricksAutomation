@@ -71,6 +71,12 @@ jobs:
             ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
             ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
+            
+        - name:                 Create DBX Repos
+          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
+          env:
+            environment:        ${{ matrix.environments }}
+            PAT_GIT:            ${{ secrets.PAT_GIT }}
 
         - name:                 Setup Python
           uses:                 actions/setup-python@v4
@@ -96,7 +102,7 @@ jobs:
           run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
-            PAT_Git:            ${{ secrets.PAT_GIT }}
+            PAT_GIT:            ${{ secrets.PAT_GIT }}
         
       
         # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'.

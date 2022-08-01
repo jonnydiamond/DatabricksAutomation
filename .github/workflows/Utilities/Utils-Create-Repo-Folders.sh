@@ -56,7 +56,7 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     echo $CREATE_REPO_RESPONSE
 done
 
-
+exit 1
 
 
 
