@@ -17,7 +17,7 @@ for row in $(echo "${JSON}" | jq -r '.Clusters[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
-    if [[ ! " ${cluster_names[*]} " =~ "$(_jq '.cluster_name')" ]]; then
+    if [[ ! " ${CLUSTER_NAMES[*]} " =~ "$(_jq '.cluster_name')" ]]; then
 
         echo "Cluster Does Not Exist: Create Cluster... "
         

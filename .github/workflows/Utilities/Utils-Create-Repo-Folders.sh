@@ -12,6 +12,7 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
+    echo $PAT_GIT
     JSON_STRING=$( jq -n -c \
                 --arg pat "$PAT_GIT" \
                 --arg gu "$(_jq '.git_username')" \
@@ -21,6 +22,7 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
                 git_username: $gu,
                 git_provider: $gp,
                 branch: $br}' )
+
 
     CREATE_GIT_CREDENTIALS_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \

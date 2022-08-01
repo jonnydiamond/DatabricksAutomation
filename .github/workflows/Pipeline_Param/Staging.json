@@ -36,6 +36,7 @@
     ],
     "Git_Configuration": [
         {
+            "personal_access_token": "nonecd",
             "git_username": "ciaran28",
             "git_provider": "gitHub"
         }
