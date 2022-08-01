@@ -12,8 +12,9 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
+    echo "$(_jq '.personal_access_token')"
     JSON_STRING=$( jq -n -c \
-                --arg pat "$PAT_GIT" \
+                --arg pat "$(_jq '.personal_access_token')" \
                 --arg gu "$(_jq '.git_username')" \
                 --arg gp "$(_jq '.git_provider')"  \
                 --arg br "$(_jq '.branch')"  \
