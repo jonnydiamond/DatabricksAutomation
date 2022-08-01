@@ -72,12 +72,6 @@ jobs:
             ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
 
             
-        - name:                 Create DBX Repos
-          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
-          env:
-            environment:        ${{ matrix.environments }}
-            PAT_GIT:            ${{ secrets.PAT_GIT }}
-
         - name:                 Setup Python
           uses:                 actions/setup-python@v4
           with:

@@ -24,17 +24,6 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
                 branch: $br}' )
 
 
-    UPDATE_GIT_CREDENTIALS_RESPONSE=$(curl -X PATCH -H "Authorization: Bearer $TOKEN" \
-                -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
-                -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
-                -H 'Content-Type: application/json' \
-                -d $JSON_STRING \
-                https://$DATABRICKS_INSTANCE/api/2.0/git-credentials/893018711170620 )
-    
-    echo $UPDATE_GIT_CREDENTIALS_RESPONSE
-
-    exit 1
-
     CREATE_GIT_CREDENTIALS_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
                 -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
