@@ -24,7 +24,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Test]    
+        environments:          [Staging]    
     steps:
       - uses:                 actions/checkout@v3  
               
