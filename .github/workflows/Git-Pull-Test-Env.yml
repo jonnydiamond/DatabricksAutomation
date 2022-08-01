@@ -56,7 +56,7 @@ jobs:
         run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-Test-Env.sh
         # What Branch is the Merge Request Being Applied To
         env:
-          target_branch:      ${{ github.base_ref }}
+          BRANCH:             ${{ github.base_ref }}
           environment:        ${{ matrix.environments }}
 
 
