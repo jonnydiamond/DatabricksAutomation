@@ -4,7 +4,7 @@
 #Below Is Databrick CLI Config.
 # Ensure There Are No Environment Variables With The Name DATABRICKS_HOST OR DATABRICKS_TOKEN Anywhere As The System Will Grab Them. 
 name: test
-on: [push]
+on: [workflow_dispatch]
 
 
 permissions:

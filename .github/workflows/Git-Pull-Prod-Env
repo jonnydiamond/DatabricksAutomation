@@ -5,7 +5,8 @@
 
 # If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
 name: Git Pull Production Environment - ProductionFolder
-on:  [workflow_dispatch]
+
+on: [workflow_dispatch]
 
 
 permissions:
@@ -18,7 +19,7 @@ jobs:
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Test]    
+        environments:          [Production]    
     steps:
       - uses:                 actions/checkout@v3  
               

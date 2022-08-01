@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+
+# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
+
+# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
+name: Infra - Merge Request Approved - Deploy to Test
+on:  
+  pull_request:
+    branches:
+      - main
+    paths:
+      - Infrastructure
+    types: [closed]
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  DeployToTestInfra:
+    name:                     Infra - Merge Request - Deploy to Test
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [Test]    
+    steps:
+      - uses:                  actions/checkout@v3
+
+      - name:                 Azure Login - ${{ matrix.environments }}
+        uses:                 azure/login@v1
+        with:
+          creds:              ${{secrets.AZURE_CREDENTIALS}}
+    
+
+      - name:                 Store JSON Param File Variables As Environ Variables
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+          prefix:             param
+
+
+      - name:                 Deploy DBX CICD Azure Resources
+        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        env:
+          environment:        ${{ matrix.environments }}

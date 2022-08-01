@@ -11,7 +11,7 @@ on:
       - main
     paths:
       - src
-    types: [open, closed]
+    types: [closed]
 
 
 permissions:
@@ -43,9 +43,9 @@ jobs:
           ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
       
 
-      - run: |
-          echo "${{ github.head_ref }}"
-          echo "${{ github.base_ref }}"
+      #- run: |
+      #    echo "${{ github.head_ref }}"
+      #    echo "${{ github.base_ref }}"
 
 
     # If it is an open merge request --> Then Update the Dev Environment 
