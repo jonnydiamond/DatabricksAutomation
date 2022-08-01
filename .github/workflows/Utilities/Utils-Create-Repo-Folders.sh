@@ -12,9 +12,9 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
-    echo "$(_jq '.personal_access_token')"
+    echo $PAT_GIT
     JSON_STRING=$( jq -n -c \
-                --arg pat "$(_jq '.personal_access_token')" \
+                --arg pat "$PAT_GIT" \
                 --arg gu "$(_jq '.git_username')" \
                 --arg gp "$(_jq '.git_provider')"  \
                 --arg br "$(_jq '.branch')"  \
@@ -22,6 +22,18 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
                 git_username: $gu,
                 git_provider: $gp,
                 branch: $br}' )
+
+
+    UPDATE_GIT_CREDENTIALS_RESPONSE=$(curl -X PATCH -H "Authorization: Bearer $TOKEN" \
+                -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
+                -H 'Content-Type: application/json' \
+                -d $JSON_STRING \
+                https://$DATABRICKS_INSTANCE/api/2.0/git-credentials/893018711170620 )
+    
+    echo $UPDATE_GIT_CREDENTIALS_RESPONSE
+
+    exit 1
 
     CREATE_GIT_CREDENTIALS_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
@@ -57,7 +69,7 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     echo $CREATE_REPO_RESPONSE
 done
 
-exit 1
+
 
 
 

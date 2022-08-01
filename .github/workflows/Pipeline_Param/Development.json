@@ -36,7 +36,6 @@
     ],
     "Git_Configuration": [
         {
-            "personal_access_token": "$PAT_GIT",
             "git_username": "ciaran28",
             "git_provider": "gitHub"
         }
