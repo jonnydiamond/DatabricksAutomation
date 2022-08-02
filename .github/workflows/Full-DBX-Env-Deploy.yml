@@ -99,8 +99,3 @@ jobs:
             PAT_GIT:            ${{ secrets.PAT_GIT }}
         
       
-        # "Syntax error: redirection unexpected" : Change from 'sh' to 'bash'.
-        #- name:                 Update Databricks Repo SP Folders
-        #  run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-All-Repo-Folders.sh
-        #  env:
-        #    environment:        ${{ matrix.environments }}
