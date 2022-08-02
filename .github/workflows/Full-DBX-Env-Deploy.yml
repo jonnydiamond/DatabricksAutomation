@@ -45,10 +45,10 @@ jobs:
             prefix:             param
 
 
-        #- name:                 Deploy DBX CICD Azure Resources
-        #  run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        #  env:
-        #    environment:        ${{ matrix.environments }}
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
