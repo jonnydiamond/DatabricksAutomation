@@ -97,5 +97,38 @@ jobs:
           env:
             environment:        ${{ matrix.environments }}
             PAT_GIT:            ${{ secrets.PAT_GIT }}
+
+
+        - name:                   Install + Configure Databricks CLI
+          run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
+          
+        - name:                   Create A Wheel File (Example)
+          run: | 
+            # Install Packages - TO DO - Do Via Requirements.txt File
+
+            python -m pip install --user --upgrade setuptools wheel
+            sudo apt-get install pandoc
+            #sudo apt-get install pdoc
+            pip3 install pdoc3
+            pip3 install pypandoc
+            pip3 install opencensus
+            pip3 install opencensus-ext-azure
+            pip3 install typeguard
+            pip3 install pytest
+            pip3 install python-dotenv
+            pip3 install jupyter
+            pip3 install databricks-api
+            pip3 install pandas
+            pip3 install pydataset
+            pip3 install pyspark 
+            pip3 install requests
+
+
+          shell: bash
+
+        - name:                 PY - Create Wheel File And Upload To Cluster
+          run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
+          env:
+            environment:        ${{ matrix.environments }}
+          
         
-      
