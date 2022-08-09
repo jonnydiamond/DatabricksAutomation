@@ -994,7 +994,8 @@ Specifices how to log the object
 > 
 >	 class Engine
 
-This is the core of the framework. It configures the environment to interact with the remote Databricks cluster.
+This is the core of the framework. It configures the environment to
+interact with the remote Databricks.
 
 Instantiate the current object
 
@@ -1087,8 +1088,8 @@ context accordingly if the code is runt on cluster or locally.
 >	 def initialize_logger(
 >		 self,
 >		 pipeline_name: str,
->		 appi_ik_scope: str = 'config',
->		 appi_ik_secret: str = 'APPI_IK'
+>		 appi_ik_scope: str = 'appinsight',
+>		 appi_ik_secret: str = 'appsecret'
 >	 )
 
 Initializes the logger

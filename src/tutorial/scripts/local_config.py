@@ -33,10 +33,16 @@ def main(cluster_config_file):
 
     cluster_name = cluster_configuration['cluster_name']
 
+    print("Cluster Name")
+
+    print(cluster_name)
+
     client = ResourceClient(
         host=configuration.DATABRICKS_HOST,
         personal_token=configuration.DATABRICKS_TOKEN
     )
+    print("Client")
+    print(client)
     drm = DatabricksResourceManager(
         client=client,
         cluster_name=cluster_name,
@@ -44,6 +50,8 @@ def main(cluster_config_file):
     )
 
     cluster_id = drm.cluster.cluster_id
+
+    print(cluster_id)
 
     local_config = DatabricksLocal(
         host=configuration.DATABRICKS_HOST,

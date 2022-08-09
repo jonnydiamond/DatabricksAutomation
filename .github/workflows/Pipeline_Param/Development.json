@@ -33,6 +33,7 @@
                 "max_workers": 4
             }
         }
+    
     ],
     "Git_Configuration": [
         {
