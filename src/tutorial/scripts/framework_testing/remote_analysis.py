@@ -184,3 +184,5 @@ step_crossValidate.initialize(
 )
 
 step_crossValidate.output_data.dataframe.toPandas()
+
+print(step_crossValidate.output_data.dataframe.toPandas())
