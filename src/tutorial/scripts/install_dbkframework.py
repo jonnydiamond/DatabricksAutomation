@@ -213,5 +213,9 @@ def main(cluster_config_file):
 
 
 if __name__ == "__main__":
+    ## Test
+    dbutils.widgets.get()
+    print(dbutils.widgets.get())
+    ## Test End
     args = parse_args()
     main(cluster_config_file=args.config_file)
