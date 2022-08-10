@@ -15,7 +15,8 @@ for path in sys.path:
 from pathlib import Path
 
 import sys
-sys.path.append(str(Path(__file__).parent.parent.joinpath('modules')))
+print(sys.path)
+#sys.path.append(str(Path(__file__).parent.parent.joinpath('modules')))
 import os
 import json
 from dbkcore.core import Log
