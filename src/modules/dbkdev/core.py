@@ -1,3 +1,5 @@
+# Databricks notebook source
+
 from pyspark.sql import DataFrame, SparkSession
 from dbkcore.core import trace, Log
 import re
