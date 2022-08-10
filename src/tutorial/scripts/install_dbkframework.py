@@ -14,8 +14,8 @@ for path in sys.path:
 
 from pathlib import Path
 
-# import sys
-# sys.path.append(str(Path(__file__).parent.parent.joinpath('modules')))
+import sys
+sys.path.append(str(Path(__file__).parent.parent.joinpath('modules')))
 import os
 import json
 from dbkcore.core import Log
@@ -214,8 +214,8 @@ def main(cluster_config_file):
 
 if __name__ == "__main__":
     ## Test
-    dbutils.widgets.get()
-    print(dbutils.widgets.get())
+    #dbutils.widgets.get()
+    #print(dbutils.widgets.get())
     ## Test End
     args = parse_args()
     main(cluster_config_file=args.config_file)
