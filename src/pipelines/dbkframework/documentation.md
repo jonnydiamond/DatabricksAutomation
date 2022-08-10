@@ -1173,3 +1173,788 @@ Current spark context
 	Spark context
 
 ----
+
+
+# Module `dbkenv`
+
+## Sub-modules
+
+  - [dbkenv.core](#module-`dbkenv.core`)
+  - [dbkenv.local](#module-`dbkenv.local`)
+
+----
+# Module `dbkenv.core`
+
+## Classes
+
+### Class `Cluster`
+
+> 
+> 
+>	 class Cluster(
+>		 client: dbkenv.core.ResourceClient,
+>		 cluster_name: str,
+>		 cluster_configuration: dict
+>	 )
+
+Manages a Databricks cluster
+
+Instantiates this object
+
+#### Parameters
+
+  - **`client`**
+	: <code>[ResourceClient](#module-`dbkenv.core.ResourceClient "dbkenv.core.ResourceClient"`)</code>  
+	A ResourceClient object
+  - **`cluster_name`** : <code>str</code>  
+	Name of the cluster
+  - **`cluster_configuration`** : <code>dict</code>  
+	Dictionary that contains the cluster configuration
+  - **`appinsight_instrumentation_key`** : <code>str</code>  
+	Application Insights’ instrumentation key
+
+#### Instance variables
+
+##### Variable `cluster_id`
+
+Type: `str`
+
+Retrieves cluster’s id
+
+###### Returns
+
+  - <code>str</code>  
+	Id of the cluster
+
+##### Variable `cluster_name`
+
+Type: `str`
+
+##### Variable `cluster_service`
+
+Type: `databricks_cli.sdk.service.ClusterService`
+
+#### Methods
+
+##### Method `cluster_exists`
+
+> 
+> 
+>	 def cluster_exists(
+>		 self
+>	 ) ‑> bool
+
+Checks is the cluster exists
+
+###### Returns
+
+  - <code>bool</code>  
+	True if exists
+
+##### Method `cluster_started`
+
+> 
+> 
+>	 def cluster_started(
+>		 self
+>	 ) ‑> bool
+
+Checks if the cluster is started
+
+###### Returns
+
+  - <code>bool</code>  
+	True if started
+
+##### Method `cluster_state`
+
+> 
+> 
+>	 def cluster_state(
+>		 self
+>	 ) ‑> str
+
+Checks cluster state
+
+###### Returns
+
+  - <code>str</code>  
+	State of the cluster
+
+##### Method `create_cluster_and_wait`
+
+> 
+> 
+>	 def create_cluster_and_wait(
+>		 self,
+>		 redeploy=False
+>	 ) ‑> bool
+
+Creates the cluster and waits for its done
+
+###### Parameters
+
+  - **`redeploy`** : <code>bool</code>  
+	Redeploy the cluster
+
+##### Method `databricks_list_clusters`
+
+> 
+> 
+>	 def databricks_list_clusters(
+>		 self
+>	 ) ‑> List[str]
+
+List clusters in Databricks
+
+###### Returns
+
+  - <code>List\[str\]</code>  
+	List of clusters
+
+##### Method `delete_cluster_and_wait`
+
+> 
+> 
+>	 def delete_cluster_and_wait(
+>		 self
+>	 ) ‑> bool
+
+Deletes the cluster and waits for completion
+
+##### Method `install_package`
+
+> 
+> 
+>	 def install_package(
+>		 self,
+>		 packages: List[dbkenv.core.Package]
+>	 ) ‑> str
+
+Installs the given packages
+
+###### Parameters
+
+  - **`packages`**
+	: <code>List\[[Package](#module-`dbkenv.core.Package "dbkenv.core.Package"`)\]</code>  
+	The packages to install
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `start_cluster_and_wait`
+
+> 
+> 
+>	 def start_cluster_and_wait(
+>		 self
+>	 ) ‑> bool
+
+Starts the cluster and wait for it completion
+
+###### Returns
+
+  - <code>bool</code>  
+	True if started
+
+### Class `Configuration`
+
+> 
+> 
+>	 class Configuration(
+>		 file_load: bool = False
+>	 )
+
+Retrieve the keys used from the package from the local environment.
+
+Initialize the configuration class.
+
+#### Parameters
+
+  - **`file_load`** : <code>bool</code>, optional  
+	Search .env file and loads it, by default False
+
+#### Instance variables
+
+##### Variable `APPINSIGHT_CONNECTIONSTRING`
+
+Type: `str`
+
+Application insight connection string.
+
+###### Returns
+
+  - <code>str</code>  
+	The connection string
+
+##### Variable `DATABRICKS_HOST`
+
+Type: `str`
+
+Databricks host url.
+
+###### Returns
+
+  - <code>str</code>  
+	The host url
+
+##### Variable `DATABRICKS_ORDGID`
+
+Type: `str`
+
+Databricks organization id.
+
+###### Returns
+
+  - <code>str</code>  
+	The id
+
+##### Variable `DATABRICKS_TOKEN`
+
+Type: `str`
+
+Databricks personal roken.
+
+###### Returns
+
+  - <code>str</code>  
+	The token
+
+### Class `DatabricksEnvironment`
+
+> 
+> 
+>	 class DatabricksEnvironment(
+>		 value,
+>		 names=None,
+>		 *,
+>		 module=None,
+>		 qualname=None,
+>		 type=None,
+>		 start=1
+>	 )
+
+Describes the type of environment used
+
+#### Ancestors (in MRO)
+
+  - [builtins.str](#module-`builtins.str`)
+  - [enum.Enum](#module-`enum.Enum`)
+
+#### Class variables
+
+##### Variable `DATABRICKS`
+
+##### Variable `LOCAL`
+
+### Class `DatabricksResourceManager`
+
+> 
+> 
+>	 class DatabricksResourceManager(
+>		 client: dbkenv.core.ResourceClient,
+>		 cluster_name: str,
+>		 cluster_configuration: dict,
+>		 log_to_appi: bool = False
+>	 )
+
+The orchestrator for managing the Databricks resources with ease
+
+Instantiates this object
+
+#### Parameters
+
+  - **`client`**
+	: <code>[ResourceClient](#module-`dbkenv.core.ResourceClient "dbkenv.core.ResourceClient"`)</code>  
+	A ResourceClient object
+  - **`cluster_name`** : <code>str</code>  
+	Name of the cluster
+  - **`cluster_configuration`** : <code>Dict</code>, optional  
+	The configuration of the cluster, by default None
+  - **`log_to_appi`** : <code>bool</code>  
+	Log to application insights
+
+#### Methods
+
+##### Method `run_notebook_and_wait`
+
+> 
+> 
+>	 def run_notebook_and_wait(
+>		 self,
+>		 destination_path: str,
+>		 delete_run=False
+>	 )
+
+##### Method `run_python_code_on_notebook`
+
+> 
+> 
+>	 def run_python_code_on_notebook(
+>		 self,
+>		 code: str
+>	 ) ‑> str
+
+Runs python code as a notebook
+
+###### Parameters
+
+  - **`code`** : <code>str</code>  
+	The code to execute
+
+###### Returns
+
+  - <code>str</code>  
+	Results from Databricks API call
+
+### Class `Jobs`
+
+> 
+> 
+>	 class Jobs(
+>		 client: dbkenv.core.ResourceClient
+>	 )
+
+Rapresents a Databricks Job
+
+Instantiates this object
+
+#### Parameters
+
+  - **`client`**
+	: <code>[ResourceClient](#module-`dbkenv.core.ResourceClient "dbkenv.core.ResourceClient"`)</code>  
+	A client
+
+#### Methods
+
+##### Method `run_notebook_and_wait`
+
+> 
+> 
+>	 def run_notebook_and_wait(
+>		 self,
+>		 destination_path: str,
+>		 cluster_id: str,
+>		 delete_run=False
+>	 ) ‑> str
+
+Run a notebooks and waits for its completion
+
+###### Parameters
+
+  - **`destination_path`** : <code>str</code>  
+	Notebooks path
+  - **`cluster_id`** : <code>str</code>  
+	Cluster’s id
+  - **`delete_run`** : <code>bool</code>, optional  
+	Deletes the run onces it’s completed, by default False
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+### Class `Package`
+
+> 
+> 
+>	 class Package(
+>		 origin: str,
+>		 package: str,
+>		 repo: str
+>	 )
+
+Rapresents the python package installed in databricks
+
+#### Reference
+
+Documentation
+[link](https://docs.databricks.com/dev-tools/api/latest/libraries.html#example-response)
+
+Creates this object
+
+#### Parameters
+
+  - **`origin`** : <code>str</code>  
+	Origin of the package
+  - **`package`** : <code>str</code>  
+	Name and version of the package
+  - **`repo`** : <code>str</code>  
+	The repository of the package
+
+#### Methods
+
+##### Method `to_api_json`
+
+> 
+> 
+>	 def to_api_json(
+>		 self
+>	 )
+
+### Class `ResourceClient`
+
+> 
+> 
+>	 class ResourceClient(
+>		 host: str,
+>		 personal_token: str
+>	 )
+
+Client used to interact with a Databricks cluster
+
+Instantiates this object
+
+#### Parameters
+
+  - **`host`** : <code>str</code>  
+	Host of the cluster
+  - **`personal_token`** : <code>str</code>  
+	Databricks personal token
+
+#### Instance variables
+
+##### Variable `apiClient`
+
+Type: `databricks_cli.sdk.api_client.ApiClient`
+
+Creates the Databricks API client
+
+###### Returns
+
+  - <code>ApiClient</code>  
+	The client
+
+### Class `Secret`
+
+> 
+> 
+>	 class Secret(
+>		 client: dbkenv.core.ResourceClient
+>	 )
+
+Manages Databricks’ secrets
+
+Instantiates this object.
+
+#### Parameters
+
+  - **`client`**
+	: <code>[ResourceClient](#module-`dbkenv.core.ResourceClient "dbkenv.core.ResourceClient"`)</code>  
+	A ResourceClient object
+
+#### Instance variables
+
+##### Variable `secret_service`
+
+#### Methods
+
+##### Method `add_scope`
+
+> 
+> 
+>	 def add_scope(
+>		 self,
+>		 scope: str
+>	 ) ‑> str
+
+Creates the scope
+
+###### Parameters
+
+  - **`scope`** : <code>str</code>  
+	Scope’s name
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `add_secret`
+
+> 
+> 
+>	 def add_secret(
+>		 self,
+>		 scope: str,
+>		 secret_name: str,
+>		 secret_value: str
+>	 ) ‑> str
+
+Adds a secret to the given scope. If a secret already exists with the
+same name, it will be overwritten.
+
+###### Note
+
+The server encrypts the secret using the secret scope’s encryption
+settings before storing it. You must have WRITE or MANAGE permission on
+the secret scope.
+
+###### Parameters
+
+  - **`scope`** : <code>str</code>  
+	Name of the scope
+  - **`secret_name`** : <code>str</code>  
+	Name of the secret
+  - **`secret_value`** : <code>str</code>  
+	Value of the secret
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `create_scope_secrets`
+
+> 
+> 
+>	 def create_scope_secrets(
+>		 self,
+>		 scope: str,
+>		 secrets: dict
+>	 )
+
+Insert a secret under the provided scope with the given name. If the
+scope already exists, it will be dropped and recreated. If a secret
+already exists with the same name, it will be overwritten.
+
+###### Notes
+
+The server encrypts the secret using the secret scope’s encryption
+settings before storing it. You must have WRITE or MANAGE permission on
+the secret scope.
+
+###### Parameters
+
+  - **`scope`** : <code>str</code>  
+	Name of the scope
+  - **`secret_names`** : <code>\[str\]</code>  
+	Secrets names that must be searched in the Key Vault
+
+##### Method `delete_scope`
+
+> 
+> 
+>	 def delete_scope(
+>		 self,
+>		 scope: str
+>	 ) ‑> str
+
+Deletes the given scope
+
+###### Parameters
+
+  - **`scope`** : <code>str</code>  
+	Scope’s name
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `list_scopes_secrets`
+
+> 
+> 
+>	 def list_scopes_secrets(
+>		 self
+>	 ) ‑> Dict[~KT, ~VT]
+
+Returns all the scopes and their secrets
+
+###### Returns
+
+  - <code>dict</code>  
+	The secrets {“secret”: …}
+
+##### Method `scopes`
+
+> 
+> 
+>	 def scopes(
+>		 self
+>	 ) ‑> List[str]
+
+Retrieve list of scopes.
+
+###### Returns
+
+  - <code>List\[str\]</code>  
+	List of scopes
+
+### Class `Workspace`
+
+> 
+> 
+>	 class Workspace(
+>		 client: dbkenv.core.ResourceClient
+>	 )
+
+Manages a Databricks Workspace
+
+Instantiates this object
+
+#### Parameters
+
+  - **`client`**
+	: <code>[ResourceClient](#module-`dbkenv.core.ResourceClient "dbkenv.core.ResourceClient"`)</code>  
+	A ResourceClient object
+
+#### Instance variables
+
+##### Variable `workspace_service`
+
+Type: `databricks_cli.sdk.service.WorkspaceService`
+
+The Databricks Workspace Service
+
+###### Returns
+
+  - <code>WorkspaceService</code>  
+	Workspace service from Databricks API
+
+#### Methods
+
+##### Method `delete_content`
+
+> 
+> 
+>	 def delete_content(
+>		 self,
+>		 destination_path: str
+>	 ) ‑> str
+
+Deletes the content at the given path
+
+###### Parameters
+
+  - **`destination_path`** : <code>str</code>  
+	Path of the file
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `list_content`
+
+> 
+> 
+>	 def list_content(
+>		 self,
+>		 destination_folder: str
+>	 ) ‑> List[str]
+
+Lists the content in the given folder
+
+###### Parameters
+
+  - **`destination_folder`** : <code>str</code>  
+	Folder to check
+
+###### Returns
+
+  - <code>List\[str\]</code>  
+	List of files
+
+##### Method `make_dir`
+
+> 
+> 
+>	 def make_dir(
+>		 self,
+>		 path_dir: str
+>	 ) ‑> str
+
+Makes a directory in the given folder
+
+###### Parameters
+
+  - **`path_dir`** : <code>str</code>  
+	Base directory to which add the folder
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+##### Method `upload_content`
+
+> 
+> 
+>	 def upload_content(
+>		 self,
+>		 destination_path: str,
+>		 content: str,
+>		 format='SOURCE',
+>		 language='PYTHON',
+>		 overwrite=True
+>	 ) ‑> str
+
+Uploads content to the workspace
+
+###### Parameters
+
+  - **`destination_path`** : <code>str</code>  
+	Destination of the file
+  - **`content`** : <code>str</code>  
+	File’s content as string
+  - **`format`** : <code>str</code>, optional  
+	Databricks file format, by default “SOURCE”
+  - **`overwrite`** : <code>bool</code>, optional  
+	Overwrite the file if exists, by default True
+
+###### Returns
+
+  - <code>str</code>  
+	Result from Databricks API call
+
+----
+# Module `dbkenv.local`
+
+## Classes
+
+### Class `DatabricksLocal`
+
+> 
+> 
+>	 class DatabricksLocal(
+>		 host: str,
+>		 databricks_token: str,
+>		 cluster_id: str,
+>		 org_id: str,
+>		 port=15001
+>	 )
+
+Sets up the local environment to use a remote instance of Databricks
+
+Instantiates this object.
+
+#### Parameters
+
+  - **`host`** : <code>str</code>  
+	Databricks host
+  - **`databricks_token`** : <code>str</code>  
+	Personal token
+  - **`cluster_id`** : <code>str</code>  
+	Cluster’s id
+  - **`org_id`** : <code>str</code>  
+	Organization id
+  - **`port`** : <code>int</code>, optional  
+	Port for connection, by default 15001
+
+#### Methods
+
+##### Method `initialize`
+
+> 
+> 
+>	 def initialize(
+>		 self
+>	 )
+
+Initialize the configuration.
+
+----
