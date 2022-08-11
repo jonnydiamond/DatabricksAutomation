@@ -140,12 +140,12 @@ jobs:
             databricks fs cp "src/pipelines/dbkframework/dist/dbkframework-1-py3-none-any.whl" dbfs:/FileStore/dev/dbkframework-1-py3-none-any.whl --overwrite
           shell: bash
 
-        - name: Install Wheel On Cluster
-          run: |
-            # Get The Cluster ID & Make Wheel Name Dynamic
-            
-            databricks libraries install --cluster-id "0802-090441-honks846" --whl "dbfs:/FileStore/dbkframework-1-py3-none-any.whl"  
-          shell: bash    
+        #- name: Install Wheel On Cluster
+        #  run: |
+        #    # Get The Cluster ID & Make Wheel Name Dynamic
+        #    
+        #    databricks libraries install --cluster-id "0802-090441-honks846" --whl "dbfs:/FileStore/dbkframework-1-py3-none-any.whl"  
+        #  shell: bash    
 
 
 
