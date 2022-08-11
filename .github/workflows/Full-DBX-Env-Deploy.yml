@@ -127,9 +127,11 @@ jobs:
 
         - name: Install wheel
           run: |
-            cd src/pipelines/dbkframework
-            pip uninstall -y dfordbx-0.0.1-py3-none-any.whl
-            pip install dfordbx-0.0.1-py3-none-any.whl
+            ls
+            cd src/pipelines/dbkframework/dist
+            ls
+            pip uninstall -y dbkframework-1-py3-none-any.whl
+            pip install dbkframework-1-py3-none-any.whl
   
         - name: Upoload Wheel File To DBFS
           run: |
