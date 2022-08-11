@@ -61,7 +61,7 @@ jobs:
         # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
         
         # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
-        # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right
+        # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right.
 
 
         - name:                 Authenticate to DBX Service Principal
