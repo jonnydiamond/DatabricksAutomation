@@ -102,7 +102,7 @@ jobs:
         - name:                   Install + Configure Databricks CLI
           run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
 
-        - name:                   Create A Wheel File (Example)
+        - name:                   Import Python Wheel Dependencies 
           run: | 
             python -m pip install --upgrade pip
             python -m pip install flake8 pytest pyspark pytest-cov requests

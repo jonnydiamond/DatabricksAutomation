@@ -16,3 +16,4 @@ scikit-learn>=0.24.1
 PyArrow>=0.15.1
 pyspark
 pandas>=0.24.2
+pandoc
