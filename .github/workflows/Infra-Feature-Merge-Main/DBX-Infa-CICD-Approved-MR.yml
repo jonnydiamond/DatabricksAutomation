@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+# Once Feature Branch Merge Request Is Approved, The Main Branch Will Be Updated. 
+# Use The Updated Main Branch Infra Code To Deploy Updated Azure Resources To UAT Environment.
+
+name: Infra - Feature Merge Into Main Approved - Deploy to UAT Env
+on:  [workflow_dispatch]
+  #pull_request:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - Infrastructure
+  #  types: [closed]
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  DeployToTestInfra:
+    name:                     Infra - Feature Merge Into Main Approved - Deploy to UAT Env
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [UAT]    
+    steps:
+      - uses:                  actions/checkout@v3
+        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch That Has Been Successfully Merged Into/Updated
+
+      - name:                 Azure Login - ${{ matrix.environments }}
+        uses:                 azure/login@v1
+        with:
+          creds:              ${{secrets.AZURE_CREDENTIALS}}
+    
+
+      - name:                 Store JSON Param File Variables As Environ Variables
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+          prefix:             param
+
+
+      - name:                 Deploy DBX CICD Azure Resources
+        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        env:
+          environment:        ${{ matrix.environments }}

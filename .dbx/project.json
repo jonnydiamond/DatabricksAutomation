@@ -1,9 +1,0 @@
-{
-    "environments": {
-        "default": {
-            "profile": "default",
-            "workspace_dir": "/Shared/dbx/projects/DatabricksAutomation",
-            "artifact_location": "dbfs:/dbx/DatabricksAutomation"
-        }
-    }
-}

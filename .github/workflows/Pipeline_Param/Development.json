@@ -32,8 +32,31 @@
                 "min_workers": 2,
                 "max_workers": 4
             }
+        },
+        {
+            "cluster_name": "dbx-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
         }
-    
+    ],
+    "WheelFiles": [
+        {
+            "Cluster": "dbx-sp-cluster",
+            "Setup_py_File_Path": "src/pipelines/dbkframework/setup.py"
+
+        },
+        {
+            "Cluster": "dbx-sp-cluster2",
+            "Setup_py_File_Path": "src/pipelines/dbkframework/setup.py"
+
+        }
     ],
     "Git_Configuration": [
         {
@@ -47,18 +70,6 @@
             "provider": "gitHub",
             "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder",
             "branch": "develop"
-        },
-        {
-            "url": "https://github.com/ciaran28/DatabricksAutomation", 
-            "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/TestFolder",
-            "branch": "main"
-        },
-        {
-            "url": "https://github.com/ciaran28/DatabricksAutomation", 
-            "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/ProductionFolder",
-            "branch": "main"
         }
     ]
 }

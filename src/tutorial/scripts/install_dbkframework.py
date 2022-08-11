@@ -92,9 +92,7 @@ def main(cluster_config_file):
         cluster_configuration = json.load(cl)
 
     cluster_name = cluster_configuration['cluster_name']
-    ## Change
-    print(cluster_name)
-    ##
+
     print("Databricks Host And Databricks Token: For Resource Client Object Creation")
     print(configuration.DATABRICKS_HOST)
     print(configuration.DATABRICKS_TOKEN)

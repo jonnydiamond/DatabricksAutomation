@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+# Feature Branch Merge Requested (Not Apprved)
+# Take Infra Code From Requesting Feature Branch And Deploy To Dev Environment
+
+name: App - Feature Merge Into Main Reqquested - Pull Request On Feature Branch
+on: [workflow_dispatch] 
+  #pull_request:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - Infrastructure
+  #  types: [open]
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  Git_Pull_Dev_Env:
+    name:                     Git Pull Dev Environment - DevelopmentFolder
+    runs-on:                  ubuntu-latest
+    strategy:
+      matrix:
+        environments:          [Development]    
+    steps:
+      - uses:                 actions/checkout@v3  
+              
+      - name:                 JSON To Env
+        uses:                 antifree/json-to-variables@v1.0.1
+        with:
+          filename:           '.github/workflows/Global_Parameters/${{ matrix.environments }}.json'
+          prefix:             param
+
+
+      - name:                 Authenticate to DBX SP
+        run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+        env:
+          ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+      
+
+      - run: |
+          echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
+
+      - name:                 Update Test Repo In Test Environment (Main Branch)
+        run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
+        # What Branch is the Merge Request Being Applied To
+        env:
+          BRANCH:          ${{ github.head_ref }}
+          UPDATE_FOLDER:  'DevelopmentFolder'
+
+      # CREATE .WHL FILE
+

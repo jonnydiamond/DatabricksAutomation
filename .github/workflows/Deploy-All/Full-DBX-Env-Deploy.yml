@@ -19,7 +19,7 @@ jobs:
       runs-on:                  ubuntu-latest
       strategy:
         matrix:
-          environments:          [Development, Staging, Production]    
+          environments:          [Development, UAT, PreProduction, Production]    
       steps:
         - uses:                  actions/checkout@v3
 
@@ -104,31 +104,110 @@ jobs:
 
         - name:                   Create A Wheel File (Example)
           run: | 
-            # Install Packages - TO DO - Do Via Requirements.txt File
+            python -m pip install --upgrade pip
+            python -m pip install flake8 pytest pyspark pytest-cov requests
 
+            pip3 install -r ./src/pipelines/dbkframework/requirements.txt
             python -m pip install --user --upgrade setuptools wheel
-            sudo apt-get install pandoc
-            #sudo apt-get install pdoc
-            pip3 install pdoc3
-            pip3 install pypandoc
-            pip3 install opencensus
-            pip3 install opencensus-ext-azure
-            pip3 install typeguard
-            pip3 install pytest
-            pip3 install python-dotenv
-            pip3 install jupyter
-            pip3 install databricks-api
-            pip3 install pandas
-            pip3 install pydataset
-            pip3 install pyspark 
-            pip3 install requests
 
 
+        - name: Lint with flake8
+          run: |
+            # stop the build if there are Python syntax errors or undefined names
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+            # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+        - name: Create wheel
+          run: |
+            ls
+            cd src/pipelines/dbkframework
+            python setup.py sdist bdist_wheel
+
+        - name: Install wheel
+          run: |
+            cd src/pipelines/dbkframework
+            pip uninstall -y dfordbx-0.0.1-py3-none-any.whl
+            pip install dfordbx-0.0.1-py3-none-any.whl
+  
+        - name: Upoload Wheel File To DBFS
+          run: |
+            # Make Wheel Name Dynamic
+
+            databricks fs cp "src/pipelines/dbkframework/dist/dbkframework-1-py3-none-any.whl" dbfs:/FileStore/dev --overwrite
           shell: bash
 
-        - name:                 PY - Create Wheel File And Upload To Cluster
-          run:                  python src/tutorial/scripts/install_dbkframework.py -c "src/tutorial/cluster_config.json"
-          env:
-            environment:        ${{ matrix.environments }}
+        - name: Install Wheel On Cluster
+          run: |
+            # Get The Cluster ID & Make Wheel Name Dynamic
+            
+            databricks libraries install --cluster-id "0802-090441-honks846" --whl "dbfs:/FileStore/dev/dbkframework-1-py3-none-any.whl"  
+          shell: bash    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            # Navigate To The Setup.Py File.
+            #ls
+            #cd src
+            #cd pipelines
+            #cd dbkframework
+
+            # Create The Python Wheel File
+            #python setup.py sdist bdist_wheel
+
+            #cd dist
+            #echo "Name of Pyton Wheel File"
+            #ls
+
+            #databricks fs -h
+            #databricks fs ls
+            #databricks fs rm 'dbfs:/FileStore/dev/artifacts/'
+            #databricks fs cp -r dbkframework-1-py3-none-any.whl dbfs:/FileStore/dev/artifacts/
+
+            #databricks libraries uninstall --cluster-id {cluster_id} --whl dbfs:/FileStore/dev/artifacts/dbkframework-1-py3-none-any.whl
+            #databricks libraries install --cluster-id {cluster_id} --whl dbfs:/FileStore/dev/artifacts/dbkframework-1-py3-none-any.whl
+
+          #shell: bash
+
           
         

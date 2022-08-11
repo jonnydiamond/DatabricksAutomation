@@ -1,25 +1,28 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
+# Once Feature Branch Merge Request Is Approved, The Main Branch Will Be Updated. 
+# Use The Updated Main Branch Infra Code To Deploy Updated Azure Resources To UAT Environment.
 
-# TO DO: Write A New Package For Setting Environment Variables From A Parameters File. 
-
-# If Main Branch Updates, Then We Need The REPO Production Folder in ALL Environments (Production/Testing/Development) To Update
-name: Git Pull Production Environment - ProductionFolder
-
-on: [workflow_dispatch]
-
+name: App - Feature Merge Into Main Approved - Deploy to UAT Env
+on: [workflow_dispatch] 
+  #pull_request:
+  #  branches:
+  #    - main
+  #  paths:
+  #    - src/** # Include GITHUB Workflows in Time?
+  #  types: [closed]
 
 permissions:
       id-token:               write
       contents:               read
 
 jobs:
-  Git_Pull_Production:
-    name:                     Git Pull Production Environment - ProductionFolder
+  Git_Pull_Dev_Env:
+    name:                     Git Pull UAT Environment - UATFolder
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [Production]    
+        environments:          [UAT]    
     steps:
       - uses:                 actions/checkout@v3  
               
@@ -43,13 +46,9 @@ jobs:
           echo "${{ github.base_ref }}"
 
       - name:                 Update Test Repo In Test Environment (Main Branch)
-        run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-Prod-Env.sh
-        # What Branch is the Merge Request Being Applied To
+        run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
         env:
-          target_branch:      ${{ github.base_ref }}
+          BRANCH:          ${{ github.base }} # Should Be Main
+          UPDATE_FOLDER:  'UATFolder'
 
       # CREATE .WHL FILE
-
-
-
-
