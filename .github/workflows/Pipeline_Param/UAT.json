@@ -10,7 +10,7 @@
         {
             "role":"Key Vault Administrator", 
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
-            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-aut-rg",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-uat-rg",
             "principalType": "User"
         },
         {
