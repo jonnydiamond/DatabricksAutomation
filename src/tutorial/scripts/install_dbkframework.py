@@ -6,6 +6,7 @@ import sys
 import os
 
 
+
 for path in sys.path:
     print(path)
 
@@ -15,7 +16,7 @@ for path in sys.path:
 from pathlib import Path
 
 import sys
-print(sys.path)
+#print(sys.path)
 #sys.path.append(str(Path(__file__).parent.parent.joinpath('modules')))
 import os
 import json
@@ -214,9 +215,5 @@ def main(cluster_config_file):
 
 
 if __name__ == "__main__":
-    ## Test
-    #dbutils.widgets.get()
-    #print(dbutils.widgets.get())
-    ## Test End
     args = parse_args()
     main(cluster_config_file=args.config_file)
