@@ -6,7 +6,7 @@
           "value": "eastus"
       },
       "environment": {
-          "value": "prod"
+          "value": "preprod"
       },
       "repoConfig": {
         "value": {

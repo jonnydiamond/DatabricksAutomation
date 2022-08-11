@@ -6,7 +6,7 @@
           "value": "eastus"
       },
       "environment": {
-          "value": "test"
+          "value": "uat"
       },
       "repoConfig": {
         "value": {
@@ -35,10 +35,10 @@
         }
       },
       "resourceGroupName" :{
-        "value": "databricks-test-rg"
+        "value": "databricks-uat-rg"
       },
       "workspaceName" : {
-        "value": "azdbxwstest"
+        "value": "azdbxwsuat"
       },
       "pricingTier": {
         "value": "premium"
@@ -47,10 +47,10 @@
         "value": true
       },
       "loganalyticswsname": {
-        "value": "dbxloganalyticstest"
+        "value": "dbxloganalyticsuat"
       },
       "appInsightswsname": {
-        "value": "dbxappinsightstest"
+        "value": "dbxappinsightsuat"
       }
     }
   }
