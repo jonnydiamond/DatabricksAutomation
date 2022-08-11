@@ -17,8 +17,8 @@ from devmaint.docgenerator import create_adow_documentation
 
 package_name = current_file_folder.stem
 
-## Amendment. modules_to_use missing dbkenv
-modules_to_use = ['dbkcore', 'dbkdev', 'acai_ml', 'dbkenv']
+
+modules_to_use = ['dbkcore', 'dbkdev', 'acai_ml']
 path_requirements = current_file_folder.joinpath('requirements.txt')
 package_dir = {}
 documentations = []
