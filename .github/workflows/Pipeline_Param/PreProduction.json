@@ -10,13 +10,13 @@
         {
             "role":"Key Vault Administrator", 
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
-            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-prod-rg",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-preprod-rg",
             "principalType": "User"
         },
         {
             "role":"Key Vault Administrator",
             "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
-            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-prod-rg",
+            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-preprod-rg",
             "principalType": "ServicePrincipal"
         }
     ],
