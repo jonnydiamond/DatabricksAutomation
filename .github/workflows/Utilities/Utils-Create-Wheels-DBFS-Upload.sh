@@ -34,7 +34,13 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Create The Wheel File
     python "$setup_py_file_path" sdist bdist_wheel
 
-    cd src/pipelines/dbkframework/dist 
+    cd src
+    ls
+    cd pipelines
+    ls
+    cd dbkframework
+    ls
+    cd dist 
     ls
     wheel_file_name=$( ls -d -- *.whl )
     echo "Wheel File Name: $wheel_file_name"
