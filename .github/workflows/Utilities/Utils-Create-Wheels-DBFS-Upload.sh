@@ -40,14 +40,20 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     echo "Wheel File Name: $wheel_file_name"
 
     # Install Wheel File
-    #pip uninstall -y "$setup_py_file_path/dist/$wheel_file_name"
-    #pip install -y "$setup_py_file_path/dist/$wheel_file_name"
+    echo "$root_dir_file_path/dist/$wheel_file_name"
+    pip uninstall -y "$root_dir_file_path/dist/$wheel_file_name"
+    pip install -y "$root_dir_file_path/dist/$wheel_file_name"
 
     # Upoload Wheel File To DBFS Folder. Wheel File Will Be Stored In A Folder Relating To The Cluster
     # It Is To Be Deployed To
 
     databricks fs rm dbfs:/FileStore/dev/$wheel_file_name
-    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_file_name --overwrite
+    echo "$root_dir_file_path/dist/$wheel_file_name"
+    echo "dbfs:/FileStore/dev/$wheel_file_name"
+    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" "dbfs:/FileStore/dev/$wheel_file_name" --overwrite
+    databricks fs ls
+
+
 
     # Remove dist folder from DevOps Agent
     ls
