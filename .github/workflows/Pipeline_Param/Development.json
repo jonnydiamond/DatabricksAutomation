@@ -47,16 +47,15 @@
         }
     ],
     "WheelFiles": [
-        {
-            "Cluster": "dbx-sp-cluster",
-            "Setup_py_File_Path": "src/pipelines/dbkframework/setup.py"
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster"
 
-        },
-        {
-            "Cluster": "dbx-sp-cluster2",
-            "Setup_py_File_Path": "src/pipelines/dbkframework/setup.py"
-
-        }
+            },
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster2"
+            }
     ],
     "Git_Configuration": [
         {
