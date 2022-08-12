@@ -33,7 +33,8 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     python "$setup_py_file_path" sdist bdist_wheel
 
     cd dist 
-    wheel_file_name=$( ls )
+    ls
+    wheel_file_name=$( ls -d -- *.whl )
     echo "Wheel File Name: $wheel_file_name"
 
     # Install Wheel File
@@ -46,9 +47,11 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
     databricks fs cp "$setup_py_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_file_name --overwrite
 
-    # Remove Wheel File From DevOps Agent
+    # Remove dist folder from DevOps Agent
     ls
-    rm -f $wheel_file_name
+    cd ..
+    ls
+    rm -rf dist
 
     
 
