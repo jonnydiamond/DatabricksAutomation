@@ -45,7 +45,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # It Is To Be Deployed To
 
     databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
-    databricks fs cp "$setup_py_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_file_name --overwrite
+    databricks fs cp "$setup_py_file_path/dist/$wheel_file_name" dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
 
     # Remove dist folder from DevOps Agent
     ls
