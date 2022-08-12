@@ -34,7 +34,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Create The Wheel File
     python "$setup_py_file_path" sdist bdist_wheel
 
-    cd dist 
+    cd src/pipelines/dbkframework/dist 
     ls
     wheel_file_name=$( ls -d -- *.whl )
     echo "Wheel File Name: $wheel_file_name"
@@ -60,6 +60,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     #cd ..
     #ls
     #rm -rf dist
+    #pip uninstall -y $wheel_file_name
 
     
 
