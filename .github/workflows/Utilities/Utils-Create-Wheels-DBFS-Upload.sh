@@ -30,16 +30,11 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     
     echo "Wheel File Destined For Cluster: $wheel_cluster "
     echo "Location Of Setup.py File For Wheel File Creation; $setup_py_file_path"
-
+    
+    cd src/pipelines/dbkframework
     # Create The Wheel File
-    python "$setup_py_file_path" sdist bdist_wheel
-
-    cd src
-    ls
-    cd pipelines
-    ls
-    cd dbkframework
-    ls
+    python setup.py sdist bdist_wheel
+    
     cd dist 
     ls
     wheel_file_name=$( ls -d -- *.whl )
