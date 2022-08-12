@@ -31,7 +31,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     echo "Wheel File Destined For Cluster: $wheel_cluster "
     echo "Location Of Setup.py File For Wheel File Creation; $setup_py_file_path"
     
-    cd %root_dir_file_path
+    cd $root_dir_file_path
 
     # Create The Wheel File
     python setup.py sdist bdist_wheel
@@ -55,19 +55,10 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
 
     # Databricks CLI Does Not Accept Absolute FilePaths, Only Relative
     databricks fs cp $wheel_file_name dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
-    databricks fs ls
-
-
-
-    # Remove dist folder from DevOps Agent
-    #ls
-    #cd ..
-    #ls
-    #rm -rf dist
-    #pip uninstall -y $wheel_file_name
-
     
-
-
+    # Cleanup - Remove dist folder from DevOps Agent
+    pip uninstall -y $wheel_file_name
+    cd ..
+    rm -rf dist
 
 done
