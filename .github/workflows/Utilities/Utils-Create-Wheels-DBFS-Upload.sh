@@ -46,8 +46,8 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Upoload Wheel File To DBFS Folder. Wheel File Will Be Stored In A Folder Relating To The Cluster
     # It Is To Be Deployed To
 
-    databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
-    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_cluster_$wheel_file_name --overwrite
+    databricks fs rm dbfs:/FileStore/dev/$wheel_file_name
+    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_file_name --overwrite
 
     # Remove dist folder from DevOps Agent
     ls
