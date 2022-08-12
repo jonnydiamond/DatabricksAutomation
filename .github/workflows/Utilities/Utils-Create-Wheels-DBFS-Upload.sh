@@ -25,6 +25,8 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
 
     wheel_cluster=$(_jq '.wheel_cluster')
     setup_py_file_path=$(_jq '.setup_py_file_path')
+    # We Are Removing Setup.py From The FilePath 'setup_py_file_path'
+    root_dir_file_path=${setup_py_file_path%/*}
     
     echo "Wheel File Destined For Cluster: $wheel_cluster "
     echo "Location Of Setup.py File For Wheel File Creation; $setup_py_file_path"
@@ -45,7 +47,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # It Is To Be Deployed To
 
     databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
-    databricks fs cp "$setup_py_file_path/dist/$wheel_file_name" dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
+    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
 
     # Remove dist folder from DevOps Agent
     ls
