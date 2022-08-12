@@ -51,7 +51,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     databricks fs rm dbfs:/FileStore/dev/$wheel_file_name
     echo "$root_dir_file_path/dist/$wheel_file_name"
     echo "dbfs:/FileStore/dev/$wheel_file_name"
-    databricks fs cp $root_dir_file_path/dist/$wheel_file_name dbfs:/FileStore/dev/$wheel_file_name --overwrite
+    databricks fs cp "$root_dir_file_path/dist/$wheel_file_name" dbfs:/FileStore/dev/$wheel_file_name --overwrite
     databricks fs ls
 
 
