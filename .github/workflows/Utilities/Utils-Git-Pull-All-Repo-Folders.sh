@@ -6,8 +6,6 @@
 
 echo "Ingest JSON File"
 
-
-
 #Based on DBX Repo Folders Created in Parameters File Within Objection Repo_Configuration 
 REPO_FOLDERS=("DevelopmentFolder"
 "TestFolder"

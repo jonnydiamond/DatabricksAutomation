@@ -2,9 +2,6 @@
 # Each Setup.py Relates To The Creation Of A New Wheel File, Which Will Be Saved In 
 # DBFS In A Folder Corresponding To The Cluster The Wheel File Is To Be Uploaded To. 
 
-
-# TO DO : MUST MAKE THE WHEEL FILES DYNAMIC
-
 echo "Import Wheel Dependencies"
 python -m pip install --upgrade pip
 python -m pip install flake8 pytest pyspark pytest-cov requests
@@ -23,7 +20,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
 
-    wheel_cluster=$(_jq '.wheel_cluster')
+    CLUSTER_NAME=$(_jq '.wheel_cluster')
     setup_py_file_path=$(_jq '.setup_py_file_path')
     # We Are Removing Setup.py From The FilePath 'setup_py_file_path'
     root_dir_file_path=${setup_py_file_path%/*}
@@ -49,7 +46,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Upoload Wheel File To DBFS Folder. Wheel File Will Be Stored In A Folder Relating To The Cluster
     # It Is To Be Deployed To
 
-    databricks fs rm dbfs:/FileStore/dev/$wheel_file_name
+    databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
     echo "$root_dir_file_path/dist/$wheel_file_name"
     echo "dbfs:/FileStore/dev/$wheel_file_name"
 
@@ -61,4 +58,34 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     cd ..
     rm -rf dist
 
+    upload_to_cluster=$(_jq '.upload_to_cluster?')
+    if [ upload_to_cluster ]
+    then
+        databricks libraries uninstall --cluster-id {cluster_id} --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+
+        LIST_CLUSTERS=$(curl -X GET -H "Authorization: Bearer $TOKEN" \
+                            -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
+                            -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
+                            -H 'Content-Type: application/json' \
+                            https://$DATABRICKS_INSTANCE/api/2.0/clusters/list )
+
+        # Extract Existing Cluster Names
+        CLUSTER_NAMES=$( jq -r '[.clusters[].cluster_name]' <<< "$LIST_CLUSTERS")
+        echo $CLUSTER_NAMES
+
+        # UPDATE THE CLUSTER NAME SEARCH ===> CREATE A CLUSTER LIST 
+        echo 'clusterID'
+        CLUSTER_ID=$( jq -r --arg CLUSTER_NAME "$CLUSTER_NAME" ' .clusters[] | select( .cluster_name | contains($CLUSTER_NAME)) | .cluster_id ' <<< "$LIST_CLUSTERS")
+        echo $CLUSTER_ID
+
+        databricks libraries uninstall --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+        databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+        
+        # Make This More Effecient. Restart Clusters Once Only After All DBFS Files Have Been Uploaded. Preferably A Restart All Clusters In 
+        # The Workspace Would Do. 
+        databricks clusters restart --cluster-id $CLUSTER_ID
+    fi
 done
+
+
+
