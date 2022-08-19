@@ -10,7 +10,7 @@ on:
       - main
     paths:
       - Infrastructure/**
-    types: [closed]
+    types: [open, closed]
 
 
 permissions:
@@ -18,8 +18,16 @@ permissions:
       contents:               read
 
 jobs:
+  checks:
+    if:                         github.event_name == 'pull_request' && github.event.action == 'open'
+    name:                       Checks
+    runs-on:                    ubuntu-latest
+    steps:
+      - run: |
+          echo "Checks Test!!!"
+
   deployinfra:
-      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      if:                       github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
       runs-on:                  ubuntu-latest
       strategy:
@@ -40,7 +48,6 @@ jobs:
           with:
             creds:              ${{secrets.AZURE_CREDENTIALS}}
       
-
         - name:                 Store JSON Param File Variables As Environ Variables
           uses:                 antifree/json-to-variables@v1.0.1
           with:
