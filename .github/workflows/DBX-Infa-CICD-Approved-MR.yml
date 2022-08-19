@@ -19,33 +19,33 @@ permissions:
 
 jobs:
   DeployToTestInfra:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-    name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
-    runs-on:                  ubuntu-latest
-    strategy:
-      matrix:
-        environments:          [Development]    
-    - run: |
-        echo "${{ github.head_ref }}"
-        echo "${{ github.base_ref }}"
-    steps:
-      - uses:                  actions/checkout@v3
-        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into main
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+      runs-on:                  ubuntu-latest
+      strategy:
+        matrix:
+          environments:          [Development]    
+      - run: |
+          echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
+      steps:
+        - uses:                  actions/checkout@v3
+          ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into main
 
-      - name:                 Azure Login - ${{ matrix.environments }}
-        uses:                 azure/login@v1
-        with:
-          creds:              ${{secrets.AZURE_CREDENTIALS}}
-    
+        - name:                 Azure Login - ${{ matrix.environments }}
+          uses:                 azure/login@v1
+          with:
+            creds:              ${{secrets.AZURE_CREDENTIALS}}
+      
 
-      - name:                 Store JSON Param File Variables As Environ Variables
-        uses:                 antifree/json-to-variables@v1.0.1
-        with:
-          filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
-          prefix:             param
+        - name:                 Store JSON Param File Variables As Environ Variables
+          uses:                 antifree/json-to-variables@v1.0.1
+          with:
+            filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+            prefix:             param
 
 
-      - name:                 Deploy DBX CICD Azure Resources
-        run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        env:
-          environment:        ${{ matrix.environments }}
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  sh ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
