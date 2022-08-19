@@ -19,7 +19,6 @@ permissions:
 
 jobs:
   checks:
-    if:                         github.event_name == 'pull_request' && github.event.action == 'open'
     name:                       Checks
     runs-on:                    ubuntu-latest
     steps:
