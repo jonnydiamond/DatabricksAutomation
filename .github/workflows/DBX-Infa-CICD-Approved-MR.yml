@@ -4,6 +4,7 @@
 # Use The Updated Main Branch Infra Code To Deploy Updated Azure Resources To UAT Environment.
 
 name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+ on: 
   pull_request:
     branches:
       - main
@@ -29,7 +30,7 @@ jobs:
         echo "${{ github.base_ref }}"
     steps:
       - uses:                  actions/checkout@v3
-        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into it
+        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into main
 
       - name:                 Azure Login - ${{ matrix.environments }}
         uses:                 azure/login@v1
