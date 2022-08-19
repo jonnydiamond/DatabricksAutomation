@@ -28,8 +28,8 @@ jobs:
     
       steps:
         - run: |
-          echo "${{ github.head_ref }}"
-          echo "${{ github.base_ref }}"
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
 
         - uses:                  actions/checkout@v3
           ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into main
