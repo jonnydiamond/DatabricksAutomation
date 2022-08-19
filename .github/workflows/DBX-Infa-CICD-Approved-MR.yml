@@ -18,17 +18,19 @@ permissions:
       contents:               read
 
 jobs:
-  DeployToTestInfra:
+  deployinfra:
       if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
       name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
       runs-on:                  ubuntu-latest
       strategy:
         matrix:
           environments:          [Development]    
-      - run: |
+    
+      steps:
+        - run: |
           echo "${{ github.head_ref }}"
           echo "${{ github.base_ref }}"
-      steps:
+
         - uses:                  actions/checkout@v3
           ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into main
 
