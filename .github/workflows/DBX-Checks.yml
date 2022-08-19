@@ -1,0 +1,14 @@
+name: Infra - Checks
+on: 
+  push:
+    branches:
+      - main
+    paths:
+      - Infrastructure/**
+jobs:
+  checks:
+    name:                       Checks
+    runs-on:                    ubuntu-latest
+    steps:
+      - run: |
+          echo "Checks Test!!!"
