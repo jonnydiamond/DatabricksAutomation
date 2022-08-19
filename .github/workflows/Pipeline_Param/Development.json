@@ -51,7 +51,6 @@
                 "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
                 "wheel_cluster": "dbx-sp-cluster",
                 "upload_to_cluster?": true
-
             }
     ],
     "Jobs": [

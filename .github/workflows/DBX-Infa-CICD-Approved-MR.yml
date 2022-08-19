@@ -3,14 +3,13 @@
 # Once Feature Branch Merge Request Is Approved, The Main Branch Will Be Updated. 
 # Use The Updated Main Branch Infra Code To Deploy Updated Azure Resources To UAT Environment.
 
-name: Infra - Feature Merge Into Main Approved - Deploy to UAT Env
-on:  [workflow_dispatch]
-  #pull_request:
-  #  branches:
-  #    - main
-  #  paths:
-  #    - Infrastructure
-  #  types: [closed]
+name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+  pull_request:
+    branches:
+      - main
+    paths:
+      - Infrastructure
+    types: [closed]
 
 
 permissions:
@@ -19,14 +18,18 @@ permissions:
 
 jobs:
   DeployToTestInfra:
-    name:                     Infra - Feature Merge Into Main Approved - Deploy to UAT Env
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
     runs-on:                  ubuntu-latest
     strategy:
       matrix:
-        environments:          [UAT]    
+        environments:          [Development]    
+    - run: |
+        echo "${{ github.head_ref }}"
+        echo "${{ github.base_ref }}"
     steps:
       - uses:                  actions/checkout@v3
-        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch That Has Been Successfully Merged Into/Updated
+        ref:                   ${{ github.base_ref }} # This Should Be The Main Branch AFTER Feature is merged into it
 
       - name:                 Azure Login - ${{ matrix.environments }}
         uses:                 azure/login@v1
