@@ -5,12 +5,15 @@
 
 name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
 on: 
+  push:
   pull_request:
     branches:
       - main
     paths:
       - Infrastructure/**
-    types: [open, closed]
+    types:
+      - opened
+      - closed
 
 
 permissions:
