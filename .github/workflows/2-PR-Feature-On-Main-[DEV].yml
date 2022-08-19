@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+
+
+name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+on: 
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - closed
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  # This will run when the pull request is open. This is were we do all of the unit testing prior to pull request review.
+  # Ensure That All Checks must pass in the settings before it can be approved
+  # Ensure at least one reviewer needed before merging in settings
+  Pull_Request_Checks_Feature_To_Main:
+    if:                         github.event_name == 'pull_request' && github.event.action == 'opened' && github.base_ref == 'main'
+    name:                       Checks
+    runs-on:                    ubuntu-latest
+    steps:
+      - run: |
+          echo "Checks Test!!!"
+
+  PR_Approved_Feature_To_Main:
+      # Once Review is APPROVED, then We Will run this
+      if:                       github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+      runs-on:                  ubuntu-latest
+      strategy:
+        matrix:
+          environments:          [Development]    
+    
+      steps:
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - uses:                  actions/checkout@v3
+          with:
+            ref:                   ${{ github.base_ref }} 
+
+        - name:                 Azure Login - ${{ matrix.environments }}
+          uses:                 azure/login@v1
+          with:
+            creds:              ${{secrets.AZURE_CREDENTIALS}}
+      
+
+        - name:                 Store JSON Param File Variables As Environ Variables
+          uses:                 antifree/json-to-variables@v1.0.1
+          with:
+            filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+            prefix:             param
+
+        # Only run if file path !infra AND merging into main, then don't run this!
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Assign RBAC Permissions 
+          run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+        # Switch To DBX SP.
+
+        # Day To Day Use Interacting With Databricks API Does Not Require God Rights dbxsp. The Principal of Zero Trust Applies.
+        
+        # Therefore We Use The DBX SP (Only Has Databricks Custom Role Assignments - No Owner Permissions etc), For Interacting With Databricks...
+        # API To Create Clusters/ Jobs etc. Might be worth giving sp contributor right.
+
+
+        - name:                 Authenticate to DBX Service Principal
+          run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+          env:
+            ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
+            
+        - name:                 Setup Python
+          uses:                 actions/setup-python@v4
+          with:
+            python-version:     '3.8'
+
+
+        - name:                 Create And Store PAT Token In Key Vault
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
+
+
+        - name:                 Create DBX Secret Scopes
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
+        
+
+        - name:                 Create DBX Clusters
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Create DBX Repos
+          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
+          env:
+            environment:        ${{ matrix.environments }}
+            PAT_GIT:            ${{ secrets.PAT_GIT }}
+
+
+        - name:                   Install + Configure Databricks CLI
+          run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
+
+
+        - name:                   Create Wheel Files & Upload To DBFS
+          run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+          env:
+            environment:          ${{ matrix.environments }}

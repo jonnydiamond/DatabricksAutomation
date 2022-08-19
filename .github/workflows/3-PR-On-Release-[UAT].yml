@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+
+name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+on: 
+  pull_request:
+    branches:
+      - release****
+    types:
+      - opened
+
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+  # This will pick up PRs from Main, and Also Hotfix Branches Into Release
+  Pull_Request_Checks:
+    if:                         github.event_name == 'pull_request' && github.event.action == 'opened'
+    name:                       Checks
+    runs-on:                    ubuntu-latest
+    steps:
+      - run: |
+          echo "Checks Test!!!"
+
+  PR_Main_On_Release:
+      # THIS DEPENDS ON THE CHECKS ABOVE. IF THEY FAIL WE WILL NOT DEPLOY TO TEST.
+      # NOTE That Hotfix Branches Will Not Deploy To UAT. Hotfixes Branches Will Be Deployed To PreProduction When HotFix Branch Merged To Release
+      if:                       github.event_name == 'pull_request' && github.event.action == 'open' && github.head_ref == 'main'
+      name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+      runs-on:                  ubuntu-latest
+      strategy:
+        matrix:
+          environments:          [UAT]    
+    
+      steps:
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - uses:                  actions/checkout@v3
+          with:
+            ref:                   ${{ github.base_ref }} ## THIS MUST BE MAIN AND NOT THE RELEASE
+
+        - name:                 Azure Login - ${{ matrix.environments }}
+          uses:                 azure/login@v1
+          with:
+            creds:              ${{secrets.AZURE_CREDENTIALS}}
+      
+
+        - name:                 Store JSON Param File Variables As Environ Variables
+          uses:                 antifree/json-to-variables@v1.0.1
+          with:
+            filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+            prefix:             param
+
+        # Only run if file path !infra AND merging into main, then don't run this!
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Assign RBAC Permissions 
+          run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Authenticate to DBX Service Principal
+          run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+          env:
+            ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
+            
+        - name:                 Setup Python
+          uses:                 actions/setup-python@v4
+          with:
+            python-version:     '3.8'
+
+
+        - name:                 Create And Store PAT Token In Key Vault
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
+
+
+        - name:                 Create DBX Secret Scopes
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
+        
+
+        - name:                 Create DBX Clusters
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Create DBX Repos
+          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
+          env:
+            environment:        ${{ matrix.environments }}
+            PAT_GIT:            ${{ secrets.PAT_GIT }}
+
+
+        - name:                   Install + Configure Databricks CLI
+          run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
+
+
+        - name:                   Create Wheel Files & Upload To DBFS
+          run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+          env:
+            environment:          ${{ matrix.environments }}
+
+        # INCLUDE GIT PULL HERE SO THAT THE UAT ENVIRONMENT HAS THE MOST UP TO DATE VERSION OF THE MAIN BRANCH -- 
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - name:                 Update Test Repo In Test Environment (Main Branch)
+          run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
+          env:
+            BRANCH:          ${{ github.base_ref }} # Should Be Main
+            UPDATE_FOLDER:  'UATFolder'
