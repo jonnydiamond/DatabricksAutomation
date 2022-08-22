@@ -8,7 +8,7 @@ on:
     tags:
       - 'v**'
     branches:
-      - 'Release-**'
+      - 'release-**'
 
 permissions:
       id-token:               write
@@ -43,10 +43,10 @@ jobs:
             filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
             prefix:             param
 
-        - name:                 Deploy DBX CICD Azure Resources
-          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-          env:
-            environment:        ${{ matrix.environments }}
+        #- name:                 Deploy DBX CICD Azure Resources
+        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        #  env:
+        #    environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
