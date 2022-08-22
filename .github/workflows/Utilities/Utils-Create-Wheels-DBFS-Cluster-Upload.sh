@@ -67,7 +67,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
                             -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
                             -H 'Content-Type: application/json' \
                             https://$DATABRICKS_INSTANCE/api/2.0/clusters/list )
-        echo LIST_CLUSTERS
+        echo $LIST_CLUSTERS
 
         # Extract Existing Cluster Names
         CLUSTER_NAMES=$( jq -r '[.clusters[].cluster_name]' <<< "$LIST_CLUSTERS")
