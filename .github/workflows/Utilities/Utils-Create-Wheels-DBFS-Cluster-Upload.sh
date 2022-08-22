@@ -25,7 +25,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # We Are Removing Setup.py From The FilePath 'setup_py_file_path'
     root_dir_file_path=${setup_py_file_path%/*}
     
-    echo "Wheel File Destined For Cluster: $wheel_cluster "
+    echo "Wheel File Destined For Cluster: $CLUSTER_NAME "
     echo "Location Of Setup.py File For Wheel File Creation; $setup_py_file_path"
     
     cd $root_dir_file_path
@@ -46,12 +46,12 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Upoload Wheel File To DBFS Folder. Wheel File Will Be Stored In A Folder Relating To The Cluster
     # It Is To Be Deployed To
 
-    databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+    databricks fs rm dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
     echo "$root_dir_file_path/dist/$wheel_file_name"
     echo "dbfs:/FileStore/dev/$wheel_file_name"
 
     # Databricks CLI Does Not Accept Absolute FilePaths, Only Relative
-    databricks fs cp $wheel_file_name dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
+    databricks fs cp $wheel_file_name dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name --overwrite
     
     # Cleanup - Remove dist folder from DevOps Agent
     pip uninstall -y $wheel_file_name
@@ -88,7 +88,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
             echo "Cluster $CLUSTER_ID Is TERMINATED... Turning On.... "
             databricks clusters start --cluster-id "$CLUSTER_ID"
 
-        elif ["$CLUSTER_STATUS" != "RUNNING"]; then
+        elif ["$CLUSTER_STATUS" == "RUNNING"]; then
             echo "Cluster $CLUSTER_ID already running, skipping..."
         else
             echo "Cluster Is Pending... "
@@ -109,8 +109,8 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         echo "Running now..."
 
 
-        databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
-        databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+        databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
+        databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
         
         # Make This More Effecient. Restart Clusters Once Only After All DBFS Files Have Been Uploaded. Preferably A Restart All Clusters In 
         # The Workspace Would Do. 
