@@ -75,6 +75,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
 
         # UPDATE THE CLUSTER NAME SEARCH ===> CREATE A CLUSTER LIST 
         echo 'clusterID'
+        echo $CLUSTER_NAME
         CLUSTER_ID=$( jq -r --arg CLUSTER_NAME "$CLUSTER_NAME" ' .clusters[] | select( .cluster_name | contains($CLUSTER_NAME)) | .cluster_id ' <<< "$LIST_CLUSTERS")
         echo $CLUSTER_ID
 
