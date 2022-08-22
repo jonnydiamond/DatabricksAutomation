@@ -59,10 +59,10 @@ jobs:
             prefix:             param
 
         # Only run if file path !infra AND merging into main, then don't run this!
-        - name:                 Deploy DBX CICD Azure Resources
-          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-          env:
-            environment:        ${{ matrix.environments }}
+        #- name:                 Deploy DBX CICD Azure Resources
+        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        #  env:
+        #    environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
