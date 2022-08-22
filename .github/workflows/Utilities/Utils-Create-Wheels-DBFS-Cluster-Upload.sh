@@ -105,7 +105,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         do
             sleep 30
             echo "Starting..."
-            CLUSTER_STATUS=$(databricks clusters get --cluster-id $clusterid | jq -r .state)
+            CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
         done
         echo "Running now..."
 
