@@ -1,0 +1,111 @@
+# When The Release Branch Is Tagged With A Version Number, The Release Branch Code Is
+# Deployed To The Production Environment
+# Pipeline Is Triggered When ANY Branch Is Tagged EXCLUDING Main, Thereby Ensuring Only Release Is Used, 
+# Given That We Never Tag Feature Branches 
+
+on:
+  push:
+    tags:
+      - 'v**'
+    branches:
+      - 'Release-**'
+
+permissions:
+      id-token:               write
+      contents:               read
+
+jobs:
+    Tag_Release_Branch:
+      name:                     Tag_Release_Branch
+      runs-on:                  ubuntu-latest
+      strategy:
+        matrix:
+          environments:          [Production]    
+    
+      steps:
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - uses:                  actions/checkout@v3
+          with:
+            ref:                   ${{ github.base_ref }} ## THIS MUST BE Release Branch
+
+        - name:                 Azure Login - ${{ matrix.environments }}
+          uses:                 azure/login@v1
+          with:
+            creds:              ${{secrets.AZURE_CREDENTIALS}}
+      
+
+        - name:                 Store JSON Param File Variables As Environ Variables
+          uses:                 antifree/json-to-variables@v1.0.1
+          with:
+            filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
+            prefix:             param
+
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Assign RBAC Permissions 
+          run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Authenticate to DBX Service Principal
+          run:                  bash ./.github/workflows/Utilities/Utils-DBX-SP-Authenticate.sh
+          env:
+            ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
+            ARM_CLIENT_SECRET:  ${{ secrets.ARM_CLIENT_SECRET }}
+            ARM_TENANT_ID:      ${{ secrets.ARM_TENANT_ID }}
+
+            
+        - name:                 Setup Python
+          uses:                 actions/setup-python@v4
+          with:
+            python-version:     '3.8'
+
+
+        - name:                 Create And Store PAT Token In Key Vault
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
+
+
+        - name:                 Create DBX Secret Scopes
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
+        
+
+        - name:                 Create DBX Clusters
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
+          env:
+            environment:        ${{ matrix.environments }}
+
+
+        - name:                 Create DBX Repos
+          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
+          env:
+            environment:        ${{ matrix.environments }}
+            PAT_GIT:            ${{ secrets.PAT_GIT }}
+
+
+        - name:                   Install + Configure Databricks CLI
+          run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
+
+
+        - name:                   Create Wheel Files & Upload To DBFS
+          run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+          env:
+            environment:          ${{ matrix.environments }}
+
+        # INCLUDE GIT PULL HERE SO THAT THE Production ENVIRONMENT HAS THE MOST UP TO DATE VERSION OF THE MAIN BRANCH -- 
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - name:                 Update Production Repo In Production Environment (Release Branch)
+          run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
+          env:
+            BRANCH:          ${{ github.base_ref }} # Should Be Release
+            UPDATE_FOLDER:  'ProductionFolder'
