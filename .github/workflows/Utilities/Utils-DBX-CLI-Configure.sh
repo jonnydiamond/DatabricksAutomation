@@ -2,7 +2,7 @@
 
 echo $DATABRICKS_HOST
 echo $DATABRICKS_TOKEN
-pip install databricks-cli --upgrade
+pip3 install databricks-cli --upgrade
 
 # Change absolutely NOTHING.
 # It would seem that the PAT Token That I was Running Off had expired! Ensure That The Environment Variables Are Set:
