@@ -110,5 +110,5 @@ jobs:
         - name:                 Update PreProduction Repo In PreProduction Environment (Main Branch)
           run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
           env:
-            BRANCH:          ${{ github.base_ref }} # Should Be Release
+            BRANCH:          ${{ github.base_ref }} # Should Be Release.
             UPDATE_FOLDER:  'PreProductionFolder'
