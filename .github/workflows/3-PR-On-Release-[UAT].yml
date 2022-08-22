@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 
-name: Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+name: Infra - Feature Merge Into Main Approved - Deploy to Test Env
 on: 
   pull_request:
     branches:
@@ -23,11 +23,15 @@ jobs:
     steps:
       - run: |
           echo "Checks Test!!!"
+      - run: |
+          echo "${{ github.head_ref }}"
+          echo "${{ github.base_ref }}"
 
   PR_Main_On_Release:
+      needs: Pull_Request_Checks
       # THIS DEPENDS ON THE CHECKS ABOVE. IF THEY FAIL WE WILL NOT DEPLOY TO TEST.
       # NOTE That Hotfix Branches Will Not Deploy To UAT. Hotfixes Branches Will Be Deployed To PreProduction When HotFix Branch Merged To Release
-      if:                       github.event_name == 'pull_request' && github.event.action == 'open' && github.head_ref == 'main'
+      if:                       github.event_name == 'pull_request' && github.event.action == 'open' && github.base_ref == 'main'
       name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
       runs-on:                  ubuntu-latest
       strategy:
