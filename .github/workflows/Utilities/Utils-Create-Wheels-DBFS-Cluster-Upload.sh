@@ -48,7 +48,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
 
     databricks fs rm dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
     echo "$root_dir_file_path/dist/$wheel_file_name"
-    echo "dbfs:/FileStore/dev/$wheel_file_name"
+    echo "dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name"
 
     # Databricks CLI Does Not Accept Absolute FilePaths, Only Relative
     databricks fs cp $wheel_file_name dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name --overwrite
@@ -81,6 +81,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         
         #Start Cluster And Wait!
 
+        ## THERE IS A BUG HERE POSSIBLE AT CLUSTER_STATUS = "RUNNING"
         CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
         echo $CLUSTER_STATUS
         if [ "$CLUSTER_STATUS" == "TERMINATED" ]
