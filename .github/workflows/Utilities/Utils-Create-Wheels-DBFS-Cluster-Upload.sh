@@ -89,7 +89,8 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
             echo "Cluster $CLUSTER_ID Is TERMINATED... Turning On.... "
             databricks clusters start --cluster-id "$CLUSTER_ID"
 
-        elif ["$CLUSTER_STATUS" == "RUNNING"]; then
+        elif [ "$CLUSTER_STATUS" == "RUNNING" ]
+        then
             echo "Cluster $CLUSTER_ID already running, skipping..."
         else
             echo "Cluster Is Pending... "
