@@ -79,7 +79,34 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         CLUSTER_ID=$( jq -r --arg CLUSTER_NAME "$CLUSTER_NAME" ' .clusters[] | select( .cluster_name == $CLUSTER_NAME ) | .cluster_id ' <<< "$LIST_CLUSTERS")
         echo $CLUSTER_ID
         
-        databricks clusters start --cluster-id "$CLUSTER_ID"
+        #Start Cluster And Wait!
+
+        CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
+        if [ "$CLUSTER_STATUS" == "TERMINATED" ]
+        then    
+            echo "Cluster $CLUSTER_ID Is TERMINATED... Turning On.... "
+            databricks clusters start --cluster-id "$CLUSTER_ID"
+
+        elif ["$CLUSTER_STATUS" != "RUNNING"]
+            echo "Cluster $CLUSTER_ID already running, skipping..."
+            exit 0
+        fi
+
+        #=======================================================
+        # Now loop (stay here) until running
+        #======================================================
+
+        CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
+        
+        while [ "$CLUSTER_STATUS" != "RUNNING" ]
+        do
+            sleep 30
+            echo "Starting..."
+            CLUSTER_STATUS=$(databricks clusters get --cluster-id $clusterid | jq -r .state)
+        done
+        echo "Running now..."
+
+
         databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
         databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
         
