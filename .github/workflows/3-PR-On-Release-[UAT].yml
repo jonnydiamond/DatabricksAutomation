@@ -17,7 +17,7 @@ permissions:
 jobs:
   # This will pick up PRs from Main, and Also Hotfix Branches Into Release
   Pull_Request_Checks:
-    if:                         github.event_name == 'pull_request' && github.event.action == 'opened'
+    if:                         github.event_name == 'pull_request' && github.event.action == 'opened' && github.head_ref == 'main'
     name:                       Checks
     runs-on:                    ubuntu-latest
     steps:
@@ -31,8 +31,7 @@ jobs:
       needs: Pull_Request_Checks
       # THIS DEPENDS ON THE CHECKS ABOVE. IF THEY FAIL WE WILL NOT DEPLOY TO TEST.
       # NOTE That Hotfix Branches Will Not Deploy To UAT. Hotfixes Branches Will Be Deployed To PreProduction When HotFix Branch Merged To Release
-      if:                       github.event_name == 'pull_request' && github.event.action == 'open'
-      name:                     Infra - Feature Merge Into Main Approved - Deploy to DEV Env
+      name:                     Infra - Feature Merge Request Into Main  - Deploy to Test Env
       runs-on:                  ubuntu-latest
       strategy:
         matrix:
@@ -45,7 +44,7 @@ jobs:
 
         - uses:                  actions/checkout@v3
           with:
-            ref:                   ${{ github.base_ref }} ## THIS MUST BE MAIN AND NOT THE RELEASE
+            ref:                   ${{ github.head_ref }} ## THIS MUST BE MAIN AND NOT THE RELEASE
 
         - name:                 Azure Login - ${{ matrix.environments }}
           uses:                 azure/login@v1
@@ -60,10 +59,10 @@ jobs:
             prefix:             param
 
         # Only run if file path !infra AND merging into main, then don't run this!
-        - name:                 Deploy DBX CICD Azure Resources
-          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-          env:
-            environment:        ${{ matrix.environments }}
+        #- name:                 Deploy DBX CICD Azure Resources
+        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+        #  env:
+        #    environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
@@ -124,5 +123,5 @@ jobs:
         - name:                 Update Test Repo In Test Environment (Main Branch)
           run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
           env:
-            BRANCH:          ${{ github.base_ref }} # Should Be Main
+            BRANCH:          ${{ github.head_ref }} # Should Be Main
             UPDATE_FOLDER:  'UATFolder'

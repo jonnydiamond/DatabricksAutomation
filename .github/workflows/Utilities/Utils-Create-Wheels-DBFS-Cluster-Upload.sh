@@ -25,7 +25,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # We Are Removing Setup.py From The FilePath 'setup_py_file_path'
     root_dir_file_path=${setup_py_file_path%/*}
     
-    echo "Wheel File Destined For Cluster: $wheel_cluster "
+    echo "Wheel File Destined For Cluster: $CLUSTER_NAME "
     echo "Location Of Setup.py File For Wheel File Creation; $setup_py_file_path"
     
     cd $root_dir_file_path
@@ -46,12 +46,12 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     # Upoload Wheel File To DBFS Folder. Wheel File Will Be Stored In A Folder Relating To The Cluster
     # It Is To Be Deployed To
 
-    databricks fs rm dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+    databricks fs rm dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
     echo "$root_dir_file_path/dist/$wheel_file_name"
     echo "dbfs:/FileStore/dev/$wheel_file_name"
 
     # Databricks CLI Does Not Accept Absolute FilePaths, Only Relative
-    databricks fs cp $wheel_file_name dbfs:/FileStore/$wheel_cluster/$wheel_file_name --overwrite
+    databricks fs cp $wheel_file_name dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name --overwrite
     
     # Cleanup - Remove dist folder from DevOps Agent
     pip uninstall -y $wheel_file_name
@@ -79,9 +79,38 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         CLUSTER_ID=$( jq -r --arg CLUSTER_NAME "$CLUSTER_NAME" ' .clusters[] | select( .cluster_name == $CLUSTER_NAME ) | .cluster_id ' <<< "$LIST_CLUSTERS")
         echo $CLUSTER_ID
         
-        databricks clusters start --cluster-id "$CLUSTER_ID"
-        databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
-        databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+        #Start Cluster And Wait!
+
+        CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
+        echo $CLUSTER_STATUS
+        if [ "$CLUSTER_STATUS" == "TERMINATED" ]
+        then    
+            echo "Cluster $CLUSTER_ID Is TERMINATED... Turning On.... "
+            databricks clusters start --cluster-id "$CLUSTER_ID"
+
+        elif ["$CLUSTER_STATUS" == "RUNNING"]; then
+            echo "Cluster $CLUSTER_ID already running, skipping..."
+        else
+            echo "Cluster Is Pending... "
+        fi
+
+        #=======================================================
+        # Now loop (stay here) until running
+        #======================================================
+
+        CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
+        
+        while [ "$CLUSTER_STATUS" != "RUNNING" ]
+        do
+            sleep 30
+            echo "Starting..."
+            CLUSTER_STATUS=$(databricks clusters get --cluster-id $clusterid | jq -r .state)
+        done
+        echo "Running now..."
+
+
+        databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
+        databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$CLUSTER_NAME/$wheel_file_name
         
         # Make This More Effecient. Restart Clusters Once Only After All DBFS Files Have Been Uploaded. Preferably A Restart All Clusters In 
         # The Workspace Would Do. 
