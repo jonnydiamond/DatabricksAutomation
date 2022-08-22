@@ -41,6 +41,13 @@
             "git_provider": "gitHub"
         }
     ],
+    "WheelFiles": [
+        {
+            "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+            "wheel_cluster": "dbx-sp-cluster",
+            "upload_to_cluster?": true
+        }
+    ],
     "Repo_Configuration": [
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation",
