@@ -4,11 +4,11 @@
 # Given That We Never Tag Feature Branches 
 
 on:
-  push:
+  release:
     tags:
       - 'v**'
-    branches:
-      - 'release-**'
+    #branches:
+    #  - 'Release-**'
 
 permissions:
       id-token:               write
@@ -43,10 +43,10 @@ jobs:
             filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
             prefix:             param
 
-        #- name:                 Deploy DBX CICD Azure Resources
-        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        #  env:
-        #    environment:        ${{ matrix.environments }}
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
@@ -104,8 +104,8 @@ jobs:
             echo "${{ github.head_ref }}"
             echo "${{ github.base_ref }}"
 
-        - name:                 Update Production Repo In Production Environment (Release Branch)
+        - name:                 Update Production Repo In Production Environment ( Branch)
           run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
           env:
             BRANCH:          ${{ github.base_ref }} # Should Be Release
-            UPDATE_FOLDER:  'ProductionFolder'
+            UPDATE_FOLDER:  'PreProductionFolder'
