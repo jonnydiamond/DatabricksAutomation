@@ -61,13 +61,13 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
     upload_to_cluster=$(_jq '.upload_to_cluster?')
     if [ upload_to_cluster ]
     then
-        databricks libraries uninstall --cluster-id {cluster_id} --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
 
         LIST_CLUSTERS=$(curl -X GET -H "Authorization: Bearer $TOKEN" \
                             -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
                             -H "X-Databricks-Azure-Workspace-Resource-Id: $WORKSPACE_ID" \
                             -H 'Content-Type: application/json' \
                             https://$DATABRICKS_INSTANCE/api/2.0/clusters/list )
+        echo LIST_CLUSTERS
 
         # Extract Existing Cluster Names
         CLUSTER_NAMES=$( jq -r '[.clusters[].cluster_name]' <<< "$LIST_CLUSTERS")
@@ -78,7 +78,7 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         CLUSTER_ID=$( jq -r --arg CLUSTER_NAME "$CLUSTER_NAME" ' .clusters[] | select( .cluster_name | contains($CLUSTER_NAME)) | .cluster_id ' <<< "$LIST_CLUSTERS")
         echo $CLUSTER_ID
 
-        databricks libraries uninstall --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
+        databricks libraries uninstall --cluster-id "$CLUSTER_ID" --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
         databricks libraries install --cluster-id $CLUSTER_ID --whl dbfs:/FileStore/$wheel_cluster/$wheel_file_name
         
         # Make This More Effecient. Restart Clusters Once Only After All DBFS Files Have Been Uploaded. Preferably A Restart All Clusters In 
