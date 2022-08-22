@@ -82,14 +82,16 @@ for row in $(echo "${JSON}" | jq -r '.WheelFiles[] | @base64'); do
         #Start Cluster And Wait!
 
         CLUSTER_STATUS=$(databricks clusters get --cluster-id $CLUSTER_ID | jq -r .state)
+        echo $CLUSTER_STATUS
         if [ "$CLUSTER_STATUS" == "TERMINATED" ]
         then    
             echo "Cluster $CLUSTER_ID Is TERMINATED... Turning On.... "
             databricks clusters start --cluster-id "$CLUSTER_ID"
 
-        elif ["$CLUSTER_STATUS" != "RUNNING"]
+        elif ["$CLUSTER_STATUS" != "RUNNING"]; then
             echo "Cluster $CLUSTER_ID already running, skipping..."
-            exit 0
+        else
+            echo "Cluster Is Pending... "
         fi
 
         #=======================================================
