@@ -4,7 +4,7 @@
 # Given That We Never Tag Feature Branches 
 
 on:
-  push:
+  release:
     tags:
       - 'v**'
     branches:
