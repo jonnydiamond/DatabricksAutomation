@@ -38,7 +38,7 @@
         "value": "databricks-preprod-rg"
       },
       "workspaceName" : {
-        "value": "azdbxwspreprod"
+        "value": "dbxwspreprod"
       },
       "pricingTier": {
         "value": "premium"
@@ -47,10 +47,10 @@
         "value": true
       },
       "loganalyticswsname": {
-        "value": "dbxloganalyticspreprod"
+        "value": "loganalyticspreprod"
       },
       "appInsightswsname": {
-        "value": "dbxappinsightspreprod"
+        "value": "appinsightspreprod"
       }
     }
   }

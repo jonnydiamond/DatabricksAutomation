@@ -4,6 +4,8 @@
 
 param location string
 param workspaceName string
+var varworkspaceName = substring('${workspaceName}-${uniqueString(resourceGroup().id)}', 0, 24)
+var varmrgworkspaceName = substring('${workspaceName}-mrg-${uniqueString(resourceGroup().id)}', 0, 24)
 
 @allowed([
   'standard'
@@ -22,14 +24,14 @@ param environment string
 var roleDefinitionAzureEventHubsDataOwner = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')
 var roleDefinitionUser = guid('${resourceGroup().id}/8e3af657-a8ff-443c-a75c-2fe8c4bcb635/')
 
-var managedResourceGroupName = '${workspaceName}-mrg-databricks'
+var managedResourceGroupName = varmrgworkspaceName
 
 
 // ################################################################################################################################################################//
 //                                                             Deploy AzDatabricks Workspace                                                                     
 // ################################################################################################################################################################//
 resource azDatabricksWS 'Microsoft.Databricks/workspaces@2021-04-01-preview' = {
-  name: workspaceName
+  name: varworkspaceName
   
   location: location
   properties: {

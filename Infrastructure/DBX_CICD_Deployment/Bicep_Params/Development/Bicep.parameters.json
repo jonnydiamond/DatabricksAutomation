@@ -38,7 +38,7 @@
       "value": "databricks-dev-rg"
     },
     "workspaceName" : {
-      "value": "azdbxwsdev"
+      "value": "dbxwsdev"
     },
     "pricingTier": {
       "value": "premium"
@@ -47,10 +47,10 @@
       "value": true
     },
     "loganalyticswsname": {
-      "value": "dbxloganalyticsdev"
+      "value": "loganalyticsdev"
     },
     "appInsightswsname": {
-      "value": "dbxappinsightsdev"
+      "value": "appinsightsdev"
     }
   }
 }

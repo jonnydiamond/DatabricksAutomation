@@ -38,7 +38,7 @@
         "value": "databricks-prod-rg"
       },
       "workspaceName" : {
-        "value": "azdbxwsprod"
+        "value": "dbxwsprod"
       },
       "pricingTier": {
         "value": "premium"
@@ -47,10 +47,10 @@
         "value": true
       },
       "loganalyticswsname": {
-        "value": "dbxloganalyticsprod"
+        "value": "loganalyticsprod"
       },
       "appInsightswsname": {
-        "value": "dbxappinsightsprod"
+        "value": "appinsightsprod"
       }
     }
   }

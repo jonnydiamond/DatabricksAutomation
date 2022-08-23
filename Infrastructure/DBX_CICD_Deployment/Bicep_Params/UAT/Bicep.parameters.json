@@ -38,7 +38,7 @@
         "value": "databricks-uat-rg"
       },
       "workspaceName" : {
-        "value": "azdbxwsuat"
+        "value": "dbxwsuat"
       },
       "pricingTier": {
         "value": "premium"
@@ -47,10 +47,10 @@
         "value": true
       },
       "loganalyticswsname": {
-        "value": "dbxloganalyticsuat"
+        "value": "loganalyticsuat"
       },
       "appInsightswsname": {
-        "value": "dbxappinsightsuat"
+        "value": "appinsightsuat"
       }
     }
   }

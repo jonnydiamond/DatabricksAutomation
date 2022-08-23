@@ -1,10 +1,15 @@
 param location string = 'uksouth'
+
 param logwsname string 
+var varlogwsname = substring('${logwsname}-${uniqueString(resourceGroup().id)}', 0, 24)
+
 param appinsightname string 
+var varappinsightname = substring('${appinsightname}-${uniqueString(resourceGroup().id)}', 0, 24)
+
 
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
-  name: logwsname
+  name: varlogwsname
   location: location
   properties: {
     sku: {
@@ -25,7 +30,7 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2021-12-01-previ
 }
 
 resource appInsight 'Microsoft.Insights/components@2020-02-02' = {
-  name: appinsightname
+  name: varappinsightname
   location: location
   kind: 'web'
   properties: {

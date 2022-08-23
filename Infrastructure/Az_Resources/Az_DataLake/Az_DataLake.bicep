@@ -6,6 +6,7 @@ param location string
 param containerNames array
 param ShouldCreateContainers bool = true
 param storageAccountName string
+var varstorageAccountName = substring('${storageAccountName}-sa-${uniqueString(resourceGroup().id)}', 0, 24)
 param azDatabricksWorkspaceID string
 param workspaceName string
 param resourceGroupName string
