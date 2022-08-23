@@ -73,7 +73,35 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 - Yaml Pipelines in Github Actions
 - Filter API Responses using JQuery (Bash)
 
-# Create the Service Principal
+# Create the Service Principals
+
+Create Service Principal (God Rights)
+- You will need to Assign RBAC permissions to Azure Resources created on the fly. For example, RBAC permissions to access key vault, and store for instance a PAT Token.
+
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+
+Create Databricks SPN (Contributor Rights + Custom Databricks Role)
+- For those who only need permissions to create resources and intereact with the Databricks API.
+
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+
+Now you can retrieve the ObjectID using the ApplicationID (Save For Later)
+
+``` az ad sp show --id ce79c2ef-170d-4f1c-a706-7814efb94898 --query objectId ```
+
+Output:
+
+``` "0e3c30b0-dd4e-4937-96ca-3fe88bd8f259" ```
+
+# Retrieve your Own Object ID
+
+This is required to give you Key Vault Administrator Permissions 
+
+``` az ad user show --id ciaranh@microsoft.com --query objectId ```
+
+Output:
+
+``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
 
 - [Instruction to create the service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
 - [Instruction to assign role to the service principal access over the Subscription](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#assign-a-role-to-the-application). Please provide **contributor** access over the subscription.
@@ -125,6 +153,134 @@ The below sections provide the step by step approach to set up the solution. As 
 - 
 
 ![map02](docs/images/map02.png)
+
+
+
+
+# Update The Parameters Files
+
+```json {
+    "ResourceGroupName": "databricks-dev-rg", // Amend - Update Resource Group Name Locations Below
+    "Location": "uksouth", 
+    "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Development/Bicep.parameters.json",
+    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
+    "SubscriptionId": "/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", // Amend
+    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
+    "RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605", # Your ObjectID (Gives You Access To The KeyVault)
+            "scope": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", // The ObjectID of The Service Principal (It Will Store PAT Token in Key Vault)
+            "scope": "/subscriptions//xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
+            "principalType": "ServicePrincipal"
+        }
+    ],
+    "Clusters": [
+        {
+            "cluster_name": "dbx-sp-cluster",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        },
+        {
+            "cluster_name": "dbx-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        }
+    ],
+    "WheelFiles": [
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster",
+                "upload_to_cluster?": true
+            }
+    ],
+    "Jobs": [
+        {
+            "name": "job_remote_analysis",
+            "settings": {
+                "name": "job_remote_analysis",
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false
+                },
+                "max_concurrent_runs": 1,
+                "tasks": [
+                    {
+                        "task_key": "job_remote_analysis",
+                        "notebook_task": {
+                            "notebook_path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/src/tutorial/scripts/framework_testing/remote_analysis",
+                            "source": "WORKSPACE"
+                        },
+                        "cluster_name": "dbx-sp-cluster"
+                    }
+                ],
+                "format": "MULTI_TASK"
+            }
+        }
+    ],
+    "Git_Configuration": [
+        {
+            "git_username": "ciaran28",
+            "git_provider": "gitHub"
+        }
+    ],
+    "Repo_Configuration": [
+        {
+            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "provider": "gitHub",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder",
+            "branch": "develop"
+        }
+    ]
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 The objectives of this section are:
 
