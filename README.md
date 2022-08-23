@@ -9,32 +9,69 @@ This Repository contains a Databricks development framework for delivering Data 
 - Azure Monitor Service
 - Azure Key Vault
 
-# Why?
-
 Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the the technologies biggest constraint is the complexity of integrating it seamlessly, or put another way, operationalizing it within a the confines a fully automated Continuous Integration and Deployment setup.
 
 The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. 
 
-# Details of the accelerator
 
-The accelerator contains few of the core features of Databricks development which can be extended or reused in any implementation projects with Databricks.
+# Details of the Accelerator
+
+The Accelerator contains core features for Databricks development which can be extended or reused in any Databricks specific implementation.
 
 ![overview](docs/images/Overview.JPG)
 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
-- Support for Databricks development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
+- Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
 - Example Model file which uses the framework end to end.
 
+# Databricks as Infrastructure
 
-# Prerequisites
+There are many ways that a User may create Jobs, Notebooks, Interatact and upload files to Databricks DBFS, Create Clusters etc. etc. For example, the may interact   with Databricks API/CLI from:
+- Local VSCode
+- Within Databricks UI 
+- Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
+ 
+One issue that arises is the programmatic way for which this approach adopts. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+ 
+When intereacting with the Databricks API to execute the functionality listed above, we believe that Jobs, Cluster creation etc. come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
 
-To successfully complete your solution, you will need to have access to and or provisioned the following:
+As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein. 
 
-- Access to an Azure subscription
-- Service Principal (valid Client ID and secret ) which has the contributor permission the subscription. We are going to create the resource group using the service principal.
+This does not preclude infrastructre creation on ad hoc basis using the API/within the portal. 
+ 
+ # Continuous Deployment + Branching Strategy
+ 
+It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
+
+The Branching Strategy will build out of the box, and is a Trunk Based Branching Strategy. (Go into more detail)
+
+<img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
+
+-   Feature merge to Main: Deploy to Develop Environment 
+-   Merge Request from Main To Release: Deploy to UAT
+-   Merge Request Approval from Main to Release: Deploy to PreProduction
+-   Tag Release Branch with Stable Version: Deploy to Production 
+ 
+
+
+# Pre-requisites
+
+- Github Account
+- Access to an Azure Subscription
+- Service Principal With Ownership RBAC permissions assigned. (Instructions below)
+- Service Principal with Databricks Custom Role Permissions. (Instructions below)
 - VS Code installed.
-- Docker Desktop Installed.
+- Docker Desktop Installed (Instructions below)
+
+# Under The Hood
+
+- Authenticate to Databricks API/CLI using Azure Service Principal Authentication
+- Databricks API in Bash
+- Databricks CLI in Bash
+- Databricks API using Python SDK 
+- Yaml Pipelines in Github Actions
+- Filter API Responses using JQuery (Bash)
 
 # Create the Service Principal
 
@@ -57,7 +94,7 @@ The below sections provide the step by step approach to set up the solution. As 
 
 ![map01](docs/images/map01.png)
 1. Clone the Repository : https://github.com/microsoft/dstoolkit-ml-ops-for-databricks/pulls
-2. Install Docker Desktop. In this solution, the Visual Code uses the docker image as a remote container to run the solution.
+2. Install Docker Desktop. Visual Code uses the docker image as a remote container to run the solution.
 3. Create .env file in the root folder, and keep the file blank for now. (root folder is the parent folder of the project)
 4. In the repo, open the workspace. File: workspace.ode-workspace.
 
@@ -82,7 +119,10 @@ The below sections provide the step by step approach to set up the solution. As 
 
 ![pythonversion](docs/images/pythonversion.jpg)
 
-## Section 2: Databricks environment creation
+## Section 2: Databricks Environment Creation
+
+- Create Service Principals
+- 
 
 ![map02](docs/images/map02.png)
 
