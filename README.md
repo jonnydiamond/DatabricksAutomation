@@ -38,7 +38,7 @@ When intereacting with the Databricks API to execute the functionality listed ab
 
 As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein. 
 
-This does not preclude infrastructre creation on ad hoc basis using the API/within the portal. 
+This does not preclude infrastructre creation on ad hoc basis using the API/within the Portal... we in fact provide the development framework to interact with the Databricks API/CLI using a Docker Image in VSCode. Freedom to choose ! 
  
  # Continuous Deployment + Branching Strategy
  
