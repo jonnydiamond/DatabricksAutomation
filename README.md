@@ -9,6 +9,12 @@ This Repository contains a Databricks development framework for delivering Data 
 - Azure Monitor Service
 - Azure Key Vault
 
+# Why?
+
+Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the major drawback of lies in integrating the technology seamlessly, or put another way, operationalizing it within a the confines a fully automated Continuous Integration and Deployment setup.
+
+The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. 
+
 # Details of the accelerator
 
 The accelerator contains few of the core features of Databricks development which can be extended or reused in any implementation projects with Databricks.
@@ -17,8 +23,7 @@ The accelerator contains few of the core features of Databricks development whic
 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
-- continuous development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Implementation of the Databricks utilities in VS Code such as dbutils, notebook execution, secret handling.
+- Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
 - Example Model file which uses the framework end to end.
 
 
