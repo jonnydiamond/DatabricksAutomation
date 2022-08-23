@@ -2,7 +2,12 @@
 
 # About this repository
 
-This repository contains the Databricks development framework for delivering any Data Engineering projects, and machine learning projects based on the Azure Technologies.
+This Repository contains a Databricks development framework for delivering Data Engineering projects and Machine Learning projects based on Azure Technologies, specifically:
+
+- Azure Databricks 
+- Azure Log Analytics
+- Azure Monitor Service
+- Azure Key Vault
 
 # Details of the accelerator
 
