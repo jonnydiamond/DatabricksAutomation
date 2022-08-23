@@ -1,14 +1,13 @@
 # When The Release Branch Is Tagged With A Version Number, The Release Branch Code Is
 # Deployed To The Production Environment
 # Pipeline Is Triggered When ANY Branch Is Tagged EXCLUDING Main, Thereby Ensuring Only Release Is Used, 
-# Given That We Never Tag Feature Branches 
+# Given That We Never Tag Feature Branches . VEEEEEEEEERY DIFFERENT 
 
 on:
   push:
     tags:
       - 'v**'
-    branches:
-      - 'release-**'
+
 
 permissions:
       id-token:               write
@@ -16,6 +15,7 @@ permissions:
 
 jobs:
     Tag_Release_Branch:
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       name:                     Tag_Release_Branch
       runs-on:                  ubuntu-latest
       strategy:
@@ -24,6 +24,7 @@ jobs:
     
       steps:
         - run: |
+            echo "${{ github.ref }}"
             echo "${{ github.head_ref }}"
             echo "${{ github.base_ref }}"
 
@@ -43,10 +44,10 @@ jobs:
             filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
             prefix:             param
 
-        #- name:                 Deploy DBX CICD Azure Resources
-        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        #  env:
-        #    environment:        ${{ matrix.environments }}
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
@@ -104,8 +105,8 @@ jobs:
             echo "${{ github.head_ref }}"
             echo "${{ github.base_ref }}"
 
-        - name:                 Update Production Repo In Production Environment (Release Branch)
+        - name:                 Update Production Repo In Production Environment ( Branch)
           run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
           env:
             BRANCH:          ${{ github.base_ref }} # Should Be Release
-            UPDATE_FOLDER:  'ProductionFolder'
+            UPDATE_FOLDER:  'PreProductionFolder'
