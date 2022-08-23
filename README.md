@@ -93,6 +93,50 @@ Output:
 
 ``` "0e3c30b0-dd4e-4937-96ca-3fe88bd8f259" ```
 
+# Create Databricks Custom Role On DBX SPN
+
+1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
+
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
+
+2. Provide Cusom Role Name
+
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
+
+3. Provide Databricks Permissions 
+
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
+
+4. Update the parameters files to Ensure The Custom Role Name Aligns 
+
+```json      
+"RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"Databricks_Custom_Role", # Ensure this aligns with the name given in step 2
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        }
+    ]
+    
+```
+
+
+
 # Retrieve your Own Object ID
 
 This is required to give you Key Vault Administrator Permissions 
