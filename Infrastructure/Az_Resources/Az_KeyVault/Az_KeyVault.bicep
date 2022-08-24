@@ -7,7 +7,10 @@
 // able to get the Object ID of Dbx ws in BICEP. Gonna have to do it in YAML anyway -->
 // I was having issues assigning serviceConenct1 RBAC in YAML --> could keep it here ....
 
-param keyVaultName string 
+param environment string
+
+var keyVaultName = 'keyvault-${environment}-${substring(uniqueString(resourceGroup().id), 0, 4)}'
+
 
 resource azKeyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: keyVaultName
@@ -28,22 +31,22 @@ resource azKeyVault 'Microsoft.KeyVault/vaults@2021-10-01' = {
     enableSoftDelete: false
     enabledForTemplateDeployment: true
     accessPolicies: [
-       {
-         //applicationId: 'ce79c2ef-170d-4f1c-a706-7814efb94898' // Application ID of databricks SPN
-         permissions: {
+        {
+          //applicationId: 'ce79c2ef-170d-4f1c-a706-7814efb94898' // Application ID of databricks SPN
+          permissions: {
             // Give it the ability to set secrets // we can then get rid of the Key Vault Admin permission set in the main pipeline
-             // Can we do this for the main spn , the equivalent of serviceConnect1
-           secrets: [
+              // Can we do this for the main spn , the equivalent of serviceConnect1
+            secrets: [
             'set'
             'list'
             'get'
           ]
-         }
-         tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
-         objectId: 'ab926dd1-657d-4bb2-9987-c7857046d0dd'
-       }
-       
-       {
+          }
+          tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
+          objectId: 'ab926dd1-657d-4bb2-9987-c7857046d0dd'
+        }
+        
+        {
         //applicationId: '5d57ca95-aca6-453d-9110-97f687d9dff6' // Application ID of serviceConnect1
         permissions: {
           secrets: [

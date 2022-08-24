@@ -4,16 +4,14 @@
 
 param location string
 param workspaceName string
-var varworkspaceName = substring('${workspaceName}-${uniqueString(resourceGroup().id)}', 0, 24)
-var varmrgworkspaceName = substring('${workspaceName}-mrg-${uniqueString(resourceGroup().id)}', 0, 24)
+var varworkspaceName = '${workspaceName}-${substring(uniqueString(resourceGroup().id), 0, 4)}'
+var managedResourceGroupName = '${workspaceName}-mrg-${substring(uniqueString(resourceGroup().id), 0, 4)}'
 
 @allowed([
   'standard'
   'premium'
 ])
 param pricingTier string = 'premium'
-param repoConfig object
-param environment string
 
 
 // ################################################################################################################################################################//
@@ -24,7 +22,6 @@ param environment string
 var roleDefinitionAzureEventHubsDataOwner = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')
 var roleDefinitionUser = guid('${resourceGroup().id}/8e3af657-a8ff-443c-a75c-2fe8c4bcb635/')
 
-var managedResourceGroupName = varmrgworkspaceName
 
 
 // ################################################################################################################################################################//
@@ -38,10 +35,10 @@ resource azDatabricksWS 'Microsoft.Databricks/workspaces@2021-04-01-preview' = {
     managedResourceGroupId: '${subscription().id}/resourceGroups/${managedResourceGroupName}'
     publicNetworkAccess: 'Enabled'
     authorizations: [
-       {
-         principalId: '0e3c30b0-dd4e-4937-96ca-3fe88bd8f259'
-         roleDefinitionId: roleDefinitionUser 
-       }
+      {
+        principalId: '0e3c30b0-dd4e-4937-96ca-3fe88bd8f259'
+        roleDefinitionId: roleDefinitionUser 
+      }
     ]
   }
   sku: {

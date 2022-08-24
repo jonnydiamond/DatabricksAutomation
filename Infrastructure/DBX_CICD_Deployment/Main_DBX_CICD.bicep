@@ -2,7 +2,6 @@ targetScope = 'subscription'
 
 param location string
 param environment string
-param repoConfig object
 param storageConfig object
 param containerNames array
 param resourceGroupName string
@@ -11,11 +10,9 @@ param pricingTier string
 param ShouldCreateContainers bool = true
 param loganalyticswsname string 
 param appInsightswsname string 
+param storageAccountName string 
 
-var keyVaultName = 'keyvault${environment}dbxkv'
 
-
-var storageAccountName = 'adls${workspaceName}'
 //var roleDefinitionAzureStorageBlobContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
 
 
@@ -38,14 +35,11 @@ resource azResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 module azDatabricks '../Az_Resources/Az_Databricks/Az_Databricks.bicep' =  {
   dependsOn: [
     azResourceGroup
-    
   ]
   scope: resourceGroup(resourceGroupName)
   name: 'azDatabricks' 
   params: {
-    environment: environment
     location: location
-    repoConfig: repoConfig
     workspaceName: workspaceName
     pricingTier: pricingTier
   }
@@ -62,7 +56,7 @@ module azKeyVault '../Az_Resources/Az_KeyVault/Az_KeyVault.bicep' = {
   scope: azResourceGroup
   name: 'azKeyVault'
   params: {
-    keyVaultName: keyVaultName
+    environment: environment 
   }
 }
 

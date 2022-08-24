@@ -51,6 +51,9 @@
       },
       "appInsightswsname": {
         "value": "appinsightspreprod"
+      },
+      "storageAccountName": {
+        "value": "adlspreprod"
       }
     }
   }
