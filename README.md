@@ -124,7 +124,27 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 </details>
 
 
-# Create the Service Principals
+# Create Main Service Principal (God Rights)
+<details open>
+<summary>Click Dropdown... </summary>
+<br>
+- You will need to Assign RBAC permissions to Azure Resources created on the fly. For example, RBAC permissions to access Key Vault, and store for instance a PAT Token.
+- Open the Terminal Window in your VSCode and enter the command below. Be sure to not clear the output. 
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+- You will now see the following output. Copy the JSON object (highlighted with green)
+<img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
+<br>
+<br>
+
+2. Provide Cusom Role Name
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
+<br>
+<br>
+  
+3. Provide Databricks Permissions
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
+
+</details>
 
 Create Service Principal (God Rights)
 
