@@ -106,9 +106,8 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 # Create Databricks Custom Role On DBX SPN
 <details close>
 <summary>Click Dropdown... </summary>
-  
+  <img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
 - Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
-
 <img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
 
 - Provide Cusom Role Name
