@@ -7,11 +7,6 @@
 - [Create Databricks Custom Role On DBX SPN](#Create-Databricks-Custom-Role-On-DBX-SPN)
 - [Create Main Service Principal](#Create-Main-Service-Principal)
 
-# Heading levels
-
-> This is a fixture to test heading levels
-
-<!-- toc -->
 
 # About This Repository
 
