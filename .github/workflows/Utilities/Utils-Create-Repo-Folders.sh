@@ -51,7 +51,7 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
 
     PATH="$(_jq '.path')"
     echo "Test File Path To Repo Is Correct: expecting /Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/"
-    echo "/Repos/$param_dbxSPNAppID/$(_jq '.path')
+    echo "/Repos/$param_dbxSPNAppID/$(_jq '.path')"
 
     JSON_STRING=$( jq -n -c \
                 --arg url "$(_jq '.url')" \
