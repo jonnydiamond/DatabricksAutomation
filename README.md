@@ -142,7 +142,6 @@ Output:
 ```json
 
 {
-    "ResourceGroupName": "databricks-dev-rg", # Set This To You Own Unique Resource Group Name
     "dbxSPNAppID": "<>",  # Databricks_API_SP ObjectID Saved In Text File
     "SubscriptionId": "<>", # You SubID
 
@@ -182,65 +181,8 @@ Output:
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Create Databricks Custom Role On DBX SPN
-
-1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
-
-<img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
-
-2. Provide Cusom Role Name
-
-<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
-
-3. Provide Databricks Permissions 
-
-<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
-
-4. Update the parameters files to Ensure The Custom Role Name Aligns 
-
-```json      
-"RBAC_Assignments": [
-        {
-            "role":"Key Vault Administrator", 
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
-            "principalType": "User"
-        },
-        { 
-            "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
-            "principalType": "ServicePrincipal"
-        },
-        {
-            "role":"Contributor", 
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
-            "principalType": "ServicePrincipal"
-        },
-        {
-            "role":"Databricks_Custom_Role", # Ensure this aligns with the name given in step 2
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
-            "principalType": "ServicePrincipal"
-        }
-    ]
-    
 ```
+
 
 # Creating Secrets 
 
@@ -250,20 +192,6 @@ Output:
 
 
 
-- [Instruction to create the service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
-- [Instruction to assign role to the service principal access over the Subscription](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#assign-a-role-to-the-application). Please provide **contributor** access over the subscription.
-- [Instruction to Get application ID and tenant ID for the application you registered](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#get-tenant-and-app-id-values-for-signing-in)
-- [Instruction to create application secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#option-2-create-a-new-application-secret). The application Secret is needed at the later part of this setup. Please copy the **value** and store it in a notepad for now.
-
-# Getting Started
-
-The below sections provide the step by step approach to set up the solution. As part of this solution, we need the following resources to be provisioned in a resource group.
-
-1. Azure Databricks
-2. Application Insight Instance.
-3. A log analytics workspace for the App Insight.
-4. Azure Key Vault to store the secrets.
-5. A Storage Account.
 
 ## Section 1: Docker image load in VS Code
 
@@ -304,102 +232,6 @@ The below sections provide the step by step approach to set up the solution. As 
 
 
 
-# Update The Parameters Files
-
-```json {
-    "ResourceGroupName": "databricks-dev-rg", // Amend - Update Resource Group Name Locations Below
-    "Location": "uksouth", 
-    "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Development/Bicep.parameters.json",
-    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
-    "SubscriptionId": "/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", // Amend
-    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
-    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
-    "RBAC_Assignments": [
-        {
-            "role":"Key Vault Administrator", 
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605", # Your ObjectID (Gives You Access To The KeyVault)
-            "scope": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
-            "principalType": "User"
-        },
-        { 
-            "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", // The ObjectID of The Service Principal (It Will Store PAT Token in Key Vault)
-            "scope": "/subscriptions//xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
-            "principalType": "ServicePrincipal"
-        }
-    ],
-    "Clusters": [
-        {
-            "cluster_name": "dbx-sp-cluster",
-            "spark_version": "10.4.x-scala2.12",
-            "node_type_id": "Standard_D3_v2",
-            "spark_conf": {},
-            "autotermination_minutes": 30,
-            "runtime_engine": "STANDARD",
-            "autoscale": {
-                "min_workers": 2,
-                "max_workers": 4
-            }
-        },
-        {
-            "cluster_name": "dbx-sp-cluster2",
-            "spark_version": "10.4.x-scala2.12",
-            "node_type_id": "Standard_D3_v2",
-            "spark_conf": {},
-            "autotermination_minutes": 30,
-            "runtime_engine": "STANDARD",
-            "autoscale": {
-                "min_workers": 2,
-                "max_workers": 4
-            }
-        }
-    ],
-    "WheelFiles": [
-            {
-                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
-                "wheel_cluster": "dbx-sp-cluster",
-                "upload_to_cluster?": true
-            }
-    ],
-    "Jobs": [
-        {
-            "name": "job_remote_analysis",
-            "settings": {
-                "name": "job_remote_analysis",
-                "email_notifications": {
-                    "no_alert_for_skipped_runs": false
-                },
-                "max_concurrent_runs": 1,
-                "tasks": [
-                    {
-                        "task_key": "job_remote_analysis",
-                        "notebook_task": {
-                            "notebook_path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/src/tutorial/scripts/framework_testing/remote_analysis",
-                            "source": "WORKSPACE"
-                        },
-                        "cluster_name": "dbx-sp-cluster"
-                    }
-                ],
-                "format": "MULTI_TASK"
-            }
-        }
-    ],
-    "Git_Configuration": [
-        {
-            "git_username": "ciaran28",
-            "git_provider": "gitHub"
-        }
-    ],
-    "Repo_Configuration": [
-        {
-            "url": "https://github.com/ciaran28/DatabricksAutomation",
-            "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder",
-            "branch": "develop"
-        }
-    ]
-}
-```
 
 
 
@@ -416,10 +248,7 @@ The below sections provide the step by step approach to set up the solution. As 
 
 
 
-
-
-
-
+#OLD SECTION
 
 
 
@@ -600,17 +429,4 @@ Post running the script, we will be able to see the data in the terminal.
 
 ![final](docs/images/final.jpg)
 
-### Execution from Databricks
 
-In order to run the same notebook in the databricks, we just need to create a databricks secrets for the application insight connection string. 
-
-For this, we can execute the below query:
-
-``` bash
-python src/tutorial/create_databricks_secrets.py
-
-```
-
-After copying the content of the remote_analysis.py in the databricks notebook, we get the output as below:
-
-![DatabricksNotebookExecution](docs/images/DatabricksNotebookExecution.JPG)
