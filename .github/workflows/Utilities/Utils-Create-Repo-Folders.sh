@@ -56,10 +56,11 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     JSON_STRING=$( jq -n -c \
                 --arg url "$(_jq '.url')" \
                 --arg provider "$(_jq '.provider')" \
-                --arg path "$(_jq '.path')" \
+                --arg path "ABSOLUTE_FILE_PATH" \
                 '{url: $url,
                 provider: $provider,
                 path: $path}' )
+    
     
     echo "JSON -D String "
     echo $JSON_STRING
