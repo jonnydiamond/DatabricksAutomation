@@ -18,10 +18,6 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
     echo $PAT_GIT
-
-
-
-
     JSON_STRING=$( jq -n -c \
                 --arg pat "$PAT_GIT" \
                 --arg gu "$(_jq '.git_username')" \
@@ -50,9 +46,10 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     }
 
     PATH="$(_jq '.path')"
-    echo $PATH
-    echo "Test File Path To Repo Is Correct: expecting /Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/"
-    echo "/Repos/$param_dbxSPNAppID/$PATH"
+    echo "We Will Create The $(_jq '.path') Folder By Appending It To The User Folder $param_dbxSPNAppID In Databricks REPOS "
+    echo "The User Folder $param_dbxSPNAppID is Protected And Is Linked To The DevOps Agent SP Which Is The User.
+
+    echo "Creating /Repos/$param_dbxSPNAppID/$PATH Fodler In Repos ... "
 
     JSON_STRING=$( jq -n -c \
                 --arg url "$(_jq '.url')" \
