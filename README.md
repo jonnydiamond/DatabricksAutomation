@@ -1,8 +1,8 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
 
-- [Heading](#About This Repository)
-- [Heading](#Details of The Accelerator)
+- [Heading](#About%This%Repository)
+- [Heading](#Details%of%The Accelerator)
 - [Heading](#heading-2)
 
 
