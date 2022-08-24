@@ -9,7 +9,7 @@ This Repository contains a Databricks development framework for delivering Data 
 - Azure Monitor Service
 - Azure Key Vault
 
-Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the the technologies biggest constraint is the complexity of integrating it seamlessly, or put another way, operationalizing it within a the confines a fully automated Continuous Integration and Deployment setup.
+Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the the technology's biggest constraint is the complexity of integrating it seamlessly, or put another way, operationalizing it within the confines a fully automated Continuous Integration and Deployment setup.
 
 The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. 
 
