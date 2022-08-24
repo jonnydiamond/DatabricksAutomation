@@ -102,7 +102,7 @@ jobs:
 
 
         - name:                 Create DBX Repos
-          run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
+          run:                  bash ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
             PAT_GIT:            ${{ secrets.PAT_GIT }}
