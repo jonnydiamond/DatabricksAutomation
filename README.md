@@ -89,16 +89,18 @@ Create Service Principal (God Rights)
 
 - Create a Secret "AZURE_CREDENTIALS" and paste the JSON Object in
 
-
-
-
+<img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
 
 
 
 Create Databricks SPN (Contributor Rights + Custom Databricks Role)
 - For those who only need permissions to create resources and intereact with the Databricks API.
 
-``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+
+<img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
+
+- Create Github Secrets  ClientID, ClientSecret and TennantID, using the output from the JSON response above.
 
 Now you can retrieve the ObjectID using the ApplicationID (Save For Later)
 
