@@ -52,7 +52,6 @@ jobs:
 
 
 
-
         - name:                 Deploy DBX CICD Azure Resources
           run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
           env:

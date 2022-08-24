@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 # Ensure That Your DevOps/PipelineAgent Has Owner RBAC Assigned. Do This Manually In Azure Portal 
+# Anything With param_ Was Set As An Environment Variable Using "antifree/json-to-variables@v1.0.1" In Main Yaml Pipeline
+echo "SubscriptionID: $param_SubscriptionId"
+echo "Resource Group Name: $param_parameters_resourceGroupName_value"
 
-echo "SubscriptionID: $SubscriptionId"
-echo "Resource Group Name: $param_resourceGroupName"
-
-RESOURCE_GROUP_ID=$( az group show -n $param_resourceGroupName --query id -o tsv )
+RESOURCE_GROUP_ID=$( az group show -n $param_parameters_resourceGroupName_value --query id -o tsv )
 echo "Resource Group Resource ID: $RESOURCE_GROUP_ID"
 
 echo "Ingest JSON File"

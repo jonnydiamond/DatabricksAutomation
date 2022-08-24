@@ -1,10 +1,10 @@
 param location string = 'uksouth'
 
 param logwsname string 
-var varlogwsname = substring('${logwsname}-${uniqueString(resourceGroup().id)}', 0, 24)
+var varlogwsname = '${logwsname}${substring(uniqueString(resourceGroup().id), 0, 4)}'
 
 param appinsightname string 
-var varappinsightname = substring('${appinsightname}-${uniqueString(resourceGroup().id)}', 0, 24)
+var varappinsightname = '${appinsightname}${substring(uniqueString(resourceGroup().id), 0, 4)}'
 
 
 
