@@ -137,15 +137,10 @@ Steps:
   2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
   3. Do Not Delete Output (required in Next Step) 
 <br>
-<p align="center">
 <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
-</p>
 <br>
-  5. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3
-<br>
-<p align="center">
+  5. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 <br>
 <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
-</p>
 <br>
 
 # Create Databricks SPN (Contributor Rights + Custom Databricks Role)
