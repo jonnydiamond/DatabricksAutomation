@@ -1,9 +1,9 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
 
-- [About%This%Repository](#About%This%Repository)
+- [About This Repository](#About%This%Repository)
 - [Details of The Accelerator](#Details%of%The%Accelerator)
-- [Heading](#heading-2)
+- [Databricks as Infrastructure](#Databricks%as%Infrastructure)
 
 
 # Heading levels
@@ -12,7 +12,7 @@
 
 <!-- toc -->
 
-# About%This%Repository
+# About This Repository
 
 This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
