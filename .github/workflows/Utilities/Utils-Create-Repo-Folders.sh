@@ -55,7 +55,7 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     JSON_STRING=$( jq -n -c \
                     --arg url "$(_jq '.url')" \
                     --arg pr "$(_jq '.provider')" \
-                    --arg pa "TEST"  \
+                    --arg pa "/Repos/$param_dbxSPNAppID/$(_jq '.path')"  \
                     '{url: $url,
                     provider: $pr,
                     path: $pa}' )
