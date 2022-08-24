@@ -87,7 +87,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 
 
 # Under The Hood
-<details open>
+<details close>
 <summary>Click Dropdown... </summary>
 <br>
   
@@ -104,7 +104,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 
 
 # Create Databricks Custom Role On DBX SPN
-<details open>
+<details close>
 <summary>Click Dropdown... </summary>
 <br>
   
