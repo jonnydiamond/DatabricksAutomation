@@ -40,18 +40,15 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
     echo $CREATE_GIT_CREDENTIALS_RESPONSE
 done
 
+echo "User Folders In Databricks Repos Will Be Described Using An Email Address... e.g Ciaranh@Microsoft.com  "
+echo "The DevOps Agent SP Which Is Also A User, However Its Databricks Repo User Folder is Named After The AppID: $param_dbxSPNAppID"
+echo "All Folders Defined In The JSON Parameters Folder Will Be Appended To /Repos/<AppId>/"
+
 for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
 
-    #PATH="$(_jq '.path')"
-    #echo "We Will Create The $PATH Folder By Appending It To The User Folder $param_dbxSPNAppID In Databricks REPOS "
-    #echo "The User Folder $param_dbxSPNAppID is Protected And Is Linked To The DevOps Agent SP Which Is The User."
-
-    #echo "Creating /Repos/$param_dbxSPNAppID/$PATH Fodler In Repos ... "
-    #ABSOLUTE_FILE_PATH="/Repos/$param_dbxSPNAppID/$PATH"
-    #echo $ABSOLUTE_FILE_PATH
     JSON_STRING=$( jq -n -c \
                     --arg url "$(_jq '.url')" \
                     --arg pr "$(_jq '.provider')" \
