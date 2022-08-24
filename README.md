@@ -2,31 +2,253 @@
 
 # About this repository
 
-This repository contains the Databricks development framework for delivering any Data Engineering projects, and machine learning projects based on the Azure Technologies.
+This Repository contains a Databricks development framework for delivering Data Engineering projects and Machine Learning projects based on Azure Technologies, specifically:
 
-# Details of the accelerator
+- Azure Databricks 
+- Azure Log Analytics
+- Azure Monitor Service
+- Azure Key Vault
 
-The accelerator contains few of the core features of Databricks development which can be extended or reused in any implementation projects with Databricks.
+Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the the technologies biggest constraint is the complexity of integrating it seamlessly, or put another way, operationalizing it within a the confines a fully automated Continuous Integration and Deployment setup.
+
+The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. 
+
+
+# Details of the Accelerator
+
+The Accelerator contains core features for Databricks development which can be extended or reused in any Databricks specific implementation.
 
 ![overview](docs/images/Overview.JPG)
 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
-- Support for Databricks development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
-- continuous development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Implementation of the Databricks utilities in VS Code such as dbutils, notebook execution, secret handling.
+- Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
+- Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
 - Example Model file which uses the framework end to end.
 
+# Databricks as Infrastructure
 
-# Prerequisites
+There are many ways that a User may create Jobs, Notebooks, Interatact and upload files to Databricks DBFS, Create Clusters etc. etc. For example, the may interact   with Databricks API/CLI from:
+- Local VSCode
+- Within Databricks UI 
+- Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
+ 
+One issue that arises is the programmatic way for which this approach adopts. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+ 
+When intereacting with the Databricks API to execute the functionality listed above, we believe that Jobs, Cluster creation etc. come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
 
-To successfully complete your solution, you will need to have access to and or provisioned the following:
+As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein. 
 
-- Access to an Azure subscription
-- Service Principal (valid Client ID and secret ) which has the contributor permission the subscription. We are going to create the resource group using the service principal.
+This does not preclude infrastructre creation on ad hoc basis using the API/within the Portal... we in fact provide the development framework to interact with the Databricks API/CLI using a Docker Image in VSCode. Freedom to choose ! 
+ 
+ # Continuous Deployment + Branching Strategy
+ 
+It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
+
+The Branching Strategy will build out of the box, and is a Trunk Based Branching Strategy. (Go into more detail)
+
+<img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
+
+-   Feature merge to Main: Deploy to Develop Environment 
+-   Merge Request from Main To Release: Deploy to UAT
+-   Merge Request Approval from Main to Release: Deploy to PreProduction
+-   Tag Release Branch with Stable Version: Deploy to Production 
+ 
+
+
+# Pre-requisites
+
+- Github Account
+- Access to an Azure Subscription
+- Service Principal With Ownership RBAC permissions assigned. (Instructions below)
+- Service Principal with Databricks Custom Role Permissions. (Instructions below)
 - VS Code installed.
-- Docker Desktop Installed.
+- Docker Desktop Installed (Instructions below)
 
-# Create the Service Principal
+# Under The Hood
+
+- Authenticate to Databricks API/CLI using Azure Service Principal Authentication
+- Databricks API in Bash
+- Databricks CLI in Bash
+- Databricks API using Python SDK 
+- Yaml Pipelines in Github Actions
+- Filter API Responses using JQuery (Bash)
+
+
+
+# Create Databricks Custom Role On DBX SPN
+
+1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
+
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
+
+2. Provide Cusom Role Name
+
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
+
+3. Provide Databricks Permissions 
+
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
+
+# Create the Service Principals
+
+Create Service Principal (God Rights)
+
+- You will need to Assign RBAC permissions to Azure Resources created on the fly. For example, RBAC permissions to access Key Vault, and store for instance a PAT Token.
+
+- Open the Terminal Window in your VSCode and enter the command below. Be sure to not clear the output. 
+
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+
+- You will now see the following output. Copy the JSON object (highlighted with green)
+
+<img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
+
+- Create a Secret "AZURE_CREDENTIALS" and paste the JSON Object in
+
+<img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
+
+
+Create Databricks SPN (Contributor Rights + Custom Databricks Role)
+- For those who only need permissions to create resources and intereact with the Databricks API.
+
+``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+
+<img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
+
+- Create Github Secrets  ClientID, ClientSecret and TennantID, using the output from the JSON response above.
+
+<img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
+
+
+- Retrieve The ApplicationID using the Command Below, and copy it to a text file. 
+
+``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
+
+- Retrieve The ObjectID using the Command Below, and copy it to a text file. 
+
+``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
+
+- Retrieve The YOUR ObjectID using the Command Below, and copy it to a text file. We will use this to assign you Key Vault Admin permission.
+
+``` az ad user show --id ciaranh@microsoft.com --query objectId ```
+
+Output:
+
+``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
+
+- Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
+
+
+```json
+
+{
+    "ResourceGroupName": "databricks-dev-rg", # Set This To You Own Unique Resource Group Name
+    "dbxSPNAppID": "<>",  # Databricks_API_SP ObjectID Saved In Text File
+    "SubscriptionId": "<>", # You SubID
+
+    "RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",  # Your ObjectID Saved In Text File
+            "Description": "You Object ID",
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"DBX_Custom_Role", # Custom Role Created In Previous Step
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+        }
+    ],
+    "Git_Configuration": [
+        {
+            "git_username": "ciaran28", # Update To Your UserName
+            "git_provider": "gitHub"
+        }
+    ],
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Create Databricks Custom Role On DBX SPN
+
+1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
+
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
+
+2. Provide Cusom Role Name
+
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
+
+3. Provide Databricks Permissions 
+
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
+
+4. Update the parameters files to Ensure The Custom Role Name Aligns 
+
+```json      
+"RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"Databricks_Custom_Role", # Ensure this aligns with the name given in step 2
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
+            "principalType": "ServicePrincipal"
+        }
+    ]
+    
+```
+
+# Creating Secrets 
+
+- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
+
+<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
+
+
 
 - [Instruction to create the service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
 - [Instruction to assign role to the service principal access over the Subscription](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#assign-a-role-to-the-application). Please provide **contributor** access over the subscription.
@@ -47,7 +269,7 @@ The below sections provide the step by step approach to set up the solution. As 
 
 ![map01](docs/images/map01.png)
 1. Clone the Repository : https://github.com/microsoft/dstoolkit-ml-ops-for-databricks/pulls
-2. Install Docker Desktop. In this solution, the Visual Code uses the docker image as a remote container to run the solution.
+2. Install Docker Desktop. Visual Code uses the docker image as a remote container to run the solution.
 3. Create .env file in the root folder, and keep the file blank for now. (root folder is the parent folder of the project)
 4. In the repo, open the workspace. File: workspace.ode-workspace.
 
@@ -72,9 +294,140 @@ The below sections provide the step by step approach to set up the solution. As 
 
 ![pythonversion](docs/images/pythonversion.jpg)
 
-## Section 2: Databricks environment creation
+## Section 2: Databricks Environment Creation
+
+- Create Service Principals
+- 
 
 ![map02](docs/images/map02.png)
+
+
+
+
+# Update The Parameters Files
+
+```json {
+    "ResourceGroupName": "databricks-dev-rg", // Amend - Update Resource Group Name Locations Below
+    "Location": "uksouth", 
+    "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Development/Bicep.parameters.json",
+    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
+    "SubscriptionId": "/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", // Amend
+    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
+    "RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605", # Your ObjectID (Gives You Access To The KeyVault)
+            "scope": "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", // The ObjectID of The Service Principal (It Will Store PAT Token in Key Vault)
+            "scope": "/subscriptions//xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/databricks-dev-rg", // Update SubID + ResourceGroup Name
+            "principalType": "ServicePrincipal"
+        }
+    ],
+    "Clusters": [
+        {
+            "cluster_name": "dbx-sp-cluster",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        },
+        {
+            "cluster_name": "dbx-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        }
+    ],
+    "WheelFiles": [
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster",
+                "upload_to_cluster?": true
+            }
+    ],
+    "Jobs": [
+        {
+            "name": "job_remote_analysis",
+            "settings": {
+                "name": "job_remote_analysis",
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false
+                },
+                "max_concurrent_runs": 1,
+                "tasks": [
+                    {
+                        "task_key": "job_remote_analysis",
+                        "notebook_task": {
+                            "notebook_path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/src/tutorial/scripts/framework_testing/remote_analysis",
+                            "source": "WORKSPACE"
+                        },
+                        "cluster_name": "dbx-sp-cluster"
+                    }
+                ],
+                "format": "MULTI_TASK"
+            }
+        }
+    ],
+    "Git_Configuration": [
+        {
+            "git_username": "ciaran28",
+            "git_provider": "gitHub"
+        }
+    ],
+    "Repo_Configuration": [
+        {
+            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "provider": "gitHub",
+            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder",
+            "branch": "develop"
+        }
+    ]
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 The objectives of this section are:
 
