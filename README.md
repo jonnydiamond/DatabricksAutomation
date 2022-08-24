@@ -239,12 +239,6 @@ Steps:
 
 ![pythonversion](docs/images/pythonversion.jpg)
 
-## Section 2: Databricks Environment Creation
-
-- Create Service Principals
-- 
-
-![map02](docs/images/map02.png)
 
 
 
@@ -256,112 +250,10 @@ Steps:
 
 
 
+)
 
 
 
-
-
-
-
-
-
-#OLD SECTION
-
-
-
-
-
-
-
-
-
-The objectives of this section are:
-
-- Create the required resources.
-    1. Azure Databricks
-    2. Application Insight Instance.
-    3. A log analytics workspace for the App Insight.
-    4. Azure Key Vault to store the secrets.
-    5. A Storage Account.
-
-- Create the .env file for the local development.
-
-> You don't need to create the environment again if you already had a databricks environment. You can directly create the .env file ( Section 4 ) with the details of your environment.
-
-1. Go to **src/setup/config/setup_config.json**, and complete the json files with the values; according to your environment. The service principal should be having the contributor access over the subscription you are using. Or if you choose to create the resource group manually, or reuse an existing resource group, then it should have the contributor access on the resource group itself.
-
-> These details would be used to connect to the Azure Subscription for the resource creation.
-
-``` json
-{
- 
-    "applicationID":"deeadfb5-27xxxaad3-9fd39049b450",
-    "tenantID":"72f988bf-8xxxxx2d7cd011db47",
-    "subscriptionID":"89c37dd8xxxx-1cfb98c0262e",
-    "resourceGroupName":"AccleratorDBKMLOps2",
-    "resourceGroupLocation":"NorthEurope"
-}
-```
-
-2. create the file and provide the client ID secret in this file : **src/setup/vault/appsecret.txt**
-
-> Incase you are not able to create the file from the solution, you can directly go to the file explorer to create the file.
->
-> NOTE: DBToken.txt will be created in the later section, please ignore it for now.
-
-At the end of the secret files creation, the folder structure will like below:
-
-![SecretsFileImage](docs/images/SecretsFileImage.jpg)
-
-3. Open the Powershell ISE in your local machine. We are going to run the Powershell script to create the required resources. The name of the resources are basically having a prefix to the resourcegroup name.
-4. set the root path of the Powershell terminal till setup, and execute the deployResource.ps1
-
-``` powershell
-cd "C:\Users\projects\New folder\MLOpsBasic-Databricks\src\setup"
-.\deployResources.ps1
-```
-
-> If you receive the below error, execute the  command [Set-ExecutionPolicy RemoteSigned]
-
-``` cmd
->.\deployResources.ps1 : File C:\Users\projects\New
-folder\MLOpsBasic-Databricks\src\setup\deployResources.ps1 cannot be loaded because running scripts is disabled on this.
-```
-> if you get the error module is not found, and if Powershell ISE is not able to recognize any specific Powershell command, then Install the Powershell Az Module. [Instructions](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.4.0)
-``` cmd
-Install-Module  Az
-```
-
-![PowershellScreen](docs/images/PowershellScreen.jpg)
-
-Post successful execution of the script, we can see the resources created successfully in the Azure Subscription.
-
-![AzureResources](docs/images/AzureResources.JPG)
-
-
-## Section 3: Databricks cluster creation
-
-![map03](docs/images/map03.png)
-
-1. To create the databricks cluster we need to have personal Access token created. Go to the Databricks workspace, and get the personal access token from the user setting, and save it in the file src/setup/vault/DBKtoken.txt
-
-![DatabricksTokenGeneration](docs/images/DatabricksTokenGeneration.jpg)
-
-2. Run the following command
-
-``` cmd
-cd "C:\Users\projects\New folder\MLOpsBasic-Databricks\src\setup"
- 
-.\configureResources.ps1
-```
-
-3. At the end of the script execution, we will be able to see the databricks cluster has been created successfully.the config file: src\setup\util\DBCluster-Configuration.json is being used to create the cluster.
-
-![SuccessfulClusterCreation](docs/images/SuccessfulClusterCreation.JPG)
-
-4. Copy the output of the script and paste it to the .env file which we had created previously. Please note that the values of the variables will be different as per your environment configuration. the later section (Section 4) describes the creation of .env file in detail.
-
-![OutputOfTheConfigurationStep](docs/images/OutputOfTheConfigurationStep.jpg)
 
 ## Section 4: Create the .env file
 
