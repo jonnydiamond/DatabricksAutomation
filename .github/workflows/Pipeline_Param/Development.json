@@ -33,6 +33,12 @@
             "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"<Insert Jonny/Angelo Object ID>",
+            "Description": "You Object ID",
+            "principalType": "User"
         }
     ],
     "Clusters": [
