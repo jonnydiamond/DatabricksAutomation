@@ -59,6 +59,9 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
                 '{url: $url,
                 provider: $provider,
                 path: $ABSOLUTE_FILE_PATH}' )
+    
+    echo "JSON -D String "
+    echo $JSON_STRING
 
     CREATE_REPO_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
