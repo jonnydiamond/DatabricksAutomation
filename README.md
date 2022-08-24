@@ -1,22 +1,25 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
-# About this repository
 
-This Repository contains a Databricks development framework for delivering Data Engineering projects and Machine Learning projects based on Azure Technologies, specifically:
 
-- Azure Databricks 
-- Azure Log Analytics
-- Azure Monitor Service
-- Azure Key Vault
 
-Azure Databricks is an incredibly powerfull technology, used by Data Engineers and Scientists ubiquitously. However, it is this writers opinion that the the technology's biggest constraint is the complexity of integrating it seamlessly, or put another way, operationalizing it within the confines a fully automated Continuous Integration and Deployment setup.
 
-The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. 
+# About This Repository
 
+This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+
+| Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
+| ---------------- |:-------------------:| ----------------------:| ----------------------:|
+
+---
+
+Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
+
+The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
+
+---
 
 # Details of the Accelerator
-
-The Accelerator contains core features for Databricks development which can be extended or reused in any Databricks specific implementation.
 
 ![overview](docs/images/Overview.JPG)
 
@@ -429,4 +432,4 @@ Post running the script, we will be able to see the data in the terminal.
 
 ![final](docs/images/final.jpg)
 
-
+[^1]: Test
