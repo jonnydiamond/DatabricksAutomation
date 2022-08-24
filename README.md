@@ -71,10 +71,18 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 -   Tag Release Branch with Stable Version: Deploy to Production 
  
 
+# Pre-requisites
 <details open>
-<summary>Want to ruin the surprise?</summary>
+<summary>Click For More Information?</summary>
 <br>
-Well, you asked for it!
+  
+- Github Account
+- Access to an Azure Subscription
+- Service Principal With Ownership RBAC permissions assigned. (Instructions below)
+- Service Principal with Databricks Custom Role Permissions. (Instructions below)
+- VS Code installed.
+- Docker Desktop Installed (Instructions below)
+  
 </details>
 
 # Pre-requisites
