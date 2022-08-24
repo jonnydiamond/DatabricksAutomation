@@ -108,15 +108,15 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 <summary>Click Dropdown... </summary>
 <br>
   
-1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
+- Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
 
 <img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
 
-2. Provide Cusom Role Name
+- Provide Cusom Role Name
 
 <img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
 
-3. Provide Databricks Permissions 
+- Provide Databricks Permissions 
 
 <img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
   
