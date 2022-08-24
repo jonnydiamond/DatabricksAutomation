@@ -149,9 +149,14 @@ Steps:
 7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  ```az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
 9. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  ```az ad user show --id ciaranh@microsoft.com --query objectId ```
 
+# Final Snapshot of Github Secrets
 
+- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
+
+<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
 ---
+# Update Yaml Pipeline Parameters Files
 
 - Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
 
@@ -200,17 +205,20 @@ Steps:
 
 ```
 
+---
 
-# Creating Secrets 
+# Run The Yaml Pipeline
 
-- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
+- In Github you can manually run the pipeline to deploy the evironments to Azure
 
-<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
+<img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
+
+---
+---
 
 
 
-
-## Section 1: Docker image load in VS Code
+# Section 1: Docker image load in VS Code
 
 ![map01](docs/images/map01.png)
 1. Clone the Repository : https://github.com/microsoft/dstoolkit-ml-ops-for-databricks/pulls
