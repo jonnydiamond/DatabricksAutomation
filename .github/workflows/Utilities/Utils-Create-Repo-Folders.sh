@@ -52,15 +52,13 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     echo "Creating /Repos/$param_dbxSPNAppID/$PATH Fodler In Repos ... "
     ABSOLUTE_FILE_PATH="/Repos/$param_dbxSPNAppID/$PATH"
     echo $ABSOLUTE_FILE_PATH
-
     JSON_STRING=$( jq -n -c \
-                --arg url "$(_jq '.url')" \
-                --arg provider "$(_jq '.provider')" \
-                --arg path "ABSOLUTE_FILE_PATH" \
-                '{url: $url,
-                provider: $provider,
-                path: $path}' )
-    
+                    --arg url "$(_jq '.url')" \
+                    --arg pr "$(_jq '.provider')" \
+                    --arg pa "TEST"  \
+                    '{url: $url,
+                    provider: $pr,
+                    path: $pa}' )
     
     echo "JSON -D String "
     echo $JSON_STRING
