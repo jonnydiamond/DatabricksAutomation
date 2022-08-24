@@ -73,6 +73,22 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 - Yaml Pipelines in Github Actions
 - Filter API Responses using JQuery (Bash)
 
+
+
+# Create Databricks Custom Role On DBX SPN
+
+1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
+
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
+
+2. Provide Cusom Role Name
+
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
+
+3. Provide Databricks Permissions 
+
+<img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
+
 # Create the Service Principals
 
 Create Service Principal (God Rights)
@@ -92,7 +108,6 @@ Create Service Principal (God Rights)
 <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
 
 
-
 Create Databricks SPN (Contributor Rights + Custom Databricks Role)
 - For those who only need permissions to create resources and intereact with the Databricks API.
 
@@ -102,13 +117,91 @@ Create Databricks SPN (Contributor Rights + Custom Databricks Role)
 
 - Create Github Secrets  ClientID, ClientSecret and TennantID, using the output from the JSON response above.
 
-Now you can retrieve the ObjectID using the ApplicationID (Save For Later)
+<img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
 
-``` az ad sp show --id ce79c2ef-170d-4f1c-a706-7814efb94898 --query objectId ```
+
+- Retrieve The ApplicationID using the Command Below, and copy it to a text file. 
+
+``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
+
+- Retrieve The ObjectID using the Command Below, and copy it to a text file. 
+
+``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
+
+- Retrieve The YOUR ObjectID using the Command Below, and copy it to a text file. We will use this to assign you Key Vault Admin permission.
+
+``` az ad user show --id ciaranh@microsoft.com --query objectId ```
 
 Output:
 
-``` "0e3c30b0-dd4e-4937-96ca-3fe88bd8f259" ```
+``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
+
+- Now to update the Parameters File With Amendments Below. Do it for each Environment. 
+
+
+```json 
+
+
+```
+
+{
+    "ResourceGroupName": "databricks-dev-rg", # Set This To You Own Unique Resource Group Name
+    "dbxSPNAppID": "<>",  # Databricks_API_SP ObjectID Saved In Text File
+    "SubscriptionId": "<>", # You SubID
+
+    "RBAC_Assignments": [
+        {
+            "role":"Key Vault Administrator", 
+            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",  # Your ObjectID Saved In Text File
+            "Description": "You Object ID",
+            "principalType": "User"
+        },
+        { 
+            "role":"Key Vault Administrator",
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role":"DatabricksRole", # Custom Role Created In Previous Step
+            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", # Databricks_API_SP ObjectID Saved In Text File
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+        }
+    ],
+    "Git_Configuration": [
+        {
+            "git_username": "ciaran28", # Update To Your UserName
+            "git_provider": "gitHub"
+        }
+    ],
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Create Databricks Custom Role On DBX SPN
 
@@ -159,15 +252,6 @@ Output:
 <img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
 
-# Retrieve your Own Object ID
-
-This is required to give you Key Vault Administrator Permissions 
-
-``` az ad user show --id ciaranh@microsoft.com --query objectId ```
-
-Output:
-
-``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
 
 - [Instruction to create the service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#register-an-application-with-azure-ad-and-create-a-service-principal)
 - [Instruction to assign role to the service principal access over the Subscription](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#assign-a-role-to-the-application). Please provide **contributor** access over the subscription.
