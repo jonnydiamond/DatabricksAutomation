@@ -149,25 +149,15 @@ Steps:
 
 Why: For those who only need permissions to create resources and intereact with the Databricks API.
 Steps:
-  1. Open the Terminal Window in VSCode. Enter:
-  2. ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-  3. Do Not Delete Output (required in Next Step) 
-<br>
+1. Open the Terminal Window in VSCode. Enter: ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ``` [^2]
+4. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID" (values are contained within output from step 3). [^3]
+5. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): ```az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
+7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  ```az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
+9. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  ```az ad user show --id ciaranh@microsoft.com --query objectId ```
+
+
 <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
-<br>
-  4. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID" (values are contained within output from step 3)
-<br>
 <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
-<br>
-    5. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): 
-    6. ``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ``` <br>
-    7.  In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file): 
-    8.  ``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ``` <br>
-    9.  In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file): 
-    10.  ``` az ad user show --id ciaranh@microsoft.com --query objectId ``` <br>
-
-
-
 
 ---
 
@@ -465,3 +455,5 @@ Post running the script, we will be able to see the data in the terminal.
 ![final](docs/images/final.jpg)
 
 [^1]: Test
+[^2]: <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
+[^3]: <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
