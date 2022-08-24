@@ -112,58 +112,6 @@ jobs:
           run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
 
 
-        #- name:                   Create Wheel Files & Upload To DBFS
-        #  run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
-        #  env:
-        #    environment:          ${{ matrix.environments }}
-
-      #  - name:                   Import Python Wheel Dependencies 
-      #    run: | 
-      #      python -m pip install --upgrade pip
-      #      python -m pip install flake8 pytest pyspark pytest-cov requests
-
-      #      pip3 install -r ./src/pipelines/dbkframework/requirements.txt
-      #      python -m pip install --user --upgrade setuptools wheel
-      #      sudo apt-get install pandoc
-
-
-        #- name: Lint with flake8
-        #  run: |
-        #    # stop the build if there are Python syntax errors or undefined names
-        #    flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        #    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        #    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    
-      #  - name: Create wheel
-      #    run: |
-      #      ls
-      #      cd src/pipelines/dbkframework
-      #      python setup.py sdist bdist_wheel
-
-      #  - name: Install wheel
-      #    run: |
-      #      ls
-      #      cd src/pipelines/dbkframework/dist
-      #      ls
-      #      pip uninstall -y dbkframework-1-py3-none-any.whl
-      #      pip install dbkframework-1-py3-none-any.whl
-  
-        #- name: Upoload Wheel File To DBFS
-        #  run: |
-        #    # Make Wheel Name Dynamic
-
-        #    databricks fs rm dbfs:/FileStore/dev/dbkframework-1-py3-none-any.whl
-        #    databricks fs cp "src/pipelines/dbkframework/dist/dbkframework-1-py3-none-any.whl" dbfs:/FileStore/dev/dbkframework-1-py3-none-any.whl --overwrite
-        #  shell: bash
-
-        #- name: Install Wheel On Cluster
-        #  run: |
-        #    # Get The Cluster ID & Make Wheel Name Dynamic
-        #    
-        #    databricks libraries install --cluster-id "0802-090441-honks846" --whl "dbfs:/FileStore/dbkframework-1-py3-none-any.whl"  
-        #  shell: bash    
-
-
 
 
 

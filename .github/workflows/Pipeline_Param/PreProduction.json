@@ -65,7 +65,7 @@
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation", 
             "provider": "gitHub",
-            "path": "/PreProductionFolder",
+            "path": "PreProductionFolder",
             "branch": "main"
         }
     ]

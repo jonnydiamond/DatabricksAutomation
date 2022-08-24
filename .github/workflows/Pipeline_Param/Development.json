@@ -101,8 +101,7 @@
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation",
             "provider": "gitHub",
-            "path": "DevelopmentFolder",
-            "branch": "develop"
+            "path": "DevelopmentFolder"
         }
     ]
 }
