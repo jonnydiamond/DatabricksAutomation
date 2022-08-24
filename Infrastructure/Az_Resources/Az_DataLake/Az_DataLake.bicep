@@ -12,7 +12,7 @@ param resourceGroupName string
 param azKeyVaultName string
 
 
-var varstorageAccountName = '${storageAccountName}-${substring(uniqueString(resourceGroup().id), 0, 4)}'
+var varstorageAccountName = '${storageAccountName}${substring(uniqueString(resourceGroup().id), 0, 4)}'
 
 
 // ################################################################################################################################################################//
