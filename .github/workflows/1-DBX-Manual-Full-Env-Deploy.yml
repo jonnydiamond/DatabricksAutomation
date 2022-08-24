@@ -112,69 +112,7 @@ jobs:
           run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            # Navigate To The Setup.Py File.
-            #ls
-            #cd src
-            #cd pipelines
-            #cd dbkframework
-
-            # Create The Python Wheel File
-            #python setup.py sdist bdist_wheel
-
-            #cd dist
-            #echo "Name of Pyton Wheel File"
-            #ls
-
-            #databricks fs -h
-            #databricks fs ls
-            #databricks fs rm 'dbfs:/FileStore/dev/artifacts/'
-            #databricks fs cp -r dbkframework-1-py3-none-any.whl dbfs:/FileStore/dev/artifacts/
-
-            #databricks libraries uninstall --cluster-id {cluster_id} --whl dbfs:/FileStore/dev/artifacts/dbkframework-1-py3-none-any.whl
-            #databricks libraries install --cluster-id {cluster_id} --whl dbfs:/FileStore/dev/artifacts/dbkframework-1-py3-none-any.whl
-
-          #shell: bash
-
-          
-        
+        - name:                   Create Wheel Files & Upload To DBFS
+          run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+          env:
+            environment:          ${{ matrix.environments }}

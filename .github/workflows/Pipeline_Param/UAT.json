@@ -65,8 +65,7 @@
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation",
             "provider": "gitHub",
-            "path": "/UATFolder",
-            "branch": "main"
+            "path": "UATFolder"
         }
     ]
 
