@@ -3,6 +3,11 @@
 #"git_username": "ciaranh@microsoft.com",
 #"git_provider": "azureDevOpsServices"
 
+echo "Test Application ID"
+echo $param_dbxSPNAppID
+
+
+
 echo "Ingest JSON File"
 JSON=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
 #echo "${JSON}" | jq
@@ -13,6 +18,10 @@ for row in $(echo "${JSON}" | jq -r '.Git_Configuration[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
     echo $PAT_GIT
+
+
+
+
     JSON_STRING=$( jq -n -c \
                 --arg pat "$PAT_GIT" \
                 --arg gu "$(_jq '.git_username')" \
@@ -39,13 +48,18 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
+
+    PATH="$(_jq '.path')"
+    echo "Test File Path To Repo Is Correct: expecting /Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/"
+    echo "/Repos/$param_dbxSPNAppID/$(_jq '.path')
+
     JSON_STRING=$( jq -n -c \
                 --arg url "$(_jq '.url')" \
-                --arg pr "$(_jq '.provider')" \
-                --arg pa "$(_jq '.path')"  \
+                --arg provider "$(_jq '.provider')" \
+                --arg path "/Repos/$param_dbxSPNAppID/$(_jq '.path')"  \
                 '{url: $url,
-                provider: $pr,
-                path: $pa}' )
+                provider: $provider,
+                path: $path}' )
 
     CREATE_REPO_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
