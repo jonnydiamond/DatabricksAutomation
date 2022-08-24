@@ -38,11 +38,11 @@ jobs:
           az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
           pip install databricks-cli
           
-          DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
+          DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_resourceGroupName --query "[].workspaceUrl" -o tsv)"
           adburl="https://$DATABRICKS_INSTANCE"
           echo $adburl
           
-          AZ_KEYVAULT_NAME=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+          AZ_KEYVAULT_NAME=$(az keyvault list -g $param_resourceGroupName --query "[].name" -o tsv)
           token=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
           echo $token
           

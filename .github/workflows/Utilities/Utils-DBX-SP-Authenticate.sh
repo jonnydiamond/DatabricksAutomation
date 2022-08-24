@@ -8,10 +8,10 @@ echo "Logging in using Azure service priciple"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
 ### Remove This In Time
-DATABRICKS_ORDGID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceId" -o tsv)
-DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_ResourceGroupName --query "[].workspaceUrl" -o tsv)"
-WORKSPACE_ID=$(az databricks workspace list -g $param_ResourceGroupName --query "[].id" -o tsv)
-AZ_KEYVAULT_NAME=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+DATABRICKS_ORDGID=$(az databricks workspace list -g $param_resourceGroupName --query "[].workspaceId" -o tsv)
+DATABRICKS_INSTANCE="$(az databricks workspace list -g $param_resourceGroupName --query "[].workspaceUrl" -o tsv)"
+WORKSPACE_ID=$(az databricks workspace list -g $param_resourceGroupName --query "[].id" -o tsv)
+AZ_KEYVAULT_NAME=$(az keyvault list -g $param_resourceGroupName --query "[].name" -o tsv)
 DATABRICKS_TOKEN=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value" -o tsv)
 TOKEN_RESPONSE=$(az account get-access-token --resource $param_AZURE_DATABRICKS_APP_ID)
 TOKEN=$(jq .accessToken -r <<< "$TOKEN_RESPONSE")

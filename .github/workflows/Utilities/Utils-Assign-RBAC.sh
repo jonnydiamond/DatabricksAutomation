@@ -3,9 +3,9 @@
 # Ensure That Your DevOps/PipelineAgent Has Owner RBAC Assigned. Do This Manually In Azure Portal 
 
 echo "SubscriptionID: $SubscriptionId"
-echo "Resource Group Name: $ResourceGroupName"
+echo "Resource Group Name: $param_resourceGroupName"
 
-RESOURCE_GROUP_ID=$( az group show -n $ResourceGroupName --query id -o tsv )
+RESOURCE_GROUP_ID=$( az group show -n $param_resourceGroupName --query id -o tsv )
 echo "Resource Group Resource ID: $RESOURCE_GROUP_ID"
 
 echo "Ingest JSON File"

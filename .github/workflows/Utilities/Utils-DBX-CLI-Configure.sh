@@ -10,7 +10,7 @@ pip3 install databricks-cli --upgrade
 # DATABRICKS_TOKEN : It Must Not Be Expired. 
 
 
-azKeyVaultName=$(az keyvault list -g $param_ResourceGroupName --query "[].name" -o tsv)
+azKeyVaultName=$(az keyvault list -g $param_resourceGroupName --query "[].name" -o tsv)
 secret_val=$(az keyvault secret show --name "dbkstoken" --vault-name $AZ_KEYVAULT_NAME --query "value")
 
 
