@@ -71,6 +71,11 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 -   Tag Release Branch with Stable Version: Deploy to Production 
  
 
+<details open>
+<summary>Want to ruin the surprise?</summary>
+<br>
+Well, you asked for it!
+</details>
 
 # Pre-requisites
 
