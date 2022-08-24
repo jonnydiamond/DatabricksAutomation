@@ -47,7 +47,7 @@ jobs:
         - name:                 Store BICEP Param JSON File Variables As Environ VariablesStore JSON Param File Variables As Environ Variables
           uses:                 antifree/json-to-variables@v1.0.1
           with:
-            filename:           'Infrastructure/DBX_CICD_Deployment/Bicep_Params/${{ matrix.environments }}.Bicep_parameters.json'
+            filename:           'Infrastructure/DBX_CICD_Deployment/Bicep_Params/${{ matrix.environments }}/Bicep_parameters.json'
             prefix:             param
 
 
