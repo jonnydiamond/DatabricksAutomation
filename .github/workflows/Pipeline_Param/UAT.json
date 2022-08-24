@@ -1,22 +1,36 @@
 {
-    "ResourceGroupName": "databricks-uat-rg",
+    "dbxSPNAppID": "d6b70478-4e35-41a1-bad5-4b467d1cf73c",
+    "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
+    
     "Location": "uksouth",
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/UAT/Bicep.parameters.json",
     "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
-    "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
     "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
     "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
     "RBAC_Assignments": [
         {
             "role":"Key Vault Administrator", 
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
-            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-uat-rg",
+            "Description": "You Object ID",
             "principalType": "User"
         },
-        {
+        { 
             "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",
-            "scope": "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994/resourceGroups/databricks-uat-rg",
+            "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+
+        },
+        {
+            "role":"Contributor", 
+            "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
+            "Description": "Databricks SPN",
+            "principalType": "ServicePrincipal"
+        },
+        {
+            "role": "DBX_Custom_Role", 
+            "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
+            "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         }
     ],
@@ -36,7 +50,6 @@
     ],
     "Git_Configuration": [
         {
-            "personal_access_token": "nonecd",
             "git_username": "ciaran28",
             "git_provider": "gitHub"
         }
@@ -52,7 +65,7 @@
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation",
             "provider": "gitHub",
-            "path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/UATFolder",
+            "path": "/UATFolder",
             "branch": "main"
         }
     ]
