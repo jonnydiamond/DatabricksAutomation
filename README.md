@@ -2,7 +2,7 @@
 
 
 - [Heading](#About%This%Repository)
-- [Heading](#Details%of%The Accelerator)
+- [Heading](#Details%of%The%Accelerator)
 - [Heading](#heading-2)
 
 
