@@ -27,7 +27,7 @@ The Accelerator contains core features for Databricks development which can be e
 
 # Databricks as Infrastructure
 
-There are many ways that a User may create Jobs, Notebooks, Interatact and upload files to Databricks DBFS, Create Clusters etc. etc. For example, the may interact   with Databricks API/CLI from:
+There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. etc. For example, they may interact   with Databricks API/CLI from:
 - Local VSCode
 - Within Databricks UI 
 - Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
