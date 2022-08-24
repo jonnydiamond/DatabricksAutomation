@@ -5,7 +5,7 @@
 - [Details of The Accelerator](#Details-of-The-Accelerator)
 - [Databricks as Infrastructure](#Databricks-as-Infrastructure)
 - [Create Databricks Custom Role On DBX SPN](#Create-Databricks-Custom-Role-On-DBX-SPN)
-
+- [Create Main Service Principal](#Create-Main-Service-Principal)
 
 # Heading levels
 
@@ -43,6 +43,8 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
 - Example Model file which uses the Framework end to end.
 
+---
+
 # Databricks as Infrastructure
 
 There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. etc. For example, they may interact   with Databricks API/CLI from:
@@ -58,6 +60,8 @@ As such, all Databricks related infrastrucutre will sit within an environment pa
 
 This does not preclude infrastructre creation on ad hoc basis using the API/within the Portal... we in fact provide the development framework to interact with the Databricks API/CLI using a Docker Image in VSCode. Freedom to choose ! 
  
+---
+
  # Continuous Deployment + Branching Strategy
  
 It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
@@ -73,7 +77,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
  
 
 # Pre-requisites
-<details open>
+<details close>
 <summary>Click Dropdown... </summary>
 <br>
   
@@ -86,6 +90,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
   
 </details>
 
+---
 
 # Under The Hood
 <details close>
@@ -101,11 +106,10 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
   
 </details>
 
-
-
+---
 
 # Create Databricks Custom Role On DBX SPN
-<details open>
+<details close>
 <summary>Click Dropdown... </summary>
 <br>
 1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)  
@@ -129,23 +133,15 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 Why: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
 
 Steps:
-  1. Open the Terminal Window in VSCode.
+  1. Open the Terminal Window in VSCode. Enter:
   2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-
-- Open the Terminal Window in your VSCode and enter the command below. Be sure to not clear the output. 
-
-``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-
-- You will now see the following output. Copy the JSON object (highlighted with green)
-
+  3. Do Not Delete Output (required in Next Step) 
 <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
-
-- Create a Secret "AZURE_CREDENTIALS" and paste the JSON Object in
-
+  5. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3
 <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
 
 
-Create Databricks SPN (Contributor Rights + Custom Databricks Role)
+# Create Databricks SPN (Contributor Rights + Custom Databricks Role)
 - For those who only need permissions to create resources and intereact with the Databricks API.
 
 ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
