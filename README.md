@@ -1,12 +1,12 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
 
-- [Heading](#AboutThisRepository)
-- [Heading](#DetailsoftheAccelerator)
+- [Heading](#About This Repository)
+- [Heading](#Details of The Accelerator)
 - [Heading](#heading-2)
 
 
-# AboutThisRepository
+# About This Repository
 
 This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
@@ -21,14 +21,20 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 
 ---
 
-# DetailsoftheAccelerator
+# Details of The Accelerator
 
 ![overview](docs/images/Overview.JPG)
-
+- Creation of four environments
+  - Development 
+  - UAT
+  - PreProduction
+  - Production
+- Automated Continuous Deployment 
+- Automated package deployment via wheel file creation 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Example Model file which uses the framework end to end.
+- Example Model file which uses the Framework end to end.
 
 # Databricks as Infrastructure
 
