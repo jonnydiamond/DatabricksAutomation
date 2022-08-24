@@ -127,6 +127,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 
 </details>
 
+---
 
 # Create Main Service Principal
 
@@ -134,7 +135,7 @@ Why: You will need to assign RBAC permissions to Azure Resources created on the 
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
-  2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+  2. ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
   3. Do Not Delete Output (required in Next Step) 
 <br>
 <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
@@ -144,33 +145,31 @@ Steps:
 <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
 <br>
 
-# Create Databricks SPN (Contributor Rights + Custom Databricks Role)
-- For those who only need permissions to create resources and intereact with the Databricks API.
+# Create Databricks SPN
 
-``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-
+Why: For those who only need permissions to create resources and intereact with the Databricks API.
+Steps:
+  1. Open the Terminal Window in VSCode. Enter:
+  2. ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+  3. Do Not Delete Output (required in Next Step) 
+<br>
 <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
-
-- Create Github Secrets  ClientID, ClientSecret and TennantID, using the output from the JSON response above.
-
+<br>
+  5. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID" (values are contained within output from step 3)
+<br>
+<br>
 <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
+<br>
+  7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file):
+    -  ```console az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
+  9. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file):
+    - ```console az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
+  11. In VSCode Terminal Retrieve your own ObectID (copy to text file):
+    - ```console az ad user show --id ciaranh@microsoft.com --query objectId ```
 
 
-- Retrieve The ApplicationID using the Command Below, and copy it to a text file. 
 
-``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
-
-- Retrieve The ObjectID using the Command Below, and copy it to a text file. 
-
-``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
-
-- Retrieve The YOUR ObjectID using the Command Below, and copy it to a text file. We will use this to assign you Key Vault Admin permission.
-
-``` az ad user show --id ciaranh@microsoft.com --query objectId ```
-
-Output:
-
-``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
+---
 
 - Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
 
