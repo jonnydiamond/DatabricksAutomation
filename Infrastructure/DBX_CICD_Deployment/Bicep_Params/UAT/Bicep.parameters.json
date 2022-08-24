@@ -8,16 +8,6 @@
       "environment": {
           "value": "uat"
       },
-      "repoConfig": {
-        "value": {
-          "type": null,
-          "accountName": null,
-          "rootFolder": null,
-          "projectName": null,
-          "repositoryName": null,
-          "collaborationBranch": null
-        }
-      },
       "containerNames": {
           "value": [
             "bronze",

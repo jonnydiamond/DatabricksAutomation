@@ -8,16 +8,7 @@
     "environment": {
         "value": "dev"
     },
-    "repoConfig": {
-      "value": {
-        "type": "FactoryVSTSConfiguration",
-        "accountName": "ciaranh0658",
-        "rootFolder": "data-factory-resources",
-        "projectName": "Reusable Templates Project",
-        "repositoryName": "Resource Templates",
-        "collaborationBranch": "main"
-      }
-    },
+
     "containerNames": {
         "value": [
           "bronze",
