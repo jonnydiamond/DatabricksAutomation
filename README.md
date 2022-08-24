@@ -161,11 +161,11 @@ Steps:
 <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
 <br>
   7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file):
-    -  ```console az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
+```console az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
   9. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file):
-    - ```console az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
+```console az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
   11. In VSCode Terminal Retrieve your own ObectID (copy to text file):
-    - ```console az ad user show --id ciaranh@microsoft.com --query objectId ```
+```console az ad user show --id ciaranh@microsoft.com --query objectId ```
 
 
 
