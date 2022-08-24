@@ -128,7 +128,7 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 </details>
 
 
-# Create Main Service Principal (God Rights)
+# Create Main Service Principal
 
 Why: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
 
