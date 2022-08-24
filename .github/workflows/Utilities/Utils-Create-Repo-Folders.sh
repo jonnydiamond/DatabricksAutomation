@@ -47,17 +47,17 @@ for row in $(echo "${JSON}" | jq -r '.Repo_Configuration[] | @base64'); do
 
     PATH="$(_jq '.path')"
     echo "We Will Create The $(_jq '.path') Folder By Appending It To The User Folder $param_dbxSPNAppID In Databricks REPOS "
-    echo "The User Folder $param_dbxSPNAppID is Protected And Is Linked To The DevOps Agent SP Which Is The User.
+    echo "The User Folder $param_dbxSPNAppID is Protected And Is Linked To The DevOps Agent SP Which Is The User."
 
     echo "Creating /Repos/$param_dbxSPNAppID/$PATH Fodler In Repos ... "
 
     JSON_STRING=$( jq -n -c \
                 --arg url "$(_jq '.url')" \
                 --arg provider "$(_jq '.provider')" \
-                --arg path "/Repos/$param_dbxSPNAppID/$PATH"  \
+                --arg path "/Repos/$param_dbxSPNAppID/$(_jq '.provider')"  \
                 '{url: $url,
                 provider: $provider,
-                path: $path}' )
+                path: $path)
 
     CREATE_REPO_RESPONSE=$(curl -X POST -H "Authorization: Bearer $TOKEN" \
                 -H "X-Databricks-Azure-SP-Management-Token: $MGMT_ACCESS_TOKEN" \
