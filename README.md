@@ -6,12 +6,6 @@
 - [Heading](#heading-2)
 
 
-# Heading levels
-
-> This is a fixture to test heading levels
-
-<!-- toc -->
-
 # AboutThisRepository
 
 This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
