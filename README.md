@@ -135,6 +135,11 @@ Output:
     
 ```
 
+# Creating Secrets 
+
+- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
+
+<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
 
 # Retrieve your Own Object ID
