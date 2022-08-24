@@ -155,17 +155,17 @@ Steps:
 <br>
 <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
 <br>
-  5. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID" (values are contained within output from step 3)
+  4. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID" (values are contained within output from step 3)
 <br>
 <br>
 <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
 <br>
-  7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file)
-```console az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
-  8.  In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal using (copy to text file):
-```console az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
-  9.  In VSCode Terminal Retrieve your own ObectID (copy to text file):
-```console az ad user show --id ciaranh@microsoft.com --query objectId ```
+  5. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): 
+  6. ``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ``` <br>
+  7.  In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file): 
+  8.  ``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ``` <br>
+  9.  In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file): 
+  10.  ``` az ad user show --id ciaranh@microsoft.com --query objectId ``` <br>
 
 
 
