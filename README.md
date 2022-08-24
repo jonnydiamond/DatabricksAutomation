@@ -1,9 +1,9 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
 
-- [About This Repository](#About%This%Repository)
-- [Details of The Accelerator](#Details%of%The%Accelerator)
-- [Databricks as Infrastructure](#Databricks%as%Infrastructure)
+- [About This Repository](#About-This-Repository)
+- [Details of The Accelerator](#Details-of-The-Accelerator)
+- [Databricks as Infrastructure](#Databricks-as-Infrastructure)
 
 
 # Heading levels
