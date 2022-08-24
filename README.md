@@ -136,13 +136,10 @@ Output:
 
 ``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
 
-- Now to update the Parameters File With Amendments Below. Do it for each Environment. 
+- Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
 
 
-```json 
-
-
-```
+```json
 
 {
     "ResourceGroupName": "databricks-dev-rg", # Set This To You Own Unique Resource Group Name
@@ -170,7 +167,7 @@ Output:
             "principalType": "ServicePrincipal"
         },
         {
-            "role":"DatabricksRole", # Custom Role Created In Previous Step
+            "role":"DBX_Custom_Role", # Custom Role Created In Previous Step
             "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
