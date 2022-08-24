@@ -135,15 +135,9 @@ Why: You will need to assign RBAC permissions to Azure Resources created on the 
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
-  2. ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-  3. Do Not Delete Output (required in Next Step) 
-<br>
-<img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
-<br>
-  5. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 <br>
-<br>
-<img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
-<br>
+  2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+  3. Do Not Delete Output (required in Next Step) [^4]
+  4. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
 
 # Create Databricks SPN
 
@@ -156,8 +150,6 @@ Steps:
 9. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  ```az ad user show --id ciaranh@microsoft.com --query objectId ```
 
 
-<img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
-<img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
 
 ---
 
@@ -457,4 +449,6 @@ Post running the script, we will be able to see the data in the terminal.
 [^1]: Test
 [^2]: <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png"> <br>
 [^3]: <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png"> <br>
+[^4]: <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png"> <br>
+[^5]: <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png"> <br>
 
