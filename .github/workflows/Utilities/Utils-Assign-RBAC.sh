@@ -39,17 +39,17 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
 
 
 
-echo "Iterate And Assign RBAC Permissions"
-for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
-    _jq() {
-        echo ${row} | base64 --decode | jq -r ${1}
-    }
+#echo "Iterate And Assign RBAC Permissions"
+#for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
+#    _jq() {
+#        echo ${row} | base64 --decode | jq -r ${1}
+#    }
     # [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
-    role_array=$(_jq '.roles')
-    echo $role_array
+#    role_array=$(_jq '.roles')
+#    echo $role_array
 
-    echo "test"
-    echo "$(_jq '.roles')" | jq -r ' @sh '
+#    echo "test"
+#    echo "$(_jq '.roles')" | jq -r ' @sh '
 
 
 
@@ -67,6 +67,6 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     #--assignee-principal-type "$(_jq '.principalType')" \
     #--scope "$RESOURCE_GROUP_ID"
     #--scope "$(_jq '.scope')"
-done
+#done
 
 
