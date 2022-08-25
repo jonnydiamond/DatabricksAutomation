@@ -49,9 +49,9 @@ There are many ways that a User may create Jobs, Notebooks, upload files to Data
  
 The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuos Development", as opposed to Continuos _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
-When intereacting with the Databricks API to interacts with the Databricks API, we believe that Jobs, Cluster creation etc. should come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
+When intereacting with the Databricks API to interact with the Databricks API, we believe that Jobs, Cluster creation etc. should come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
 
-As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
+As such, all Databricks related infrastrucutre will sit within an environment parameter file, [^6] alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
 
 This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
@@ -158,6 +158,7 @@ Steps:
 - The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
 - Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to use the email accounts etc. you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognisant that it is far superior to use alias names.
 
+[^6]: Json Parameter File
 ```json
 
 {
