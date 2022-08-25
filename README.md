@@ -282,13 +282,22 @@ Steps:
 
 ---
 
-# Run The Yaml Pipeline
+# Deploy The Azure Environments 
 
 - In Github you can manually run the pipeline to deploy the evironments to Azure
 
 <img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
 
 ---
+# Run Python Scripts
+
+- All the Azure Resources will be configured 
+  - Repos Git configured with folders created for each environment 
+  - Clusters created
+  - KeyVault created with PAT Token stored therein 
+  - Secret Scopes created with Application Insights Connection string and Service Principal Secrets stored. Given that the Service Principal has RBAC permissions (Key Vault Administrator + Databricks Custom Role+ Contributor), we can use the DBUtils functions _within_ the Databricks Instance to access secrets from KV and intereact with the Databricks API
+  - Wheel file creation, whereby .whl files are stored in DBFS, and uploaded to cluster (if boolean set to true in parameters file)
+<img width="752" alt="image" src="https://user-images.githubusercontent.com/108273509/186661417-403d58db-147e-4dd5-966a-868876fb2ee0.png">
 
 ---
 # Section 2: Interact With Databricks From Local VS Code Using Databricks Connect + Docker Image
