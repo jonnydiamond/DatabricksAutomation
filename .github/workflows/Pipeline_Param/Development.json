@@ -21,7 +21,7 @@
             "roles": [
                 "Contributor", 
                 "DBX_Custom_Role",
-                "Key_Vault_Administrator"
+                "Key Vault Administrator"
             ],
             "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
             "Description": "Databricks SPN",
