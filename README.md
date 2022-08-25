@@ -277,7 +277,7 @@ az ad user show --id ciaranh@microsoft.com --query objectId
     ],
     "Repo_Configuration": [                        #  Create Folders in DBX Repos. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
         {
-            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "url": "https://github.com/ciaran28/DatabricksAutomation", # Change To Your Own Repository
             "provider": "gitHub",
             "path": "DevelopmentFolder"            # Create Folders As You See Fit. This Example Will Create /Repos/<userfolder>/DevelopmentFolder in DBX Instance
         }
