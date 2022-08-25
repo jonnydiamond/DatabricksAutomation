@@ -29,13 +29,14 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
 
     Field_Separator=$IFS
     IFS=,
-    for val in $TEST;
-    do
-    echo $val
+    for val in $TEST; do
+        echo "Before Variable"
+        echo $val
+        echo "After Veriable"
     done
     
     IFS=$Field_Separator
- 
+
 
     #declare -a KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -d \'\"))
     #echo $KEYS
