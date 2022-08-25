@@ -153,52 +153,132 @@ Steps:
 ---
 # Update Yaml Pipeline Parameters Files
 
-- Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
-
+- Now to update the Parameters File With Amendments Below. Do it for each Environment. 
+- Note that the databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
+- The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
 
 ```json
 
 {
-    "dbxSPNAppID": "<>",  # Databricks_API_SP ObjectID Saved In Text File
-    "SubscriptionId": "<>", # You SubID
+    "dbxSPNAppID": "<>",                      # Databricks_API_SP ObjectID Saved In Text File
+    "SubscriptionId": "<>",                   # Enter Your SubID
+    
 
-    "RBAC_Assignments": [
+    "Location": "uksouth", 
+    "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Development/Bicep.parameters.json",
+    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
+    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
+    "RBAC_Assignments": [           # RBAC Assignments. You Can Add Or Remove As You See Fit. Ingested Into Utils-Assign-RBAC.sh 
         {
             "role":"Key Vault Administrator", 
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",  # Your ObjectID Saved In Text File
+            "roleBeneficiaryObjID": "<>"        # Your ObjectID Saved In Text File
             "Description": "You Object ID",
             "principalType": "User"
         },
         { 
             "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "roleBeneficiaryObjID": "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
 
         },
         {
             "role":"Contributor", 
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         },
         {
-            "role":"DBX_Custom_Role", # Custom Role Created In Previous Step
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", # Databricks_API_SP ObjectID Saved In Text File
+            "role": "DBX_Custom_Role", 
+            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         }
     ],
-    "Git_Configuration": [
+    "Clusters": [                       #  Cluster Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Cluster.sh 
         {
-            "git_username": "ciaran28", # Update To Your UserName
+            "cluster_name": "dbx-sp-cluster",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        },
+        {
+            "cluster_name": "dbx-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        }
+    ],
+    "WheelFiles": [                        #  Wheel File Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster",
+                "upload_to_cluster?": true
+            }
+    ],
+    "Jobs": [                               # To Do
+        {
+            "name": "job_remote_analysis",
+            "settings": {
+                "name": "job_remote_analysis",
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false
+                },
+                "max_concurrent_runs": 1,
+                "tasks": [
+                    {
+                        "task_key": "job_remote_analysis",
+                        "notebook_task": {
+                            "notebook_path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/src/tutorial/scripts/framework_testing/remote_analysis",
+                            "source": "WORKSPACE"
+                        },
+                        "cluster_name": "dbx-sp-cluster"
+                    }
+                ],
+                "format": "MULTI_TASK"
+            }
+        }
+    ],
+    "Git_Configuration": [                        #  Git Configure Your DBX Env. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+            {
+        {
+            "git_username": "ciaran28",           # Uppdate With Your Github Username 
             "git_provider": "gitHub"
         }
     ],
-
+    "Repo_Configuration": [                        #  Create Folders in DBX Repos. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+        {
+            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "provider": "gitHub",
+            "path": "DevelopmentFolder"            # Create Folders As You See Fit. This Example Will Create /Repos/<userfolder>/DevelopmentFolder in DBX Instance
+        }
+    ]
 }
 
+
 ```
+
+
+
+
+
+
+
+
+
 
 ---
 
