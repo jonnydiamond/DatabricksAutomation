@@ -130,19 +130,33 @@ Why: You will need to assign RBAC permissions to Azure Resources created on the 
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
-  2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-  3. Do Not Delete Output (required in Next Step) [^4]
-  4. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
+```bash
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+```
+  2. Do Not Delete Output (required in Next Step) [^4]
+  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
 
 # Create Databricks SPN
 
 Why: For those who only need permissions to create resources and intereact with the Databricks API.
 Steps:
-1. Open the Terminal Window in VSCode. Enter: ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ``` [^2]
-4. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 3 [^3] 
-5. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): ```az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
-7. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  ```az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
-9. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  ```az ad user show --id ciaranh@microsoft.com --query objectId ```
+1. Open the Terminal Window in VSCode. Enter: 
+```bash 
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+``` [^2]
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 3 [^3] 
+3. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): 
+```bash
+az ad sp show --id <insert_SP_ClientID> --query appId -o tsv 
+```
+4. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
+```bash 
+az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv 
+```
+5. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  
+```bash
+az ad user show --id ciaranh@microsoft.com --query objectId 
+```
 
 # Final Snapshot of Github Secrets
 
