@@ -22,7 +22,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     ROLES_ARRAY="$(_jq '.roles')"
     echo $ROLES_ARRAY
 
-    KEYS=($(( echo "$ROLES_ARRAY" | jq -r tr -d "[]"))
+    KEYS=$( echo "$ROLES_ARRAY" | jq -r 'tr -d []')
     echo $KEYS
     echo "Array size: " ${#KEYS[@]}
     echo "Array elements: "${KEYS[@]}
