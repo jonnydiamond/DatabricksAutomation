@@ -31,8 +31,8 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
   - UAT
   - PreProduction
   - Production
+- Infrastrusture as Code for interacting with Databricks API
 - Automated Continuous Deployment 
-- Automated package deployment via wheel file creation 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
@@ -42,7 +42,7 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 
 # Databricks as Infrastructure
 
-There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. etc. For example, they may interact   with Databricks API/CLI from:
+There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. For example, they may interact   with Databricks API/CLI from:
 - Local VSCode
 - Within Databricks UI 
 - Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
