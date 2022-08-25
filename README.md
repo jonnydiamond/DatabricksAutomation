@@ -130,7 +130,7 @@ Why: You will need to assign RBAC permissions to Azure Resources created on the 
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
-  2. ``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+  2. ```console az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
   3. Do Not Delete Output (required in Next Step) [^4]
   4. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
 
