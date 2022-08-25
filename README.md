@@ -253,7 +253,6 @@ Steps:
         }
     ],
     "Git_Configuration": [                        #  Git Configure Your DBX Env. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
-            {
         {
             "git_username": "ciaran28",           # Uppdate With Your Github Username 
             "git_provider": "gitHub"
