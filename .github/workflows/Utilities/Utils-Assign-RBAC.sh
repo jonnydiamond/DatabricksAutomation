@@ -23,7 +23,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     echo $ROLES_ARRAY
 
     # Before: [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
-    TEST="$( echo $ROLES_ARRAY | jq -r tr -d "[]")"
+    TEST=$( echo $ROLES_ARRAY | jq -r tr -d "[]" )
     # After: "Contributor", "DBX_Custom_Role", "Key Vault Administrator"
     echo $TEST
 
