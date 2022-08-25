@@ -30,10 +30,17 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     Field_Separator=$IFS
     IFS=,
     for val in $TEST; do
+        role=$( echo $val | xargs )
+        
+        echo "Role"
+        echo "$role"
 
-        echo "Before Variable"
-        echo $val | xargs
-        echo "After Veriable"
+        echo "ObjectID"
+        echo "$(_jq '.roleBeneficiaryObjID')"
+
+        echo "Scope"
+        echo "$(_jq '.scope')"
+
     done
     
     IFS=$Field_Separator
