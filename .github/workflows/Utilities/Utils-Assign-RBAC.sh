@@ -17,15 +17,23 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
-
-    declare -A role_array=$(_jq '.roles')
+    # [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
+    role_array=$(_jq '.roles')
     echo $role_array
+
+    echo "$(_jq '.roles')" | jq -r ' @sh '
+
+
+
     #roleBeneficiaryObjID=$(_jq '.roleBeneficiaryObjID')
     #principalType="$(_jq '.principalType')"
     #echo $roleBeneficiaryObjID
     #echo $principalType
 
     for new in ${role_array[@]}; do echo $new done
+        #echo $roleBeneficiaryObjID
+        #echo $principalType
+    done
     
     #az role assignment create \
     #--role "$(_jq '.role')" \
