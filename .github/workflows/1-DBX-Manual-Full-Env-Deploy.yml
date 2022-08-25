@@ -62,7 +62,7 @@ jobs:
 
 
         - name:                 Assign RBAC Permissions 
-          run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
+          run:                  bash ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
           env:
             environment:        ${{ matrix.environments }}
 

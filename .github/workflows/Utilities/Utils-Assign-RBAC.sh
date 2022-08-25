@@ -26,7 +26,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     #echo $principalType
 
     for i in "${role_array[@]}"; do
-    echo $roleBeneficiaryObjID
+    echo $
     echo $principalType
     done
     
