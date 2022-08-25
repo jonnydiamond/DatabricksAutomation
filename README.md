@@ -158,7 +158,7 @@ az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscripti
 ```bash
 az ad sp show --id <insert_SP_ClientID> --query appId -o tsv 
 ```
-4. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
+4. In VS Code Terminal retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
 ```bash 
 az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv 
 ```
@@ -169,18 +169,18 @@ az ad user show --id ciaranh@microsoft.com --query objectId
 
 # Final Snapshot of Github Secrets
 
-- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
+- Secrets in Github should look exactly like below. The secrets are case sensitive, therefore be very cautious when creating. 
 
 <img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
 ---
 # Update Yaml Pipeline Parameters Files
 
-- Now to update the Parameters File With Amendments Below. Do it for each Environment. 
-- Parameters File Path: /.github/workflows/Pipeline_Param/
-- Note that the databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
-- The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
-- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to use the email accounts etc. you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognisant that it is far superior to use alias names.
+- Now to update the Parameters File with amendments below. Do it for each environment. 
+- Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
+- Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
+- The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
+- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognisant that it is far superior to use alias names.
 
 ```json
 
