@@ -18,7 +18,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
     # [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
-    #role_array=$(_jq '.roles')
+    role_array=$(_jq '.roles')
     echo $role_array
 
     echo "test"
@@ -31,7 +31,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     #echo $roleBeneficiaryObjID
     #echo $principalType
 
-    for new in ${role_array[@]}; do echo $new done
+    #for new in ${role_array[@]}; do echo $new done
         #echo $roleBeneficiaryObjID
         #echo $principalType
     #az role assignment create \
