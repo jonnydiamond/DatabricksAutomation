@@ -4,8 +4,16 @@
 - [About This Repository](#About-This-Repository)
 - [Details of The Accelerator](#Details-of-The-Accelerator)
 - [Databricks as Infrastructure](#Databricks-as-Infrastructure)
+- [Continuous Deployment + Branching Strategy](#Continuous-Deployment-+-Branching-Strategy)
+- [Prerequisites](#Prerequisites)
+- [Under The Hood](#Under-The-Hood)
 - [Create Databricks Custom Role On DBX SPN](#Create-Databricks-Custom-Role-On-DBX-SPN)
 - [Create Main Service Principal](#Create-Main-Service-Principal)
+- [Create Databricks SPN](#Create-Databricks-SPN)
+- [Final Snapshot of Github Secrets](#Final-Snapshot-of-Github-Secrets)
+- [Update Yaml Pipeline Parameters Files](#Update-Yaml-Pipeline-Parameters-Files)
+- [Deploy The Azure Environments](#Deploy-The-Azure-Environments)
+- [Run Python Scripts](#Run-Python-Scripts)
 
 
 # About This Repository
@@ -72,7 +80,7 @@ The Branching Strategy will be built out of the box when we redploy our resource
 -   Tag Release Branch with Stable Version: Deploy to Production 
  
 
-# Pre-requisites
+# Prerequisites
 <details close>
 <summary>Click Dropdown... </summary>
 <br>
