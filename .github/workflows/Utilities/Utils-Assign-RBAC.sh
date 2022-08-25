@@ -12,6 +12,33 @@ echo "Ingest JSON File"
 json=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
 echo "${json}" | jq
 
+
+
+
+for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
+    _jq() {
+        echo ${row} | base64 --decode | jq -r ${1}
+    }
+    for role in $(echo "${row}" | jq -r ' @base64 '); do
+        _jq() {
+            echo ${role} | base64 --decode | jq -r ${1}
+        }
+        role=$(_jq '.role')
+        echo "Role"
+        echo $role
+
+
+
+
+
+
+
+
+
+
+
+
+
 echo "Iterate And Assign RBAC Permissions"
 for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
