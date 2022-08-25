@@ -26,6 +26,8 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         role=$(_jq2 '.role')
         echo "Role"
         echo $role
+    done
+done
 
 
 
