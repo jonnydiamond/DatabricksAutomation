@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Ensure That Your DevOps/PipelineAgent Has Owner RBAC Assigned. Do This Manually In Azure Portal 
 # Anything With param_ Was Set As An Environment Variable Using "antifree/json-to-variables@v1.0.1" In Main Yaml Pipeline
@@ -21,11 +21,11 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     }
     ROLES_ARRAY=$(_jq '.roles')
     echo $ROLES_ARRAY
-    KEYS=($( echo "$ROLES_ARRAY" | jq '@sh'))
+    KEYS=($( echo "$ROLES_ARRAY" | jq -r '@sh'))
     echo "Array size: " ${#KEYS[@]}
     echo "Array elements: "${KEYS[@]}
     for ROLE in "${KEYS[@]}"; do
-        echo $ROLE 
+        echo "$ROLE" 
     done
 done
 
