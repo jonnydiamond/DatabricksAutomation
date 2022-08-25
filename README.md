@@ -209,11 +209,18 @@ Steps:
 <img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
 
 ---
+
+---
+# Section 2: Interact With Databricks From Local VS Code Using Databricks Connect + Docker Image
 ---
 
+In the previous section, we interacted with Databricks API from the DevOps Agent.
 
+But what if we wish to interact with the Databricks environemnt from our local VS Code? In order to do this we can use "Databricks Connect".
 
-# Section 1: Docker image load in VS Code
+Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds a Linux environment, and deals with all of the environment variables and path dependencies out of the box. 
+
+# Steps
 
 ![map01](docs/images/map01.png)
 1. Clone the Repository : https://github.com/microsoft/dstoolkit-ml-ops-for-databricks/pulls
@@ -243,22 +250,10 @@ Steps:
 ![pythonversion](docs/images/pythonversion.jpg)
 
 
+Note: Should you change the .env file, you will need to rebuild the container for those changes to propogate through. 
 
 
-
-
-
-
-
-
-
-
-)
-
-
-
-
-## Section 4: Create the .env file
+## Create the .env file
 
 ![map04](docs/images/map04.png)
 
