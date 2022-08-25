@@ -19,10 +19,13 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
-    ROLES_ARRAY=$(_jq '.roles')
+    ROLES_ARRAY="$(_jq '.roles')"
     echo $ROLES_ARRAY
 
-    echo "${ROLES_ARRAY//[[\],.!]}"
+    KEYS=("${ROLES_ARRAY//[[\],.!]}")
+    for ROLE in "${KEYS[@]}"; do
+        echo $ROLE
+    done
 
     #declare -a KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -d \'\"))
     #echo $KEYS
