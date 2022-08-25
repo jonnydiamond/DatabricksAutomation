@@ -20,10 +20,10 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
     for role in $(echo "${row}" | jq -r ' @base64 '); do
-        _jq() {
+        _jq2() {
             echo ${role} | base64 --decode | jq -r ${1}
         }
-        role=$(_jq '.role')
+        role=$(_jq2 '.role')
         echo "Role"
         echo $role
 
