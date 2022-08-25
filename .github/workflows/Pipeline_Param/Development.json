@@ -11,7 +11,7 @@
     "RBAC_Assignments": [
         {
             "roles": [ 
-                "Key Vault Administrator"
+                "Key_Vault_Administrator"
             ],
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
             "Description": "You Object ID",
@@ -21,7 +21,7 @@
             "roles": [
                 "Contributor", 
                 "DBX_Custom_Role",
-                "Key Vault Administrator"
+                "Key_Vault_Administrator"
             ],
             "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
             "Description": "Databricks SPN",
