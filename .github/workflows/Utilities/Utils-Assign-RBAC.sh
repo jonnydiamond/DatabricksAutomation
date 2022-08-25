@@ -18,7 +18,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
 
-    role_array=$(_jq '.roles')
+    declare -A role_array=$(_jq '.roles')
     echo $role_array
     #roleBeneficiaryObjID=$(_jq '.roleBeneficiaryObjID')
     #principalType="$(_jq '.principalType')"
