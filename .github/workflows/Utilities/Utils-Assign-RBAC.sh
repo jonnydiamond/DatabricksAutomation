@@ -23,14 +23,16 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     echo $ROLES_ARRAY
 
     # Before: [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
+    # xargs trims whitespace on either side. -n removes newline characters
     TEST=$( echo $ROLES_ARRAY | jq -r | tr -d "[]" | tr -d \'\" | xargs echo -n )
     # After: "Contributor", "DBX_Custom_Role", "Key Vault Administrator"
     echo $TEST
     Field_Separator=$IFS
     IFS=,
     for val in $TEST; do
+
         echo "Before Variable"
-        echo $val
+        echo $val | xargs
         echo "After Veriable"
     done
     
