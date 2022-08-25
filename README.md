@@ -144,7 +144,7 @@ Steps:
 ```bash 
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
 ```
-2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 3 [^3] 
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1 [^3] 
 3. In VSCode Terminal Retrieve ApplicationID of Databricks Service Principal by entering (copy to text file): 
 ```bash
 az ad sp show --id <insert_SP_ClientID> --query appId -o tsv 
