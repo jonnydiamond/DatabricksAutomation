@@ -21,11 +21,11 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     role_array=$(_jq '.roles')
     echo $role_array
     roleBeneficiaryObjID=$(_jq '.roleBeneficiaryObjID')
-    principalType=$(_jq '.principalType')
+    principalType="$(_jq '.principalType')"
     echo $roleBeneficiaryObjID
     echo $principalType
 
-    for i in ${role_array[@]}; do
+    for i in "${role_array[@]}"; do
         echo "$i"
         echo $roleBeneficiaryObjID
         echo $principalType
