@@ -39,7 +39,10 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo "$(_jq '.roleBeneficiaryObjID')"
 
         echo "Scope"
-        echo "$(_jq '.scope')"
+        echo "$RESOURCE_GROUP_ID"
+
+        echo "Principal Type"
+        echo "$(_jq '.principalType')"
 
     done
     
