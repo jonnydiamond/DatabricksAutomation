@@ -22,8 +22,20 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     ROLES_ARRAY="$(_jq '.roles')"
     echo $ROLES_ARRAY
 
-    TEST=$( echo $ROLES_ARRAY | jq -r tr -d "[]")
+    # Before: [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
+    TEST="$( echo $ROLES_ARRAY | jq -r tr -d "[]")"
+    # After: "Contributor", "DBX_Custom_Role", "Key Vault Administrator"
     echo $TEST
+
+    Field_Separator=$IFS
+    IFS=,
+    for val in $TEST;
+    do
+    echo $val
+    done
+    
+    IFS=$Field_Separator
+ 
 
     #declare -a KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -d \'\"))
     #echo $KEYS
