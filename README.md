@@ -43,17 +43,17 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 # Databricks as Infrastructure
 
 There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. For example, they may interact   with Databricks API/CLI from:
-- Local VSCode
-- Within Databricks UI 
-- Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
+1. Local VSCode
+2. Within Databricks UI 
+3. Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
  
-One issue that arises is the programmatic way for which this approach adopts. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuos Development", as opposed to Continuos _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
-When intereacting with the Databricks API to execute the functionality listed above, we believe that Jobs, Cluster creation etc. come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
+When intereacting with the Databricks API to interacts with the Databricks API, we believe that Jobs, Cluster creation etc. should come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
 
-As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein. 
+As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
 
-This does not preclude infrastructre creation on ad hoc basis using the API/within the Portal... we in fact provide the development framework to interact with the Databricks API/CLI using a Docker Image in VSCode. Freedom to choose ! 
+This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
 ---
 
