@@ -1,14 +1,24 @@
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
-
-- [Heading](#About%This%Repository)
-- [Heading](#Details%of%The Accelerator)
-- [Heading](#heading-2)
+## Table of Contents
+- [About This Repository](#About-This-Repository)
+- [Details of The Accelerator](#Details-of-The-Accelerator)
+- [Databricks as Infrastructure](#Databricks-as-Infrastructure)
+- [Continuous Deployment + Branching Strategy](#Continuous-Deployment-+-Branching-Strategy)
+- [Prerequisites](#Prerequisites)
+- [Under The Hood](#Under-The-Hood)
+- [Create Databricks Custom Role On DBX SPN](#Create-Databricks-Custom-Role-On-DBX-SPN)
+- [Create Main Service Principal](#Create-Main-Service-Principal)
+- [Create Databricks SPN](#Create-Databricks-SPN)
+- [Final Snapshot of Github Secrets](#Final-Snapshot-of-Github-Secrets)
+- [Update Yaml Pipeline Parameters Files](#Update-Yaml-Pipeline-Parameters-Files)
+- [Deploy The Azure Environments](#Deploy-The-Azure-Environments)
+- [Run Python Scripts](#Run-Python-Scripts)
 
 
 # About This Repository
 
-This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+This Repository contains an Azure Databricks Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
 | Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
 | ---------------- |:-------------------:| ----------------------:| ----------------------:|
@@ -29,33 +39,38 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
   - UAT
   - PreProduction
   - Production
+- Infrastrusture as Code for interacting with Databricks API
 - Automated Continuous Deployment 
-- Automated package deployment via wheel file creation 
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Example Model file which uses the Framework end to end.
+- Example Model file which uses the Development Framework fro end to end.
+
+---
 
 # Databricks as Infrastructure
 
-There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. etc. For example, they may interact   with Databricks API/CLI from:
-- Local VSCode
-- Within Databricks UI 
-- Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
+There are many ways that a User may create Databricks Jobs, Notebooks, Clusters, Secret Scopes, file uploads to DBFS and Clusters etc.
+For example, they may interact with Databricks API/CLI from:
+1. Their local VS Code;
+2. Within Databricks UI; or 
+3. A Yaml Pipeline deployment on a DevOps Agent (Github Actions/Azure DevOps etc.)
  
-One issue that arises is the programmatic way for which this approach adopts. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuos Development", as opposed to Continuos _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
-When intereacting with the Databricks API to execute the functionality listed above, we believe that Jobs, Cluster creation etc. come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
+When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
 
-As such, all Databricks related infrastrucutre will sit within an environment parameter file, alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein. 
+All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to this parameters file, and consistently deploy objects listed therein, using Bash Steps contained within the Yaml Pipeline. 
 
-This does not preclude infrastructre creation on ad hoc basis using the API/within the Portal... we in fact provide the development framework to interact with the Databricks API/CLI using a Docker Image in VSCode. Freedom to choose ! 
+This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
+---
+
  # Continuous Deployment + Branching Strategy
  
 It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will build out of the box, and is a Trunk Based Branching Strategy. (Go into more detail)
+The Branching Strategy will be built out of the box when we redploy our resources in later step. It follows a Trunk Based Branching Strategy paradigm to promote rapid Continuous Integration, therefore it alligns closely to the Github Flow with certain nuances. [^6] (Go into more detail)
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
@@ -65,146 +80,260 @@ The Branching Strategy will build out of the box, and is a Trunk Based Branching
 -   Tag Release Branch with Stable Version: Deploy to Production 
  
 
-
-# Pre-requisites
-
+# Prerequisites
+<details close>
+<summary>Click Dropdown... </summary>
+<br>
+  
 - Github Account
 - Access to an Azure Subscription
 - Service Principal With Ownership RBAC permissions assigned. (Instructions below)
 - Service Principal with Databricks Custom Role Permissions. (Instructions below)
 - VS Code installed.
 - Docker Desktop Installed (Instructions below)
+  
+</details>
+
+---
 
 # Under The Hood
-
+<details close>
+<summary>Click Dropdown... </summary>
+<br>
+  
 - Authenticate to Databricks API/CLI using Azure Service Principal Authentication
 - Databricks API in Bash
 - Databricks CLI in Bash
 - Databricks API using Python SDK 
 - Yaml Pipelines in Github Actions
 - Filter API Responses using JQuery (Bash)
+  
+</details>
 
-
+---
 
 # Create Databricks Custom Role On DBX SPN
-
-1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)
-
+<details close>
+<summary>Click Dropdown... </summary>
+<br>
+1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)  
 <img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
+<br>
+<br>
 
 2. Provide Cusom Role Name
-
 <img width="527" alt="image" src="https://user-images.githubusercontent.com/108273509/186198849-d8700153-88b8-44f8-886c-147bea3c3280.png">
-
-3. Provide Databricks Permissions 
-
+<br>
+<br>
+  
+3. Provide Databricks Permissions
 <img width="1199" alt="image" src="https://user-images.githubusercontent.com/108273509/186199265-9485e474-c21d-4825-b64a-5e33083e60fd.png">
 
-# Create the Service Principals
+</details>
 
-Create Service Principal (God Rights)
+---
 
-- You will need to Assign RBAC permissions to Azure Resources created on the fly. For example, RBAC permissions to access Key Vault, and store for instance a PAT Token.
+# Create Main Service Principal
 
-- Open the Terminal Window in your VSCode and enter the command below. Be sure to not clear the output. 
+Why: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
 
-``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
+Steps:
+  1. Open the Terminal Window in VSCode. Enter:
+```bash
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+```
+  2. Do Not Delete Output (required in Next Step) [^4]
+  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
 
-- You will now see the following output. Copy the JSON object (highlighted with green)
+# Create Databricks SPN
 
-<img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png">
+Why: For those who only need permissions to create resources and intereact with the Databricks API.
+Steps:
+1. Open the Terminal Window in VSCode. Enter: [^2]
+```bash 
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+```
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1 [^3] 
+3. Using the ClientID (contained within output in step 1), open the VSCode Terminal and retrieve the ApplicationID of Databricks Service Principal by entering (copy to text file): 
+```bash
+az ad sp show --id <insert_SP_ClientID> --query appId -o tsv 
+```
+4. In VS Code Terminal retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
+```bash 
+az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv 
+```
+5. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  
+```bash
+az ad user show --id ciaranh@microsoft.com --query objectId 
+```
 
-- Create a Secret "AZURE_CREDENTIALS" and paste the JSON Object in
+# Final Snapshot of Github Secrets
 
-<img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png">
+- Secrets in Github should look exactly like below. The secrets are case sensitive, therefore be very cautious when creating. 
 
+<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
-Create Databricks SPN (Contributor Rights + Custom Databricks Role)
-- For those who only need permissions to create resources and intereact with the Databricks API.
+---
+# Update Yaml Pipeline Parameters Files
 
-``` az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth ```
-
-<img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png">
-
-- Create Github Secrets  ClientID, ClientSecret and TennantID, using the output from the JSON response above.
-
-<img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png">
-
-
-- Retrieve The ApplicationID using the Command Below, and copy it to a text file. 
-
-``` az ad sp show --id <insert_SP_ClientID> --query appId -o tsv ```
-
-- Retrieve The ObjectID using the Command Below, and copy it to a text file. 
-
-``` az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv ```
-
-- Retrieve The YOUR ObjectID using the Command Below, and copy it to a text file. We will use this to assign you Key Vault Admin permission.
-
-``` az ad user show --id ciaranh@microsoft.com --query objectId ```
-
-Output:
-
-``` "3fb6e2d3-7734-43fc-be9e-af8671acf605" ```
-
-- Now to update the Parameters File With Amendments Below. Do it for each Environment. Note: You can create as many RBAC Assignments as you want. Simply add a new object to the "RBAC_Assignments" Array and the bash script (run later) will pick it up and create it. 
-
+- Now to update the Parameters File with amendments below. Do it for each environment. 
+- Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
+- Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
+- The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
+- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognisant that it is far superior to use alias names.
 
 ```json
 
 {
-    "dbxSPNAppID": "<>",  # Databricks_API_SP ObjectID Saved In Text File
-    "SubscriptionId": "<>", # You SubID
+    "dbxSPNAppID": "<>",                      # Databricks_API_SP ObjectID Saved In Text File
+    "SubscriptionId": "<>",                   # Enter Your SubID
+    
 
-    "RBAC_Assignments": [
+    "Location": "uksouth", 
+    "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Development/Bicep.parameters.json",
+    "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
+    "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
+    "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
+    "RBAC_Assignments": [           # RBAC Assignments. You Can Add Or Remove As You See Fit. Ingested Into Utils-Assign-RBAC.sh 
         {
             "role":"Key Vault Administrator", 
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",  # Your ObjectID Saved In Text File
+            "roleBeneficiaryObjID": "<>"        # Your ObjectID Saved In Text File
             "Description": "You Object ID",
             "principalType": "User"
         },
         { 
             "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "roleBeneficiaryObjID": "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
 
         },
         {
             "role":"Contributor", 
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259",  # Databricks_API_SP ObjectID Saved In Text File
+            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         },
         {
-            "role":"DBX_Custom_Role", # Custom Role Created In Previous Step
-            "roleBeneficiaryObjID":"0e3c30b0-dd4e-4937-96ca-3fe88bd8f259", # Databricks_API_SP ObjectID Saved In Text File
+            "role": "DBX_Custom_Role", 
+            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         }
     ],
-    "Git_Configuration": [
+    "Clusters": [                       #  Cluster Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Cluster.sh 
         {
-            "git_username": "ciaran28", # Update To Your UserName
+            "cluster_name": "dbx-sp-cluster",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        },
+        {
+            "cluster_name": "dbx-sp-cluster2",
+            "spark_version": "10.4.x-scala2.12",
+            "node_type_id": "Standard_D3_v2",
+            "spark_conf": {},
+            "autotermination_minutes": 30,
+            "runtime_engine": "STANDARD",
+            "autoscale": {
+                "min_workers": 2,
+                "max_workers": 4
+            }
+        }
+    ],
+    "WheelFiles": [                        #  Wheel File Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+            {
+                "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
+                "wheel_cluster": "dbx-sp-cluster",
+                "upload_to_cluster?": true
+            }
+    ],
+    "Jobs": [                               # To Do
+        {
+            "name": "job_remote_analysis",
+            "settings": {
+                "name": "job_remote_analysis",
+                "email_notifications": {
+                    "no_alert_for_skipped_runs": false
+                },
+                "max_concurrent_runs": 1,
+                "tasks": [
+                    {
+                        "task_key": "job_remote_analysis",
+                        "notebook_task": {
+                            "notebook_path": "/Repos/ce79c2ef-170d-4f1c-a706-7814efb94898/DevelopmentFolder/src/tutorial/scripts/framework_testing/remote_analysis",
+                            "source": "WORKSPACE"
+                        },
+                        "cluster_name": "dbx-sp-cluster"
+                    }
+                ],
+                "format": "MULTI_TASK"
+            }
+        }
+    ],
+    "Git_Configuration": [                        #  Git Configure Your DBX Env. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+        {
+            "git_username": "ciaran28",           # Uppdate With Your Github Username 
             "git_provider": "gitHub"
         }
     ],
-
+    "Repo_Configuration": [                        #  Create Folders in DBX Repos. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+        {
+            "url": "https://github.com/ciaran28/DatabricksAutomation", # Change To Your Own Repository
+            "provider": "gitHub",
+            "path": "DevelopmentFolder"            # Create Folders As You See Fit. This Example Will Create /Repos/<userfolder>/DevelopmentFolder in DBX Instance
+        }
+    ]
 }
+
 
 ```
 
 
-# Creating Secrets 
-
-- Secrets in Github should look exactly like this. The secrets are case sensitive, therefore be very cautious when creating. 
-
-<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
 
 
 
 
-## Section 1: Docker image load in VS Code
+
+
+
+
+---
+
+# Deploy The Azure Environments 
+
+- In Github you can manually run the pipeline to deploy the evironments to Azure
+
+<img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
+
+---
+# Run Python Scripts
+
+- All the Azure Resources will be configured 
+  - Repos Git configured with folders created for each environment 
+  - Clusters created
+  - KeyVault created with PAT Token stored therein 
+  - Secret Scopes created with Application Insights Connection string and Service Principal Secrets stored. Given that the Service Principal has RBAC permissions (Key Vault Administrator + Databricks Custom Role+ Contributor), we can use the DBUtils functions _within_ the Databricks Instance to access secrets from KV and intereact with the Databricks API
+  - Wheel file creation, whereby .whl files are stored in DBFS, and uploaded to cluster (if boolean set to true in parameters file)
+<img width="752" alt="image" src="https://user-images.githubusercontent.com/108273509/186661417-403d58db-147e-4dd5-966a-868876fb2ee0.png">
+
+---
+# Section 2: Interact With Databricks From Local VS Code Using Databricks Connect + Docker Image
+---
+
+In the previous section, we interacted with Databricks API from the DevOps Agent.
+
+But what if we wish to interact with the Databricks environemnt from our local VS Code? In order to do this we can use "Databricks Connect".
+
+Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds a Linux environment, and deals with all of the environment variables and path dependencies out of the box. 
+
+# Steps
 
 ![map01](docs/images/map01.png)
 1. Clone the Repository : https://github.com/microsoft/dstoolkit-ml-ops-for-databricks/pulls
@@ -233,131 +362,11 @@ Output:
 
 ![pythonversion](docs/images/pythonversion.jpg)
 
-## Section 2: Databricks Environment Creation
 
-- Create Service Principals
-- 
-
-![map02](docs/images/map02.png)
+Note: Should you change the .env file, you will need to rebuild the container for those changes to propogate through. 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#OLD SECTION
-
-
-
-
-
-
-
-
-
-The objectives of this section are:
-
-- Create the required resources.
-    1. Azure Databricks
-    2. Application Insight Instance.
-    3. A log analytics workspace for the App Insight.
-    4. Azure Key Vault to store the secrets.
-    5. A Storage Account.
-
-- Create the .env file for the local development.
-
-> You don't need to create the environment again if you already had a databricks environment. You can directly create the .env file ( Section 4 ) with the details of your environment.
-
-1. Go to **src/setup/config/setup_config.json**, and complete the json files with the values; according to your environment. The service principal should be having the contributor access over the subscription you are using. Or if you choose to create the resource group manually, or reuse an existing resource group, then it should have the contributor access on the resource group itself.
-
-> These details would be used to connect to the Azure Subscription for the resource creation.
-
-``` json
-{
- 
-    "applicationID":"deeadfb5-27xxxaad3-9fd39049b450",
-    "tenantID":"72f988bf-8xxxxx2d7cd011db47",
-    "subscriptionID":"89c37dd8xxxx-1cfb98c0262e",
-    "resourceGroupName":"AccleratorDBKMLOps2",
-    "resourceGroupLocation":"NorthEurope"
-}
-```
-
-2. create the file and provide the client ID secret in this file : **src/setup/vault/appsecret.txt**
-
-> Incase you are not able to create the file from the solution, you can directly go to the file explorer to create the file.
->
-> NOTE: DBToken.txt will be created in the later section, please ignore it for now.
-
-At the end of the secret files creation, the folder structure will like below:
-
-![SecretsFileImage](docs/images/SecretsFileImage.jpg)
-
-3. Open the Powershell ISE in your local machine. We are going to run the Powershell script to create the required resources. The name of the resources are basically having a prefix to the resourcegroup name.
-4. set the root path of the Powershell terminal till setup, and execute the deployResource.ps1
-
-``` powershell
-cd "C:\Users\projects\New folder\MLOpsBasic-Databricks\src\setup"
-.\deployResources.ps1
-```
-
-> If you receive the below error, execute the  command [Set-ExecutionPolicy RemoteSigned]
-
-``` cmd
->.\deployResources.ps1 : File C:\Users\projects\New
-folder\MLOpsBasic-Databricks\src\setup\deployResources.ps1 cannot be loaded because running scripts is disabled on this.
-```
-> if you get the error module is not found, and if Powershell ISE is not able to recognize any specific Powershell command, then Install the Powershell Az Module. [Instructions](https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.4.0)
-``` cmd
-Install-Module  Az
-```
-
-![PowershellScreen](docs/images/PowershellScreen.jpg)
-
-Post successful execution of the script, we can see the resources created successfully in the Azure Subscription.
-
-![AzureResources](docs/images/AzureResources.JPG)
-
-
-## Section 3: Databricks cluster creation
-
-![map03](docs/images/map03.png)
-
-1. To create the databricks cluster we need to have personal Access token created. Go to the Databricks workspace, and get the personal access token from the user setting, and save it in the file src/setup/vault/DBKtoken.txt
-
-![DatabricksTokenGeneration](docs/images/DatabricksTokenGeneration.jpg)
-
-2. Run the following command
-
-``` cmd
-cd "C:\Users\projects\New folder\MLOpsBasic-Databricks\src\setup"
- 
-.\configureResources.ps1
-```
-
-3. At the end of the script execution, we will be able to see the databricks cluster has been created successfully.the config file: src\setup\util\DBCluster-Configuration.json is being used to create the cluster.
-
-![SuccessfulClusterCreation](docs/images/SuccessfulClusterCreation.JPG)
-
-4. Copy the output of the script and paste it to the .env file which we had created previously. Please note that the values of the variables will be different as per your environment configuration. the later section (Section 4) describes the creation of .env file in detail.
-
-![OutputOfTheConfigurationStep](docs/images/OutputOfTheConfigurationStep.jpg)
-
-## Section 4: Create the .env file
+## Create the .env file
 
 ![map04](docs/images/map04.png)
 
@@ -440,4 +449,14 @@ Post running the script, we will be able to see the data in the terminal.
 
 ![final](docs/images/final.jpg)
 
+---
+---
+# Apendix
+
 [^1]: Test
+[^2]: <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png"> <br>
+[^3]: <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png"> <br>
+[^4]: <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png"> <br>
+[^5]: <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png"> <br>
+[^6]: https://microsofteur.sharepoint.com/teams/MCSMLAISolutionAccelerators/SitePages/Contribution-Guide--How-can-I-contribute-my-work-.aspx?xsdata=MDV8MDF8fDdiODIxYzQxNjQ5NDRlMDQzNWZkMDhkYTc1NmIwMjJlfDcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3fDB8MHw2Mzc5NTEzOTk2ODQ4Nzk4Njl8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxNVGs2YldWbGRHbHVaMTlPZWxWNlQwUkpNbGw2VVhST01rVjVXbE13TUZscWFHeE1WMGw0VGxSbmRGcFVWbTFOUkUxNFRtMUpOVTFVVVhsQWRHaHlaV0ZrTG5ZeXx8&sdata=QVcvTGVXVWlUelZ3R2p6MS9BTTVHT0JTWWFDYXBFZW9MMDRuZ0RWYTUxRT0%3D&ovuser=72f988bf-86f1-41af-91ab-2d7cd011db47%2Cciaranh%40microsoft.com&OR=Teams-HL&CT=1660511292416&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjA3MzEwMTAwNSIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D#sst-flow
+
