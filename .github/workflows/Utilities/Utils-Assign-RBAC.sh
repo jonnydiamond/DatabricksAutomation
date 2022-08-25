@@ -21,7 +21,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     }
     ROLES_ARRAY=$(_jq '.roles')
     echo $ROLES_ARRAY
-    KEYS=$(("$ROLES_ARRAY" | jq -r '@sh')| tr -d \') 
+    KEYS=$(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -d \') 
     echo $KEYS
 
 done
