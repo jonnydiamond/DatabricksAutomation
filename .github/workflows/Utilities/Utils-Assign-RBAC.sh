@@ -25,11 +25,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     #echo $roleBeneficiaryObjID
     #echo $principalType
 
-    for i in "${role_array[@]}"; do
-        echo "$i"
-        #echo $roleBeneficiaryObjID
-        #echo $principalType
-    done
+    for new in ${role_array[@]}; do echo $new done
     
     #az role assignment create \
     #--role "$(_jq '.role')" \
