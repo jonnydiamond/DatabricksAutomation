@@ -10,7 +10,7 @@
 
 # About This Repository
 
-This Repository contains an Azure Databricks development framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+This Repository contains an Azure Databricks Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
 | Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
 | ---------------- |:-------------------:| ----------------------:| ----------------------:|
@@ -36,22 +36,23 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Example Model file which uses the Framework end to end.
+- Example Model file which uses the Development Framework fro end to end.
 
 ---
 
 # Databricks as Infrastructure
 
-There are many ways that a User may create Jobs, Notebooks, upload files to Databricks DBFS, Create Clusters etc. For example, they may interact   with Databricks API/CLI from:
-1. Local VSCode
-2. Within Databricks UI 
-3. Yaml Pipeline on DevOps Agent (Github Actions/Azure DevOps etc.)
+There are many ways that a User may create Databricks Jobs, Notebooks, Clusters, Secret Scopes, file uploads to DBFS and Clusters etc.
+For example, they may interact with Databricks API/CLI from:
+1. Their local VS Code;
+2. Within Databricks UI; or 
+3. A Yaml Pipeline deployment on a DevOps Agent (Github Actions/Azure DevOps etc.)
  
 The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuos Development", as opposed to Continuos _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
-When intereacting with the Databricks API to interact with the Databricks API, we believe that Jobs, Cluster creation etc. should come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
+When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
 
-As such, all Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
+All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to this parameters file, and consistently deploy objects listed therein, using Bash Steps contained within the Yaml Pipeline. 
 
 This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
@@ -61,7 +62,7 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
  
 It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will build out of the box, and is a Trunk Based Branching Strategy. (Go into more detail)
+The Branching Strategy will be built out of the box when we redploy our resources in later step. It follows a Trunk Based Branching Strategy paradigm to promote rapid Continuous Integration, therefore it alligns closely to the Github Flow with certain nuances. [^6] (Go into more detail)
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
@@ -449,4 +450,5 @@ Post running the script, we will be able to see the data in the terminal.
 [^3]: <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png"> <br>
 [^4]: <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png"> <br>
 [^5]: <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png"> <br>
+[^6]: https://microsofteur.sharepoint.com/teams/MCSMLAISolutionAccelerators/SitePages/Contribution-Guide--How-can-I-contribute-my-work-.aspx?xsdata=MDV8MDF8fDdiODIxYzQxNjQ5NDRlMDQzNWZkMDhkYTc1NmIwMjJlfDcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3fDB8MHw2Mzc5NTEzOTk2ODQ4Nzk4Njl8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxNVGs2YldWbGRHbHVaMTlPZWxWNlQwUkpNbGw2VVhST01rVjVXbE13TUZscWFHeE1WMGw0VGxSbmRGcFVWbTFOUkUxNFRtMUpOVTFVVVhsQWRHaHlaV0ZrTG5ZeXx8&sdata=QVcvTGVXVWlUelZ3R2p6MS9BTTVHT0JTWWFDYXBFZW9MMDRuZ0RWYTUxRT0%3D&ovuser=72f988bf-86f1-41af-91ab-2d7cd011db47%2Cciaranh%40microsoft.com&OR=Teams-HL&CT=1660511292416&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjA3MzEwMTAwNSIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D#sst-flow
 
