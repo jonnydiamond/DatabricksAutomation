@@ -17,11 +17,23 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
     }
-    az role assignment create \
-    --role "$(_jq '.role')" \
-    --assignee-object-id $(_jq '.roleBeneficiaryObjID') \
-    --assignee-principal-type "$(_jq '.principalType')" \
-    --scope "$RESOURCE_GROUP_ID"
+
+    role_array=$(_jq '.roles')
+    roleBeneficiaryObjID=$(_jq '.roleBeneficiaryObjID')
+    principalType=$(_jq '.principalType')
+
+    for i in "${role_array[@]}"
+    do
+        echo "$i"
+        echo $roleBeneficiaryObjID
+        echo $principalType
+    done
+    
+    #az role assignment create \
+    #--role "$(_jq '.role')" \
+    #--assignee-object-id $(_jq '.roleBeneficiaryObjID') \
+    #--assignee-principal-type "$(_jq '.principalType')" \
+    #--scope "$RESOURCE_GROUP_ID"
     #--scope "$(_jq '.scope')"
 done
 

@@ -32,7 +32,10 @@
 			"titleBar.inactiveBackground": "#93fcdc99",
 			"titleBar.inactiveForeground": "#15202b99"
 		},
-		"peacock.remoteColor": "#93fcdc"
+		"peacock.remoteColor": "#93fcdc",
+		"githubPullRequests.ignoredPullRequestBranches": [
+			"main"
+		]
 	},
 	"extensions": {
 		"recommendations": [
