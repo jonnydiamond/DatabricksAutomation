@@ -25,7 +25,8 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     echo "Array size: " ${#TEST[@]}
     echo "Array elements: "${TEST[@]}
 
-    declare -A KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -s \' \"))
+    declare -a KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -s \' \"))
+    echo $KEYS
     echo "Array size: " ${#KEYS[@]}
     echo "Array elements: "${KEYS[@]}
     for ROLE in "${KEYS[@]}"; do
