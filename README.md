@@ -51,7 +51,7 @@ The programmatic way for which options 1 & 2 allow us to interact the Databricks
  
 When intereacting with the Databricks API to interact with the Databricks API, we believe that Jobs, Cluster creation etc. should come within the realm of "Infrastructure". We must then find a way to enshrine this Infrastructure _as code_ so that it can consistently be redployed in a Continuous Deployment framework as it cascades across environments. 
 
-As such, all Databricks related infrastrucutre will sit within an environment parameter file, [here](##Json-File) alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
+As such, all Databricks related infrastrucutre will sit within an environment parameter file [here](## Json-File), alongside all other infrastructure parameters. The Yaml Pipeline will therefore point to this parameters file, and consistently deploy objects listed therein, using Bash Steps in the Yaml Pipeline. 
 
 This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
