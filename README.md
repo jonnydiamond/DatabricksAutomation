@@ -163,16 +163,16 @@ az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scope
 
 Why: For those who only need permissions to create resources and intereact with the Databricks API.
 Steps:
-1. Open the Terminal Window in VSCode. Enter: [^2]
+1. Open the Terminal Window in VSCode. Enter (copy output to a text file): [^2]
 ```bash 
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --query "{ARM_TENANT_ID:tenant, ARM_CLIENT_ID:appId, ARM_CLIENT_SECRET:password}"
 ```
 2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1 [^3] 
-3. In VS Code Terminal retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
+3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step (copy output to a text file):  
 ```bash 
 az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
 ```
-4. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  
+4. In VSCode Terminal Retrieve your own ObectID (copy output to a text file):  
 ```bash
 az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:objectId}"
 ```
