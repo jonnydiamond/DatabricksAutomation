@@ -36,7 +36,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo "Principal Type $(_jq '.principalType')"
 
         az role assignment create \
-        --role "$role" \
+        --role "$ROLE" \
         --assignee-object-id $(_jq '.roleBeneficiaryObjID') \
         --assignee-principal-type "$(_jq '.principalType')" \
         --scope "$RESOURCE_GROUP_ID"
