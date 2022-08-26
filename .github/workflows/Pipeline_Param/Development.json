@@ -11,7 +11,7 @@
     "RBAC_Assignments": [
         {
             "roles": [ 
-                "Key_Vault_Administrator"
+                "Key Vault Administrator"
             ],
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
             "Description": "You Object ID",
