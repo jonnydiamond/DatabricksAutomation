@@ -114,7 +114,7 @@ The Branching Strategy will be built out of the box when we redploy our resource
 
 # Create Databricks Custom Role On DBX SPN
 <details close>
-<summary>Click Dropdown... </summary>
+<summary>Option To Create In Portal. Drop Down... </summary>
 <br>
 1. Open IAM at Subscription Level and navigate to creating a Custom Role (as shown below)  
 <img width="1022" alt="image" src="https://user-images.githubusercontent.com/108273509/186198305-a28acbf2-fe97-4805-b069-a339fb475894.png">
