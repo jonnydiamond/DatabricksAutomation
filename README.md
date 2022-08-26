@@ -206,30 +206,24 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
     "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
     "RBAC_Assignments": [           # RBAC Assignments. You Can Add Or Remove As You See Fit. Ingested Into Utils-Assign-RBAC.sh 
         {
-            "role":"Key Vault Administrator", 
+            "roles": [
+                "Key Vault Administrator"
+             ],
             "roleBeneficiaryObjID": "<>"        # Your ObjectID Saved In Text File
             "Description": "You Object ID",
             "principalType": "User"
         },
         { 
-            "role":"Key Vault Administrator",
+            "roles": [
+                "Key Vault Administrator",
+                 "Contributor",
+                 "DBX_Custom_Role"
+             ],    
             "roleBeneficiaryObjID": "<>"         # Databricks_API_SP ObjectID Saved In Text File
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
+        },
 
-        },
-        {
-            "role":"Contributor", 
-            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
-            "Description": "Databricks SPN",
-            "principalType": "ServicePrincipal"
-        },
-        {
-            "role": "DBX_Custom_Role", 
-            "roleBeneficiaryObjID":  "<>"         # Databricks_API_SP ObjectID Saved In Text File
-            "Description": "Databricks SPN",
-            "principalType": "ServicePrincipal"
-        }
     ],
     "Clusters": [                       #  Cluster Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Cluster.sh 
         {
