@@ -140,7 +140,7 @@ Why: You will need to assign RBAC permissions to Azure Resources created on the 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
 ```bash
-az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> 
 ```
   2. Do Not Delete Output (required in Next Step) [^4]
   3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
@@ -151,20 +151,16 @@ Why: For those who only need permissions to create resources and intereact with 
 Steps:
 1. Open the Terminal Window in VSCode. Enter: [^2]
 ```bash 
-az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth 
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --query "{ARM_TENANT_ID:tenant, ARM_CLIENT_ID:appId, ARM_CLIENT_SECRET:password}"
 ```
 2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1 [^3] 
-3. Using the ClientID (contained within output in step 1), open the VSCode Terminal and retrieve the ApplicationID of Databricks Service Principal by entering (copy to text file): 
-```bash
-az ad sp show --id <insert_SP_ClientID> --query appId -o tsv 
-```
-4. In VS Code Terminal retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
+3. In VS Code Terminal retrieve ApplicationID of Databricks Service Principal by entering  (copy to text file):  
 ```bash 
-az ad sp show --id <insert_SP_ClientID> --query objectId -o tsv 
+az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
 ```
-5. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  
+4. In VSCode Terminal Retrieve your own ObectID by entering  (copy to text file):  
 ```bash
-az ad user show --id ciaranh@microsoft.com --query objectId 
+az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:objectId}"
 ```
 
 # Final Snapshot of Github Secrets
