@@ -70,7 +70,7 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
  
 It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will be built out of the box when we redploy our resources in later step. It follows a Trunk Based Branching Strategy paradigm to promote rapid Continuous Integration, therefore it alligns closely to the Github Flow with certain nuances. [^6] (Go into more detail)
+The Branching Strategy will be built out of the box when we dploy our resources in later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
