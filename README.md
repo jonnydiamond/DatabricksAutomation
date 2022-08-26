@@ -117,7 +117,7 @@ The Branching Strategy will be built out of the box when we redploy our resource
 - Copy and paste into VS Code Terminal (Powershell)
 ```powershell
 $subid = "4f1bc772-7792-4285-99d9-3463b8d7f994" 
-$custom_role_name = "DBX_Custom_Role_TEST"
+$custom_role_name = "DBX_Custom_Role"
 
 $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
 $a = Get-Content '.github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json' -raw | ConvertFrom-Json
