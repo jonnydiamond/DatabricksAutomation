@@ -122,7 +122,7 @@ $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
 $a = Get-Content '.github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json' -raw | ConvertFrom-Json
 $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json" 
 $a.Name = "$custom_role_name"
-$a.assignableScopes = "/subscriptions/$subid"
+$a.assignableScopes = ["/subscriptions/$subid"]
 $a | ConvertTo-Json | set-content $pathToJson
 az role definition create --role-definition ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json" 
 ```
