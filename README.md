@@ -291,7 +291,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation", # Change To Your Own Repository
             "provider": "gitHub",
-            "path": "DevelopmentFolder"            # Create Folders As You See Fit. This Example Will Create /Repos/<userfolder>/DevelopmentFolder in DBX Instance
+            "path": "DevelopmentFolder"            
         }
     ]
 }
