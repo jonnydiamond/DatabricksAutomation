@@ -44,7 +44,7 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 - Logging Framework using the [Opensensus Azure Monitor Exporters](https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure)
 - Support for Databricks Development from VS Code IDE using the [Databricks Connect](https://docs.microsoft.com/en-us/azure/databricks/dev-tools/databricks-connect#visual-studio-code) feature.
 - Continuous Development with [Python Local Packaging](https://packaging.python.org/tutorials/packaging-projects/)
-- Example Model file which uses the Development Framework fro end to end.
+- Example model file which uses the Development Framework from end to end.
 
 ---
 
@@ -190,7 +190,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 - Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
 - Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
 - The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
-- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognisant that it is far superior to use alias names.
+- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognizant that it is far superior to use alias names.
 
 ```json
 
@@ -204,7 +204,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
     "TemplateFilePath":"Infrastructure/DBX_CICD_Deployment/Main_DBX_CICD.bicep",
     "AZURE_DATABRICKS_APP_ID": "2ff814a6-3304-4ab8-85cb-cd0e6f879c1d",
     "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
-    "RBAC_Assignments": [           # RBAC Assignments. You Can Add Or Remove As You See Fit. Ingested Into Utils-Assign-RBAC.sh 
+    "RBAC_Assignments": [          
         {
             "roles": [
                 "Key Vault Administrator"
@@ -225,7 +225,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
         },
 
     ],
-    "Clusters": [                       #  Cluster Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Cluster.sh 
+    "Clusters": [                       
         {
             "cluster_name": "dbx-sp-cluster",
             "spark_version": "10.4.x-scala2.12",
@@ -251,14 +251,14 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
             }
         }
     ],
-    "WheelFiles": [                        #  Wheel File Creation. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Wheels-DBFS-Cluster-Upload.sh
+    "WheelFiles": [                      
             {
                 "setup_py_file_path": "src/pipelines/dbkframework/setup.py",
                 "wheel_cluster": "dbx-sp-cluster",
                 "upload_to_cluster?": true
             }
     ],
-    "Jobs": [                               # To Do
+    "Jobs": [                                   # To Do
         {
             "name": "job_remote_analysis",
             "settings": {
@@ -281,13 +281,13 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
             }
         }
     ],
-    "Git_Configuration": [                        #  Git Configure Your DBX Env. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+    "Git_Configuration": [                        
         {
             "git_username": "ciaran28",           # Uppdate With Your Github Username 
             "git_provider": "gitHub"
         }
     ],
-    "Repo_Configuration": [                        #  Create Folders in DBX Repos. You Can Add Or Remove As You See Fit. Ingested Into Utils-Create-Repo-Folders.sh
+    "Repo_Configuration": [                        
         {
             "url": "https://github.com/ciaran28/DatabricksAutomation", # Change To Your Own Repository
             "provider": "gitHub",
@@ -335,7 +335,7 @@ In the previous section, we interacted with Databricks API from the DevOps Agent
 
 But what if we wish to interact with the Databricks environemnt from our local VS Code? In order to do this we can use "Databricks Connect".
 
-Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds a Linux environment, and deals with all of the environment variables and path dependencies out of the box. 
+Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds containerized Linux environment, dealing with all of the environment variables and path dependencies out of the box. 
 
 # Steps
 
