@@ -167,7 +167,7 @@ Steps:
 ```bash 
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --query "{ARM_TENANT_ID:tenant, ARM_CLIENT_ID:appId, ARM_CLIENT_SECRET:password}"
 ```
-2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1 [^3] 
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. Also save the values in text file for later [^3] 
 3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step (copy output to a text file):  
 ```bash 
 az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
@@ -195,7 +195,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 ```json
 
 {
-    "dbxSPNAppID": "<>",                      # Databricks_API_SP ObjectID Saved In Text File
+    "dbxSPNAppID": "<>",                      # This is the ARM_CLIENT_ID (previous sections)
     "SubscriptionId": "<>",                   # Enter Your SubID
     
 
