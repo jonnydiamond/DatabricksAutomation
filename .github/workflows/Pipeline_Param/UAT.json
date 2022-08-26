@@ -9,26 +9,19 @@
     "MANAGEMENT_RESOURCE_ENDPOINT": "https://management.core.windows.net/",
     "RBAC_Assignments": [
         {
-            "role":"Key Vault Administrator", 
+            "roles": [ 
+                "Key Vault Administrator"
+            ],
             "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
             "Description": "You Object ID",
             "principalType": "User"
         },
-        { 
-            "role":"Key Vault Administrator",
-            "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
-            "Description": "Databricks SPN",
-            "principalType": "ServicePrincipal"
-
-        },
         {
-            "role":"Contributor", 
-            "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
-            "Description": "Databricks SPN",
-            "principalType": "ServicePrincipal"
-        },
-        {
-            "role": "DBX_Custom_Role", 
+            "roles": [
+                "Contributor", 
+                "DBX_Custom_Role",
+                "Key Vault Administrator"
+            ],
             "roleBeneficiaryObjID":"4987b1f2-2b3a-4aa6-abe6-7ae617ff642a",
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
