@@ -4,7 +4,7 @@ echo "ClientID: $ARM_CLIENT_ID"
 echo "Client Secret: $ARM_CLIENT_SECRET"
 echo "Tenant ID: $ARM_TENANT_ID"
 
-echo "Logging in using Azure service priciple"
+echo "Logging in using Azure service principal"
 az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
 ### Remove This In Time
