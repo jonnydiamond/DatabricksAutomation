@@ -60,7 +60,7 @@ The programmatic way for which options 1 & 2 allow us to interact the Databricks
  
 When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
 
-All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to this parameters file, and consistently deploy objects listed therein, using Bash Steps contained within the Yaml Pipeline. 
+All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to multiple Bash Scripts (contained within .github/workflows/Utilities ). Each Bash script will ingest the appropriate environment parameter file for deploying Azure resources, or Azure Databrick API calls. 
 
 This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
@@ -68,9 +68,9 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
 
  # Continuous Deployment + Branching Strategy
  
-It is hard to talk about Continuous Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
+It is hard to talk about Continuous Deployment without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will be built out of the box when we dploy our resources in later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
+The Branching Strategy will be built out of the box when we dploy our resources in a later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
@@ -106,7 +106,7 @@ The Branching Strategy will be built out of the box when we dploy our resources 
 - Databricks CLI in Bash
 - Databricks API using Python SDK 
 - Yaml Pipelines in Github Actions
-- Filter API Responses using JQuery (Bash)
+- Docker Environment in VS Code
   
 </details>
 
