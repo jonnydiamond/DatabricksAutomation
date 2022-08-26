@@ -124,7 +124,6 @@ $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
 $a.Name = "$custom_role_name"
 $a.assignableScopes = "$subid"
 $a | ConvertTo-Json | set-content $pathToJson
-
 az role definition create --role-definition ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json" 
 ```
 
