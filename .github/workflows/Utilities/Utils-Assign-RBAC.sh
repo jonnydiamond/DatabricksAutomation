@@ -30,17 +30,17 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     for val in $TEST; do
         role=$( echo $val | xargs )
         
-        echo "Role"
-        echo "$role"
+        echo "Role: $role"
+        echo "ObjectID $(_jq '.roleBeneficiaryObjID')"
+        echo "Scope: $RESOURCE_GROUP_ID"
+        echo "Principal Type $(_jq '.principalType')"
 
-        echo "ObjectID"
-        echo "$(_jq '.roleBeneficiaryObjID')"
-
-        echo "Scope"
-        echo "$RESOURCE_GROUP_ID"
-
-        echo "Principal Type"
-        echo "$(_jq '.principalType')"
+        az role assignment create \
+        --role "$role" \
+        --assignee-object-id $(_jq '.roleBeneficiaryObjID') \
+        --assignee-principal-type "$(_jq '.principalType')" \
+        --scope "$RESOURCE_GROUP_ID"
+        #--scope "$(_jq '.scope')"
 
     done    
     IFS=$Field_Separator
