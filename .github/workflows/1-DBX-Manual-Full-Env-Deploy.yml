@@ -52,12 +52,10 @@ jobs:
             filename:           'Infrastructure/DBX_CICD_Deployment/Bicep_Params/${{ matrix.environments }}/Bicep.parameters.json'
             prefix:             param
 
-
-
-        #- name:                 Deploy DBX CICD Azure Resources
-        #  run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
-        #  env:
-        #    environment:        ${{ matrix.environments }}
+        - name:                 Deploy DBX CICD Azure Resources
+          run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
+          env:
+            environment:        ${{ matrix.environments }}
 
 
         - name:                 Assign RBAC Permissions 
