@@ -25,7 +25,7 @@ This Repository contains an Azure Databricks Development Framework for deliverin
 
 ---
 
-Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
+  Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
 
 The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
 
@@ -56,7 +56,7 @@ For example, they may interact with Databricks API/CLI from:
 2. Within Databricks UI; or 
 3. A Yaml Pipeline deployment on a DevOps Agent (Github Actions/Azure DevOps etc.)
  
-The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuos Development", as opposed to Continuos _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuous Development", as opposed to Continuous _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
 When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
 
@@ -68,7 +68,7 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
 
  # Continuous Deployment + Branching Strategy
  
-It is hard to talk about Continuos Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
+It is hard to talk about Continuous Deployment credibly without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
 The Branching Strategy will be built out of the box when we dploy our resources in later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
 
