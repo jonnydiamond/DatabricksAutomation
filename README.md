@@ -115,7 +115,7 @@ The Branching Strategy will be built out of the box when we redploy our resource
 # Create Databricks Custom Role On DBX SPN
 
 ```
-$subid = "<insert>" 
+$subid = "4f1bc772-7792-4285-99d9-3463b8d7f994" 
 $custom_role_name = "DBX_Custom_Role"
 
 $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
