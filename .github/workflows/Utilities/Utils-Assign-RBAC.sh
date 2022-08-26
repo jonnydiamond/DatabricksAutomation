@@ -13,8 +13,6 @@ json=$( jq '.' .github/workflows/Pipeline_Param/$environment.json)
 echo "${json}" | jq
 
 
-
-
 for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     _jq() {
         echo ${row} | base64 --decode | jq -r ${1}
@@ -25,7 +23,7 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
     # Before: [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
     # xargs trims whitespace on either side. -n removes newline characters
     TEST=$( echo $ROLES_ARRAY | jq -r | tr -d "[]" | tr -d \'\" | xargs echo -n )
-    # After: "Contributor", "DBX_Custom_Role", "Key Vault Administrator"
+    # After: Contributor, DBX_Custom_Role, Key Vault Administrator
     echo $TEST
     Field_Separator=$IFS
     IFS=,
@@ -44,18 +42,8 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
         echo "Principal Type"
         echo "$(_jq '.principalType')"
 
-    done
-    
+    done    
     IFS=$Field_Separator
-
-
-    #declare -a KEYS=($(( echo "$ROLES_ARRAY" | jq -r '@sh')| tr -d \'\"))
-    #echo $KEYS
-    #echo "Array size: " ${#KEYS[@]}
-    #echo "Array elements: "${KEYS[@]}
-    #for ROLE in "${KEYS[@]}"; do
-    #    echo $ROLE 
-    #done
 done
 
 
