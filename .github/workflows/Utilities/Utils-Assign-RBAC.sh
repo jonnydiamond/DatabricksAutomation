@@ -22,15 +22,15 @@ for row in $(echo "${json}" | jq -r '.RBAC_Assignments[] | @base64'); do
 
     # Before: [ "Contributor", "DBX_Custom_Role", "Key Vault Administrator" ]
     # xargs trims whitespace on either side. -n removes newline characters
-    TEST=$( echo $ROLES_ARRAY | jq -r | tr -d "[]" | tr -d \'\" | xargs echo -n )
+    ROLES_ARRAY_PARSED=$( echo $ROLES_ARRAY | jq -r | tr -d "[]" | tr -d \'\" | xargs echo -n )
     # After: Contributor, DBX_Custom_Role, Key Vault Administrator
-    echo $TEST
+    echo $ROLES_ARRAY_PARSED
     Field_Separator=$IFS
     IFS=,
-    for val in $TEST; do
-        role=$( echo $val | xargs )
+    for ROLE in $ROLES_ARRAY_PARSED; do
+        ROLE=$( echo $ROLE | xargs )
         
-        echo "Role: $role"
+        echo "Role: $ROLE"
         echo "ObjectID $(_jq '.roleBeneficiaryObjID')"
         echo "Scope: $RESOURCE_GROUP_ID"
         echo "Principal Type $(_jq '.principalType')"
