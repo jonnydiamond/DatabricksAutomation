@@ -103,6 +103,7 @@ The Branching Strategy will be built out of the box when we dploy our resources 
 <br>
   
 - Authenticate to Databricks API/CLI using Azure Service Principal Authentication
+- Azure resource deployment in BICEP
 - Databricks API in Bash
 - Databricks CLI in Bash
 - Databricks API using Python SDK 
