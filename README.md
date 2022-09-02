@@ -112,6 +112,10 @@ The Branching Strategy will be built out of the box when we dploy our resources 
 </details>
 
 ---
+# Clone Repository
+
+- Within VS Code clone this repository ( TO DO: Provide instructions)
+---
 
 # Create Databricks Custom Role On DBX SPN
 
