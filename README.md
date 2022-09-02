@@ -325,6 +325,11 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
   - .github\workflows\1-DBX-Manual-Full-Env-Deploy.yml
 
 <img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
+  
+- Azure Resources created (Production Environment snapshot)
+  
+<img width="637" alt="image" src="https://user-images.githubusercontent.com/108273509/188148485-86509546-bdd1-413d-b0b3-35f34d2e1722.png">
+
 
 ---
 # Run Python Scripts
