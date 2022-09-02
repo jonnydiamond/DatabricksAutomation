@@ -122,7 +122,7 @@ The Branching Strategy will be built out of the box when we deploy our resources
 
 ---
 
-# Create Databricks Custom Role On DBX SPN
+# Create Databricks Custom Role (assigned to Databricks Service Principal Later)
 
 - Copy and paste into VS Code Terminal (Powershell)
 ```powershell
@@ -172,9 +172,9 @@ az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scope
 
 ---
 
-# Create Databricks SPN
+# Create Databricks Service Principal
 
-**Why**: For those who only need permissions to create resources and interact with the Databricks API.
+**Why**: For those who only need permissions to create resources and interact with the Databricks API (zero trust).
 Steps:
 1. Open the Terminal Window in VSCode. Enter (copy output to a text file): [^2]
 ```bash 
