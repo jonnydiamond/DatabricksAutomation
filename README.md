@@ -191,7 +191,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 ---
 # Update Yaml Pipeline Parameters Files
 
-- Now to update the Parameters File with amendments below. Do it for each environment. 
+- Now to update the Parameters File with amendments below. Do it for each environment WITHIN VS CODE. 
 - Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
 - Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
 - The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
@@ -317,7 +317,9 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 # Deploy The Azure Environments 
 
-- In Github you can manually run the pipeline to deploy the evironments to Azure
+- Git add, commit and then push to the remote repo from your local VS Code
+- In Github you can manually run the pipeline to deploy the evironments to Azure using:
+  - .github\workflows\1-DBX-Manual-Full-Env-Deploy.yml
 
 <img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
 
