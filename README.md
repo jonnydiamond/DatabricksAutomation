@@ -19,14 +19,14 @@
 
 # About This Repository
 
-This Repository contains an Azure Databricks Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+This Repository contains an Azure Databricks Continuous Deployment _and_ Continuous Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
 | Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
 | ---------------- |:-------------------:| ----------------------:| ----------------------:|
 
 ---
 
-  Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
+ Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
 
 The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
 
