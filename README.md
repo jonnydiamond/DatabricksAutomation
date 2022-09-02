@@ -60,7 +60,7 @@ For example, they may interact with Databricks API/CLI from:
  
 The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to "Continuous **Development**", as opposed to "Continuous **Deployment**". The former is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
 
-In a nutshell Continuous **Delivery** is a partly manual process where developers can deploy any changes to customers by simply clicking a button, while continuous **Deployment** emphasizes automating the entire the process.
+In a nutshell Continuous **Delivery** is a partly manual process where developers can deploy any changes to customers by simply clicking a button, while continuous **Deployment** emphasizes automating the entire process.
  
 When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redeployed in a Continuous **Deployment** framework as it cascades across environments. 
 
