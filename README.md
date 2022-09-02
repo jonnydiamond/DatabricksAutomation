@@ -21,12 +21,14 @@
 
 This Repository contains an Azure Databricks Continuous Deployment _and_ Continuous Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
 
+---
+
 | Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
 | ---------------- |:-------------------:| ----------------------:| ----------------------:|
 
 ---
 
- Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
+Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
 
 The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
 
@@ -34,7 +36,7 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 
 # Details of The Accelerator
 
-- Creation of four environments
+- Creation of four environments:
   - Development 
   - UAT
   - PreProduction
@@ -72,7 +74,7 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
  
 It is hard to talk about Continuous Deployment without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will be built out of the box when we deploy our resources in a later step. It follows a Github Flow paradigm to promote rapid Continuous Integration, with some nuances. (see link within footnote) [^6] 
+The Branching Strategy will be built out of the box when we deploy our resources in a later step. It follows a Github Flow paradigm to promote rapid Continuous Integration, with some nuances. (see link within footnote which contains SST Git Flow for Data Science Toolkit) [^6] 
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
@@ -80,7 +82,8 @@ The Branching Strategy will be built out of the box when we deploy our resources
 -   Merge Request from Main Branch To Release Branch: Deploy to UAT environment
 -   Merge Request Approval from Main Branch to Release Branch: Deploy to PreProduction environment
 -   Tag Release Branch with Stable Version: Deploy to Production environment 
- 
+
+---
 
 # Prerequisites
 <details close>
@@ -89,8 +92,6 @@ The Branching Strategy will be built out of the box when we deploy our resources
   
 - Github Account
 - Access to an Azure Subscription
-- Service Principal With Ownership RBAC permissions assigned. (Instructions below)
-- Service Principal with Databricks Custom Role Permissions. (Instructions below)
 - VS Code installed.
 - Docker Desktop Installed (Instructions below)
   
@@ -104,12 +105,12 @@ The Branching Strategy will be built out of the box when we deploy our resources
 <br>
   
 - Authenticate to Databricks API/CLI using Azure Service Principal Authentication
+- Yaml Pipelines in Github Actions
 - Azure resource deployment in BICEP
 - Databricks API in Bash
 - Databricks CLI in Bash
-- Databricks API using Python SDK 
-- Yaml Pipelines in Github Actions
-- Docker Environment in VS Code
+- Databricks API using Python SDK (Section 2)
+- Docker Environment in VS Code (Section 2)
   
 </details>
 
@@ -199,11 +200,15 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 ---
 # Update Yaml Pipeline Parameters Files
 
-- Now to update the Parameters File with amendments below. Do it for each environment WITHIN VS CODE. 
+- The Parameters file can be thought of as a quasi ARM Template for Databricks
+  - Important: Databricks API is not native to ARM and thus BICEP. This is a distinct disadvantage relative to Terraform which allows us to configure Databricks Workspaces and for example, Clusters, in the same place.
+  - BICEP/ARM does not rely upon a state file deployment and also deploys resources incrementally, which is more effecient
+  - There may be a lag between new feauture releases and Terraform updates. 
+  - On balance, it was felt that BICEP wins out for this Azure specific deployment. However, I do recognise Terraform is a serious contender offering many advantages.
+- Now to update the Parameters files with the amendments below. Do it for each environment within _VS Code_ . 
 - Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
-- Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
 - The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
-- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognizant that it is far superior to use alias names.
+- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead.
 
 ```json
 
@@ -270,7 +275,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
                 "upload_to_cluster?": true
             }
     ],
-    "Jobs": [                                   # To Do
+    "Jobs": [                                   # Ignore. Still to Do
         {
             "name": "job_remote_analysis",
             "settings": {
@@ -310,15 +315,6 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 
 ```
-
-
-
-
-
-
-
-
-
 
 ---
 
