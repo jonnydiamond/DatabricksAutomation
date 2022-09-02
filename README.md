@@ -35,7 +35,6 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 
 # Details of The Accelerator
 
-![overview](docs/images/Overview.JPG)
 - Creation of four environments
   - Development 
   - UAT
@@ -60,7 +59,7 @@ For example, they may interact with Databricks API/CLI from:
  
 The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuous Development", as opposed to Continuous _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
  
-When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
+When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redeployed in a Continuous Deployment framework as it cascades across environments. 
 
 All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to multiple Bash Scripts (contained within .github/workflows/Utilities ). Each Bash script will ingest the appropriate environment parameter file for deploying Azure resources, or Azure Databrick API calls. 
 
@@ -72,14 +71,14 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
  
 It is hard to talk about Continuous Deployment without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will be built out of the box when we dploy our resources in a later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
+The Branching Strategy will be built out of the box when we dploy our resources in a later step. It follows a Github Flow paradigm to promote rapid Continuous Integration, with some nuances. (see link within footnote) [^6] 
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
--   Feature merge to Main: Deploy to Develop Environment 
--   Merge Request from Main To Release: Deploy to UAT
--   Merge Request Approval from Main to Release: Deploy to PreProduction
--   Tag Release Branch with Stable Version: Deploy to Production 
+-   Feature Branch merged to Main Branch: Resource deployment to development environment 
+-   Merge Request from Main Branch To Release Branch: Deploy to UAT environment
+-   Merge Request Approval from Main Branch to Release Branch: Deploy to PreProduction environment
+-   Tag Release Branch with Stable Version: Deploy to Production environment 
  
 
 # Prerequisites
