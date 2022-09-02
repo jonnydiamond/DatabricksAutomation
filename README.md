@@ -203,7 +203,6 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 ```json
 
 {
-    "dbxSPNAppID": "<>",                      # This is the ARM_CLIENT_ID (previous sections)
     "SubscriptionId": "<>",                   # Enter Your SubID
     
 
