@@ -62,7 +62,7 @@ The programmatic way for which options 1 & 2 allow us to interact the Databricks
 
 In a nutshell Continuous **Delivery** is a partly manual process where developers can deploy any changes to customers by simply clicking a button, while continuous **Deployment** emphasizes automating the entire process.
  
-When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redeployed in a Continuous **Deployment** framework as it cascades across environments. 
+When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Secret Scopes etc. should come within the realm of "Infrastructure", and as such, we must find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redeployed in a Continuous **Deployment** framework as it cascades across environments. 
 
 All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to multiple Bash Scripts (contained within .github/workflows/Utilities ). Each Bash script will ingest the appropriate environment parameter file for deploying Azure resources, or Azure Databrick API calls. 
 
@@ -159,7 +159,7 @@ az role definition create --role-definition ".github\workflows\RBAC_Role_Definit
 
 # Create Main Service Principal
 
-Why: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
+**Why**: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
@@ -167,25 +167,25 @@ Steps:
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth
 ```
   2. Do Not Delete Output (required in Next Step) [^4]
-  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
+  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 2 [^5] <br>
   4. For more information on '--sdk-auth' has been deprecated flag [^7] 
 
 ---
 
 # Create Databricks SPN
 
-Why: For those who only need permissions to create resources and intereact with the Databricks API.
+**Why**: For those who only need permissions to create resources and interact with the Databricks API.
 Steps:
 1. Open the Terminal Window in VSCode. Enter (copy output to a text file): [^2]
 ```bash 
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --query "{ARM_TENANT_ID:tenant, ARM_CLIENT_ID:appId, ARM_CLIENT_SECRET:password}"
 ```
-2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. Also save the values in text file for later [^3] 
-3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step (copy output to a text file):  
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. [^3] 
+3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step:  
 ```bash 
 az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
 ```
-4. In VSCode Terminal Retrieve your own ObectID (copy output to a text file):  
+4. In VSCode Terminal Retrieve your own ObectID:  
 ```bash
 az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:objectId}"
 ```
@@ -351,9 +351,9 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 In the previous section, we interacted with Databricks API from the DevOps Agent.
 
-But what if we wish to interact with the Databricks environemnt from our local VS Code? In order to do this we can use "Databricks Connect".
+But what if we wish to interact with the Databricks environment from our local VS Code? In order to do this we can use "Databricks Connect".
 
-Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds containerized Linux environment, dealing with all of the environment variables and path dependencies out of the box. 
+Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image which builds a containerized Linux environment within the VS Code Workspace, dealing with all of the environment variables and path dependencies out of the box. 
 
 # Steps
 
