@@ -30,7 +30,7 @@ This Repository contains an Azure Databricks Continuous Deployment _and_ Continu
 
 Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
 
-The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
+The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is to automate as much of the infrastructure as possible. [^1]
 
 ---
 
