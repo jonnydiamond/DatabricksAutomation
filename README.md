@@ -319,6 +319,10 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 # Deploy The Azure Environments 
 
+- Ensure that all bash '.sh' files within '.github\workflows\Utilities' have not defaulted to 'CRLF' EOL. Instead change this to LF. See the bottom right of VS Code.
+
+<img width="249" alt="image" src="https://user-images.githubusercontent.com/108273509/188154730-640ca196-bf69-4a2c-85e3-69f6bb24d52e.png">
+
 - Git add, commit and then push to the remote repo from your local VS Code
 - In Github you can manually run the pipeline to deploy the evironments to Azure using:
   - .github\workflows\1-DBX-Manual-Full-Env-Deploy.yml
