@@ -468,6 +468,7 @@ Post running the script, we will be able to see the data in the terminal.
 # Apendix
 
 [^1]: Test
+---
 [^2]: <img width="586" alt="image" src="https://user-images.githubusercontent.com/108273509/186402530-ac8b6962-daf9-4f58-a8a0-b7975d953388.png"> <br>
 [^3]: <img width="388" alt="image" src="https://user-images.githubusercontent.com/108273509/186403865-6cb2023e-2a44-44ef-b744-c56d232e235a.png"> <br>
 [^4]: <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png"> <br>
