@@ -333,16 +333,15 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
   
 <img width="637" alt="image" src="https://user-images.githubusercontent.com/108273509/188148485-86509546-bdd1-413d-b0b3-35f34d2e1722.png">
 
+- Snapshot of completed Github Action deployment 
+
+<img width="810" alt="image" src="https://user-images.githubusercontent.com/108273509/188155303-cfe07a79-0a9d-4a4d-a40a-dea6104b40f1.png">
+
+
 
 ---
 # Run Python Scripts
 
-- All the Azure Resources will be configured 
-  - Repos Git configured with folders created for each environment 
-  - Clusters created
-  - KeyVault created with PAT Token stored therein 
-  - Secret Scopes created with Application Insights Connection string and Service Principal Secrets stored. Given that the Service Principal has RBAC permissions (Key Vault Administrator + Databricks Custom Role+ Contributor), we can use the DBUtils functions _within_ the Databricks Instance to access secrets from KV and intereact with the Databricks API
-  - Wheel file creation, whereby .whl files are stored in DBFS, and uploaded to cluster (if boolean set to true in parameters file)
 <img width="752" alt="image" src="https://user-images.githubusercontent.com/108273509/186661417-403d58db-147e-4dd5-966a-868876fb2ee0.png">
 
 ---
