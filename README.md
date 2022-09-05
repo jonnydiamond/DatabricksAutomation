@@ -94,7 +94,7 @@ The Branching Strategy will be built out of the box when we deploy our resources
 - Access to an Azure Subscription
 - VS Code installed.
 - Docker Desktop Installed (Instructions below)
-  Azure CLI Installed (This Accelerator is tested on version 2.39)
+- Azure CLI Installed (This Accelerator is tested on version 2.39)
   
 </details>
 
