@@ -143,7 +143,8 @@ The Branching Strategy will be built out of the box when we deploy our resources
 
 - Copy and paste into VS Code Terminal (Powershell)
 ```powershell
-$subid = "<>"   # Update This To Your SubscriptionID
+# Update This To Your SubscriptionID
+$subid = "<>"  
 ```
 
 ```powershell
