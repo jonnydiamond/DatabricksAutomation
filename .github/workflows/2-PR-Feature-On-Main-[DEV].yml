@@ -57,7 +57,7 @@ jobs:
           with:
             filters: |
               workflows:
-                - 'Infrastructure/**'
+                - 'src/**'
 
         - name:                 Azure Login - ${{ matrix.environments }}
           uses:                 azure/login@v1
@@ -79,13 +79,14 @@ jobs:
         
         #Only run if file path !infra AND merging into main, then don't run this!
         - name:                 Deploy DBX CICD Azure Resources
-          if:                   steps.filter.outputs.workflows == 'true'
+          if:                   steps.filter.outputs.workflows != 'true'
           run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
           env:
             environment:        ${{ matrix.environments }}
 
 
-        - name:                 Assign RBAC Permissions 
+        - name:                 Assign RBAC Permissions
+          if:                   steps.filter.outputs.workflows != 'true'
           run:                  sh ./.github/workflows/Utilities/Utils-Assign-RBAC.sh
           env:
             environment:        ${{ matrix.environments }}
@@ -116,17 +117,19 @@ jobs:
           run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
 
 
-        - name:                 Create DBX Secret Scopes
+        - name:                 Create DBX Secret Scopes     
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
         
 
-        - name:                 Create DBX Clusters
+        - name:                 Create DBX Cluster
+          if:                   steps.filter.outputs.workflows != 'true'
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
           env:
             environment:        ${{ matrix.environments }}
 
 
         - name:                 Create DBX Repos
+          if:                   steps.filter.outputs.workflows != 'true'
           run:                  sh ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
@@ -137,8 +140,18 @@ jobs:
         - name:                   Install + Configure Databricks CLI
           run:                    bash ./.github/workflows/Utilities/Utils-DBX-CLI-Configure.sh
 
+        - run: |
+            echo "${{ github.head_ref }}"
+            echo "${{ github.base_ref }}"
+
+        - name:                 Update Test Repo In Test Environment (Main Branch)
+          run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
+          env:
+            BRANCH:          ${{ github.base_ref }} # Should Be Main
+            UPDATE_FOLDER:  'DevelopmentFolder'
 
         - name:                   Create Wheel Files & Upload To DBFS
+          if:                     steps.filter.outputs.workflows != 'true'
           run:                    bash ./.github/workflows/Utilities/Utils-Create-Wheels-DBFS-Cluster-Upload.sh
           env:
             environment:          ${{ matrix.environments }}
