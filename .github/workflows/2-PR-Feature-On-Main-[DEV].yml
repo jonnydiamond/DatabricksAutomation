@@ -57,6 +57,7 @@ jobs:
           with:
             filename:           '.github/workflows/Pipeline_Param/${{ matrix.environments }}.json'
             prefix:             param
+<<<<<<< HEAD
         
         - name:                 Store BICEP Param JSON File Variables As Environ VariablesStore JSON Param File Variables As Environ Variables
           uses:                 antifree/json-to-variables@v1.0.1
@@ -65,6 +66,10 @@ jobs:
             prefix:             param
         
         #Only run if file path !infra AND merging into main, then don't run this!
+=======
+
+        # Only run if file path !infra AND merging into main, then don't run this!
+>>>>>>> 7f165162e29938800dd1deb2569ba9323c749985
         - name:                 Deploy DBX CICD Azure Resources
           run:                  bash ./.github/workflows/Utilities/Utils-Azure-Resources.sh
           env:
@@ -117,6 +122,7 @@ jobs:
           env:
             environment:        ${{ matrix.environments }}
             PAT_GIT:            ${{ secrets.PAT_GIT }}
+            ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
 
 
         - name:                   Install + Configure Databricks CLI

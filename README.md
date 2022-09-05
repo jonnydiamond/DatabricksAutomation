@@ -1,5 +1,3 @@
-# Currently Ongoing Changes - Testing - Therefore Deployments May Not Work Just Yet
-
 ![Banner](docs/images/MLOps_for_databricks_Solution_Acclerator_logo.JPG)
 
 ## Table of Contents
@@ -17,26 +15,28 @@
 - [Deploy The Azure Environments](#Deploy-The-Azure-Environments)
 - [Run Python Scripts](#Run-Python-Scripts)
 
+---
 
 # About This Repository
 
-This Repository contains an Azure Databricks Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+This Repository contains an Azure Databricks Continuous Deployment _and_ Continuous Development Framework for delivering Data Engineering/Machine Learning projects based on the below Azure Technologies:
+
+---
 
 | Azure Databricks | Azure Log Analytics | Azure Monitor Service  | Azure Key Vault        |
 | ---------------- |:-------------------:| ----------------------:| ----------------------:|
 
 ---
 
-  Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
+Azure Databricks is a powerfull technology, used by Data Engineers and Scientists ubiquitously. However, operationalizing it within a fully automated Continuous Integration and Deployment setup may prove challenging. 
 
-The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is automate as much of the infrastructure as possible. [^1]
+The net effect is a disproportionate amount of the Data Scientist/Engineers time contemplating DevOps matters. This Repositories guiding vision is to automate as much of the infrastructure as possible. [^1]
 
 ---
 
 # Details of The Accelerator
 
-![overview](docs/images/Overview.JPG)
-- Creation of four environments
+- Creation of four environments:
   - Development 
   - UAT
   - PreProduction
@@ -58,13 +58,15 @@ For example, they may interact with Databricks API/CLI from:
 2. Within Databricks UI; or 
 3. A Yaml Pipeline deployment on a DevOps Agent (Github Actions/Azure DevOps etc.)
  
-The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to 'Continuous Development", as opposed to Continuous _Deployment_. It is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+The programmatic way for which options 1 & 2 allow us to interact the Databricks API is akin to "Continuous **Development**", as opposed to "Continuous **Deployment**". The former is strong on flexibility, however, it is somewhat weak on governance and reproducibility. 
+
+In a nutshell Continuous **Delivery** is a partly manual process where developers can deploy any changes to customers by simply clicking a button, while continuous **Deployment** emphasizes automating the entire process.
  
-When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Scret Scopes etc. should come within the realm of "Infrastructure", and as such, we must then find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redployed in a Continuous Deployment framework as it cascades across environments. 
+When interacting with the Databricks API, it is my view that Databricks Jobs, Clusters, Secret Scopes etc. should come within the realm of "Infrastructure", and as such, we must find ways to enshrine this Infrastructure _as code_ , so that it can be consistently redeployed in a Continuous **Deployment** framework as it cascades across environments. 
 
 All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to multiple Bash Scripts (contained within .github/workflows/Utilities ). Each Bash script will ingest the appropriate environment parameter file for deploying Azure resources, or Azure Databrick API calls. 
 
-This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous Development Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
+This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous **Development** Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
  
 ---
 
@@ -72,15 +74,16 @@ This does not preclude interacting with the Databricks API on ad hoc basis using
  
 It is hard to talk about Continuous Deployment without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
-The Branching Strategy will be built out of the box when we dploy our resources in a later step. It follows a GithubFlow paradigm to promote rapid Continuous Integration, with some nuances. [^6] (Go into more detail)
+The Branching Strategy will be built out of the box when we deploy our resources in a later step. It follows a Github Flow paradigm to promote rapid Continuous Integration, with some nuances. (see link within footnote which contains SST Git Flow for Data Science Toolkit) [^6] 
 
 <img width="805" alt="image" src="https://user-images.githubusercontent.com/108273509/186166011-527144d5-ebc1-4869-a0a6-83c5538b4521.png">
 
--   Feature merge to Main: Deploy to Develop Environment 
--   Merge Request from Main To Release: Deploy to UAT
--   Merge Request Approval from Main to Release: Deploy to PreProduction
--   Tag Release Branch with Stable Version: Deploy to Production 
- 
+-   Feature Branch merged to Main Branch: Resource deployment to development environment 
+-   Merge Request from Main Branch To Release Branch: Deploy to UAT environment
+-   Merge Request Approval from Main Branch to Release Branch: Deploy to PreProduction environment
+-   Tag Release Branch with Stable Version: Deploy to Production environment 
+
+---
 
 # Prerequisites
 <details close>
@@ -89,10 +92,9 @@ The Branching Strategy will be built out of the box when we dploy our resources 
   
 - Github Account
 - Access to an Azure Subscription
-- Service Principal With Ownership RBAC permissions assigned. (Instructions below)
-- Service Principal with Databricks Custom Role Permissions. (Instructions below)
 - VS Code installed.
 - Docker Desktop Installed (Instructions below)
+  Azure CLI Installed (This Accelerator is tested on version 2.39)
   
 </details>
 
@@ -104,17 +106,32 @@ The Branching Strategy will be built out of the box when we dploy our resources 
 <br>
   
 - Authenticate to Databricks API/CLI using Azure Service Principal Authentication
+- Yaml Pipelines in Github Actions
+- Azure resource deployment in BICEP
 - Databricks API in Bash
 - Databricks CLI in Bash
-- Databricks API using Python SDK 
-- Yaml Pipelines in Github Actions
-- Docker Environment in VS Code
+- Databricks API using Python SDK (Section 2)
+- Docker Environment in VS Code (Section 2)
   
 </details>
 
 ---
 
-# Create Databricks Custom Role On DBX SPN
+# Clone Repository
+
+- In your Github account create a new Repository "DatabricksAutomation"
+- Click "Import Code"
+
+<img width="904" alt="image" src="https://user-images.githubusercontent.com/108273509/188488093-78b60917-ec8d-4cf4-b59d-5283c9ef2ce9.png">
+
+- Now import the code from this Repository "ciaran28/DatabricksAutomation"
+
+<img width="523" alt="image" src="https://user-images.githubusercontent.com/108273509/188488372-5970bd86-864f-42d4-9761-37aedd4ab282.png">
+
+- Within your VS Code , "View" --> "Command Pallette" --> "Git: Clone" --> Select the Repo you have just created 
+---
+
+# Create Databricks Custom Role (assigned to Databricks Service Principal Later)
 
 - Copy and paste into VS Code Terminal (Powershell)
 ```powershell
@@ -151,53 +168,61 @@ az role definition create --role-definition ".github\workflows\RBAC_Role_Definit
 
 # Create Main Service Principal
 
-Why: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
+**Why**: You will need to assign RBAC permissions to Azure Resources created on the fly. See JSON document "RBAC_Assignment" secion.
 
 Steps:
   1. Open the Terminal Window in VSCode. Enter:
 ```bash
-az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> 
+az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth
 ```
-  2. Do Not Delete Output (required in Next Step) [^4]
-  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 3 [^5] <br>
+  2. Ensure that the Service Principal names are unique within your Tenant. If not unique, you may see the error "Insufficient privileges to complete the operation"
+  3. Do Not Delete Output (required in Next Step) [^4]
+  4. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 2 [^5] <br>
+  5. For more information on '--sdk-auth' has been deprecated flag [^7] 
 
-# Create Databricks SPN
+---
 
-Why: For those who only need permissions to create resources and intereact with the Databricks API.
+# Create Databricks Service Principal
+
+**Why**: For those who only need permissions to create resources and interact with the Databricks API (zero trust).
 Steps:
 1. Open the Terminal Window in VSCode. Enter (copy output to a text file): [^2]
 ```bash 
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscriptions/<InsertYouSubsriptionID> --query "{ARM_TENANT_ID:tenant, ARM_CLIENT_ID:appId, ARM_CLIENT_SECRET:password}"
 ```
-2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. Also save the values in text file for later [^3] 
-3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step (copy output to a text file):  
+2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. [^3] 
+3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step:  
 ```bash 
-az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
+az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:id}"
 ```
-4. In VSCode Terminal Retrieve your own ObectID (copy output to a text file):  
+4. In VSCode Terminal Retrieve your own ObectID:  
 ```bash
-az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:objectId}"
+az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:id}"
 ```
 
 # Final Snapshot of Github Secrets
 
 - Secrets in Github should look exactly like below. The secrets are case sensitive, therefore be very cautious when creating. 
 
-<img width="387" alt="image" src="https://user-images.githubusercontent.com/108273509/186392283-01093f5d-9ca2-42cb-8e84-4807920a5f7f.png">
+<img width="431" alt="image" src="https://user-images.githubusercontent.com/108273509/188156231-68700283-dc93-4c2d-a739-0eff23b47591.png">
+
 
 ---
 # Update Yaml Pipeline Parameters Files
 
-- Now to update the Parameters File with amendments below. Do it for each environment. 
+- The Parameters file can be thought of as a quasi ARM Template for Databricks
+  - Important: Databricks API is not native to ARM and thus BICEP. This is a distinct disadvantage relative to Terraform which allows us to configure Databricks Workspaces and for example, Clusters, in the same place.
+  - BICEP/ARM does not rely upon a state file deployment and also deploys resources incrementally, which is more effecient
+  - There may be a lag between new feauture releases and Terraform updates. 
+  - On balance, it was felt that BICEP wins out for this Azure specific deployment. However, I do recognise Terraform is a serious contender offering many advantages.
+- Now to update the Parameters files with the amendments below. Do it for each environment within _VS Code_ . 
 - Parameters files can be found at: /.github/workflows/Pipeline_Param/<environment-file-name>
-- Note that the Databricks specific object parameters align to the JSON syntax that would be required when interacting with the Databricks API.
 - The JSON objects are fed to their respective Bash Script, in which the Databricks/API is invoked using a For-Loop. Therefore, the JSON parameters file is flexible, allowing us to add and remove objects at will. 
-- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead, however, I am cognizant that it is far superior to use alias names.
+- Important: When assigning RBACs to Users, it would be easier to use alias' instead of objectIDs, for example ciaranh@microsoft.com. In order to do this you require permissions to use the Graph API, requiring approval from a Global Admin. For simplicity, I have used ObjectId's instead.
 
 ```json
 
 {
-    "dbxSPNAppID": "<>",                      # This is the ARM_CLIENT_ID (previous sections)
     "SubscriptionId": "<>",                   # Enter Your SubID
     
 
@@ -260,7 +285,7 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
                 "upload_to_cluster?": true
             }
     ],
-    "Jobs": [                                   # To Do
+    "Jobs": [                                   # Ignore. Still to Do
         {
             "name": "job_remote_analysis",
             "settings": {
@@ -301,32 +326,33 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 ```
 
-
-
-
-
-
-
-
-
-
 ---
 
 # Deploy The Azure Environments 
 
-- In Github you can manually run the pipeline to deploy the evironments to Azure
+- Ensure that all bash '.sh' files within '.github\workflows\Utilities' have not defaulted to 'CRLF' EOL. Instead change this to LF. See the bottom right of VS Code.
+  <img width="259" alt="image" src="https://user-images.githubusercontent.com/108273509/188154937-32c97d98-5659-4224-be5c-94a97e090e0f.png">
+
+
+- Git add, commit and then push to the remote repo from your local VS Code
+- In Github you can manually run the pipeline to deploy the evironments to Azure using:
+  - .github\workflows\1-DBX-Manual-Full-Env-Deploy.yml
 
 <img width="1172" alt="image" src="https://user-images.githubusercontent.com/108273509/186510528-29448e4d-1a0e-41b9-a37f-0cd89d226d57.png">
+  
+- Azure Resources created (Production Environment snapshot)
+  
+<img width="637" alt="image" src="https://user-images.githubusercontent.com/108273509/188148485-86509546-bdd1-413d-b0b3-35f34d2e1722.png">
+
+- Snapshot of completed Github Action deployment 
+
+<img width="810" alt="image" src="https://user-images.githubusercontent.com/108273509/188155303-cfe07a79-0a9d-4a4d-a40a-dea6104b40f1.png">
+
+
 
 ---
 # Run Python Scripts
 
-- All the Azure Resources will be configured 
-  - Repos Git configured with folders created for each environment 
-  - Clusters created
-  - KeyVault created with PAT Token stored therein 
-  - Secret Scopes created with Application Insights Connection string and Service Principal Secrets stored. Given that the Service Principal has RBAC permissions (Key Vault Administrator + Databricks Custom Role+ Contributor), we can use the DBUtils functions _within_ the Databricks Instance to access secrets from KV and intereact with the Databricks API
-  - Wheel file creation, whereby .whl files are stored in DBFS, and uploaded to cluster (if boolean set to true in parameters file)
 <img width="752" alt="image" src="https://user-images.githubusercontent.com/108273509/186661417-403d58db-147e-4dd5-966a-868876fb2ee0.png">
 
 ---
@@ -335,9 +361,9 @@ az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:object
 
 In the previous section, we interacted with Databricks API from the DevOps Agent.
 
-But what if we wish to interact with the Databricks environemnt from our local VS Code? In order to do this we can use "Databricks Connect".
+But what if we wish to interact with the Databricks environment from our local VS Code? In order to do this we can use "Databricks Connect".
 
-Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image the builds containerized Linux environment, dealing with all of the environment variables and path dependencies out of the box. 
+Now... enter Docker. Why are we using this? Configuring the environment set up for Databricks Connect on a Windows machine is a tortuous process, designed to break the will of even the most talented programmer. Instead, we will use a Docker Image which builds a containerized Linux environment within the VS Code Workspace, dealing with all of the environment variables and path dependencies out of the box. 
 
 # Steps
 
@@ -465,4 +491,4 @@ Post running the script, we will be able to see the data in the terminal.
 [^4]: <img width="690" alt="image" src="https://user-images.githubusercontent.com/108273509/186394172-20896052-6ae2-4063-9179-1950f5b93b3d.png"> <br>
 [^5]: <img width="566" alt="image" src="https://user-images.githubusercontent.com/108273509/186401411-37504ae5-1e43-4317-8b11-d14add6d6924.png"> <br>
 [^6]: https://microsofteur.sharepoint.com/teams/MCSMLAISolutionAccelerators/SitePages/Contribution-Guide--How-can-I-contribute-my-work-.aspx?xsdata=MDV8MDF8fDdiODIxYzQxNjQ5NDRlMDQzNWZkMDhkYTc1NmIwMjJlfDcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3fDB8MHw2Mzc5NTEzOTk2ODQ4Nzk4Njl8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxNVGs2YldWbGRHbHVaMTlPZWxWNlQwUkpNbGw2VVhST01rVjVXbE13TUZscWFHeE1WMGw0VGxSbmRGcFVWbTFOUkUxNFRtMUpOVTFVVVhsQWRHaHlaV0ZrTG5ZeXx8&sdata=QVcvTGVXVWlUelZ3R2p6MS9BTTVHT0JTWWFDYXBFZW9MMDRuZ0RWYTUxRT0%3D&ovuser=72f988bf-86f1-41af-91ab-2d7cd011db47%2Cciaranh%40microsoft.com&OR=Teams-HL&CT=1660511292416&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjA3MzEwMTAwNSIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D#sst-flow
-
+[^7]: https://github.com/azure/login#configure-a-service-principal-with-a-secret

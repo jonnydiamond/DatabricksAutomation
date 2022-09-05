@@ -31,7 +31,7 @@ else
                         }' https://$DATABRICKS_INSTANCE/api/2.0/token/create )
 
     echo "PAT Token Creation Response...."
-    echO $PAT_TOKEN_RESPONSE
+    echo $PAT_TOKEN_RESPONSE
 
     PAT_TOKEN=$(jq .token_value -r <<< "$PAT_TOKEN_RESPONSE")
     echo "PAT Token Creation...."

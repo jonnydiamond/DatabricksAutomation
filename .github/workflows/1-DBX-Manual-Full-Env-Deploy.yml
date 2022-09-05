@@ -1,14 +1,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-
 #https://github.com/marketplace/actions/run-databricks-notebook
-
-
 # TO DO: Write A New Package For Setting Environment Variables From A Parameters File
 
 name: DBX_CICD-DEPLOY
-
-#on: push 
-
 on: [workflow_dispatch] 
 
 permissions:
@@ -89,21 +83,22 @@ jobs:
           run:                  bash ./.github/workflows/Utilities/Utils-Create-PAToken.sh
 
 
-        - name:                 Create DBX Secret Scopes
+        - name:                 Create Databricks Secret Scopes
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Scope.sh
         
 
-        - name:                 Create DBX Clusters
+        - name:                 Create Databricks Clusters
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Cluster.sh
           env:
             environment:        ${{ matrix.environments }}
 
 
-        - name:                 Create DBX Repos
+        - name:                 Create Databricks Repos
           run:                  bash ./.github/workflows/Utilities/Utils-Create-Repo-Folders.sh
           env:
             environment:        ${{ matrix.environments }}
             PAT_GIT:            ${{ secrets.PAT_GIT }}
+            ARM_CLIENT_ID:      ${{ secrets.ARM_CLIENT_ID }}
 
 
         - name:                   Install + Configure Databricks CLI
