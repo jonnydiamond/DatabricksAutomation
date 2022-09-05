@@ -51,7 +51,9 @@ The net effect is a disproportionate amount of the Data Scientist/Engineers time
 ---
 
 # Databricks as Infrastructure
-
+<details close>
+<summary>Click Dropdown... </summary>
+<br>
 There are many ways that a User may create Databricks Jobs, Notebooks, Clusters, Secret Scopes, file uploads to DBFS and Clusters etc.
 For example, they may interact with Databricks API/CLI from:
 1. Their local VS Code;
@@ -67,11 +69,15 @@ When interacting with the Databricks API, it is my view that Databricks Jobs, Cl
 All Databricks related infrastrucutre will sit within an environment parameter file [here](#Update-Yaml-Pipeline-Parameters-Files), alongside all other infrastructure parameters. The Yaml Pipeline will point to multiple Bash Scripts (contained within .github/workflows/Utilities ). Each Bash script will ingest the appropriate environment parameter file for deploying Azure resources, or Azure Databrick API calls. 
 
 This does not preclude interacting with the Databricks API on ad hoc basis using the "Continuous **Development** Framework". We in fact provide the Development Framework to do this from a Docker Container in VS Code (Section 2)
- 
+
+</details>
+
 ---
 
  # Continuous Deployment + Branching Strategy
- 
+<details close>
+<summary>Click Dropdown... </summary>
+<br>
 It is hard to talk about Continuous Deployment without addressing the manner in which that Deployment should look... for example... what branching strategy will be adopted?
 
 The Branching Strategy will be built out of the box when we deploy our resources in a later step. It follows a Github Flow paradigm to promote rapid Continuous Integration, with some nuances. (see link within footnote which contains SST Git Flow for Data Science Toolkit) [^6] 
@@ -82,6 +88,8 @@ The Branching Strategy will be built out of the box when we deploy our resources
 -   Merge Request from Main Branch To Release Branch: Deploy to UAT environment
 -   Merge Request Approval from Main Branch to Release Branch: Deploy to PreProduction environment
 -   Tag Release Branch with Stable Version: Deploy to Production environment 
+
+</details>
 
 ---
 
