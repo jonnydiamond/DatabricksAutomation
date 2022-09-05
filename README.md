@@ -136,7 +136,9 @@ The Branching Strategy will be built out of the box when we deploy our resources
 - Copy and paste into VS Code Terminal (Powershell)
 ```powershell
 $subid = "<>"   # Update This To Your SubscriptionID
+```
 
+```powershell
 $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
 $a = Get-Content '.github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json' -raw | ConvertFrom-Json
 $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json" 
@@ -144,6 +146,7 @@ $pathToJson = ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json"
 $a[0].assignableScopes += "/subscriptions/$subid"
 $a | ConvertTo-Json | set-content $pathToJson
 az role definition create --role-definition ".github\workflows\RBAC_Role_Definition\DBX_Custom_Role.json" 
+
 ```
 
 <details close>
