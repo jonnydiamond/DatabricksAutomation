@@ -144,6 +144,7 @@ jobs:
             echo "${{ github.head_ref }}"
             echo "${{ github.base_ref }}"
 
+      # This should always be updated. Regardless of IF Condition 
         - name:                 Update Test Repo In Test Environment (Main Branch)
           run:                  bash ./.github/workflows/Utilities/Utils-Git-Pull-DBX-Repo.sh
           env:
