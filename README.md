@@ -94,6 +94,7 @@ The Branching Strategy will be built out of the box when we deploy our resources
 - Access to an Azure Subscription
 - VS Code installed.
 - Docker Desktop Installed (Instructions below)
+  Azure CLI Installed (This Accelerator is tested on version 2.39)
   
 </details>
 
@@ -118,8 +119,16 @@ The Branching Strategy will be built out of the box when we deploy our resources
 
 # Clone Repository
 
-- Within VS Code clone this repository ( TO DO: Provide instructions)
+- In your Github account create a new Repository "DatabricksAutomation"
+- Click "Import Code"
 
+<img width="904" alt="image" src="https://user-images.githubusercontent.com/108273509/188488093-78b60917-ec8d-4cf4-b59d-5283c9ef2ce9.png">
+
+- Now import the code from this Repository "ciaran28/DatabricksAutomation"
+
+<img width="523" alt="image" src="https://user-images.githubusercontent.com/108273509/188488372-5970bd86-864f-42d4-9761-37aedd4ab282.png">
+
+- Within your VS Code , "View" --> "Command Pallette" --> "Git: Clone" --> Select the Repo you have just created 
 ---
 
 # Create Databricks Custom Role (assigned to Databricks Service Principal Later)
@@ -166,9 +175,10 @@ Steps:
 ```bash
 az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --role Owner --scopes /subscriptions/<InsertYouSubsriptionID> --sdk-auth
 ```
-  2. Do Not Delete Output (required in Next Step) [^4]
-  3. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 2 [^5] <br>
-  4. For more information on '--sdk-auth' has been deprecated flag [^7] 
+  2. Ensure that the Service Principal names are unique within your Tenant. If not unique, you may see the error "Insufficient privileges to complete the operation"
+  3. Do Not Delete Output (required in Next Step) [^4]
+  4. Create Github Secret titled "AZURE_CREDENTIALS" and paste output from step 2 [^5] <br>
+  5. For more information on '--sdk-auth' has been deprecated flag [^7] 
 
 ---
 
@@ -183,11 +193,11 @@ az ad sp create-for-rbac -n <InsertNameForServicePrincipal> --scopes /subscripti
 2. Create Github Secrets entitled "ARM_CLIENT_ID", "ARM_CLIENT_SECRET" and "ARM_TENANT_ID". Values are contained within output from step 1. [^3] 
 3. In VS Code Terminal retrieve ObjectID of Databricks Service Principal by using the ARM_CLIENT_ID from the previous step:  
 ```bash 
-az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:objectId}"
+az ad sp show --id <ARM_CLIENT_ID> --query "{roleBeneficiaryObjID:id}"
 ```
 4. In VSCode Terminal Retrieve your own ObectID:  
 ```bash
-az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:objectId}"
+az ad user show --id ciaranh@microsoft.com --query "{roleBeneficiaryObjID:id}"
 ```
 
 # Final Snapshot of Github Secrets
