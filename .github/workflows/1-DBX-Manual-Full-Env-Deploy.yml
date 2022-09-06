@@ -20,7 +20,6 @@ jobs:
           # Aligns To Environment Parameter File Names.
           environments:          [Development, UAT, PreProduction, Production]         
       steps:
-        - name:                  Checkout Main Branch
         - uses:                  actions/checkout@v3       
         # Federated connections (below)
         # https://goodworkaround.com/2021/12/21/another-deep-dive-into-azure-ad-workload-identity-federation-using-github-actions/
