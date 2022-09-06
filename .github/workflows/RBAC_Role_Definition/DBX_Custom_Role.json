@@ -1,8 +1,8 @@
 {
-    "Name":  "DBX_Custom_Role2",
+    "Name":  "DBX_Custom_Role3",
     "IsCustom":  true,
     "assignableScopes":  [
-                             "/subscriptions/4f1bc772-7792-4285-99d9-3463b8d7f994"
+                             "/subscriptions/bac25631-dc16-4ed3-aecc-c050da8d72fb"
                          ],
     "Description":  "Create New Custom Role For Using Databricks API",
     "actions":  [

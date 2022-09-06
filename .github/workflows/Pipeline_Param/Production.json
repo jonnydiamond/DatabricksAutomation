@@ -1,5 +1,5 @@
 {
-    "SubscriptionId": "4f1bc772-7792-4285-99d9-3463b8d7f994",
+    "SubscriptionId": "bac25631-dc16-4ed3-aecc-c050da8d72fb",
     
     "Location": "uksouth",
     "TemplateParamFilePath":"Infrastructure/DBX_CICD_Deployment/Bicep_Params/Production/Bicep.parameters.json",
@@ -11,17 +11,17 @@
             "roles": [ 
                 "Key Vault Administrator"
             ],
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
+            "roleBeneficiaryObjID":"1ed731a7-c48f-421f-8a13-f5ef214b626e",
             "Description": "You Object ID",
             "principalType": "User"
         },
         {
             "roles": [
                 "Contributor", 
-                "DBX_Custom_Role2",
+                "DBX_Custom_Role3",
                 "Key Vault Administrator"
             ],
-            "roleBeneficiaryObjID":"02a3f916-b4ea-4207-be62-d6f5d35890e5",
+            "roleBeneficiaryObjID":"a1d4b3bc-d10d-4246-989b-7e485f2caf50",
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         }
@@ -42,13 +42,13 @@
     ],
     "Git_Configuration": [
         {
-            "git_username": "ciaran28",
-            "git_provider": "gitHub"
+            "git_username": "jonnydiamond",
+            "git_provider": "Github"
         }
     ],
     "Repo_Configuration": [      
         {
-            "url": "https://github.com/ciaran28/DatabricksAutomation", 
+            "url": "https://github.com/jonnydiamond/DatabricksAutomation", 
             "provider": "gitHub",
             "path": "ProductionFolder"
         }
