@@ -11,17 +11,17 @@
             "roles": [ 
                 "Key Vault Administrator"
             ],
-            "roleBeneficiaryObjID":"3fb6e2d3-7734-43fc-be9e-af8671acf605",
+            "roleBeneficiaryObjID":"1ed731a7-c48f-421f-8a13-f5ef214b626e",
             "Description": "You Object ID",
             "principalType": "User"
         },
         {
             "roles": [
                 "Contributor", 
-                "DBX_Custom_Role2",
+                "DBX_Custom_Role3",
                 "Key Vault Administrator"
             ],
-            "roleBeneficiaryObjID":"02a3f916-b4ea-4207-be62-d6f5d35890e5",
+            "roleBeneficiaryObjID":"932ecb36-1e85-442c-bf0d-1e89091b6a81",
             "Description": "Databricks SPN",
             "principalType": "ServicePrincipal"
         }
@@ -42,7 +42,7 @@
     ],
     "Git_Configuration": [
         {
-            "git_username": "ciaran28",
+            "git_username": "jonnydiamond",
             "git_provider": "gitHub"
         }
     ],
@@ -55,7 +55,7 @@
     ],
     "Repo_Configuration": [
         {
-            "url": "https://github.com/ciaran28/DatabricksAutomation",
+            "url": "https://github.com/jonnydiamond/DatabricksAutomation",
             "provider": "gitHub",
             "path": "UATFolder"
         }
