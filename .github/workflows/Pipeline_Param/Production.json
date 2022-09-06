@@ -43,7 +43,7 @@
     "Git_Configuration": [
         {
             "git_username": "jonnydiamond",
-            "git_provider": "Github"
+            "git_provider": "github"
         }
     ],
     "Repo_Configuration": [      
